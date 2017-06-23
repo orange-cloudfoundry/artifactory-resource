@@ -5,6 +5,6 @@ BUILD_DIR=$PWD/built-resource
 
 CGO_ENABLED=1 go test -v ./...
 
-./bin/build
+./bin/build.linux
 
 docker build -t orangeopensource/artifactory-resource .

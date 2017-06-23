@@ -2,13 +2,7 @@
 
 set -e -u -x
 
-mkdir -p assets/linux
 mkdir -p assets/darwin
-
-GOOS=linux go build -o assets/linux/in in/main.go
-GOOS=linux go build -o assets/linux/check check/main.go
-GOOS=linux go build -o assets/linux/out out/main.go
-
 GOOS=darwin go build -o assets/darwin/in in/main.go
 GOOS=darwin go build -o assets/darwin/check check/main.go
 GOOS=darwin go build -o assets/darwin/out out/main.go
