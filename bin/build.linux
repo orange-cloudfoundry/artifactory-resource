@@ -1,0 +1,8 @@
+#!/bin/bash
+
+set -e -u -x
+
+mkdir -p assets/linux
+GOOS=linux go build -o assets/linux/in in/main.go
+GOOS=linux go build -o assets/linux/check check/main.go
+GOOS=linux go build -o assets/linux/out out/main.go

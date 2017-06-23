@@ -1,2 +1,2 @@
 FROM concourse/buildroot:base
-ADD assets/ /opt/resource/
+ADD assets/linux/ /opt/resource/
