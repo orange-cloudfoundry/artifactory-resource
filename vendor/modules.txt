@@ -156,16 +156,23 @@ github.com/jbenet/go-context/io
 ## explicit; go 1.13
 github.com/jedib0t/go-pretty/v6/table
 github.com/jedib0t/go-pretty/v6/text
-# github.com/jfrog/gocmd v0.5.2
+# github.com/jfrog/build-info-go v0.1.1
+## explicit; go 1.15
+github.com/jfrog/build-info-go/build
+github.com/jfrog/build-info-go/entities
+github.com/jfrog/build-info-go/utils
+# github.com/jfrog/gocmd v0.5.4
 ## explicit; go 1.15
 github.com/jfrog/gocmd/cache
 github.com/jfrog/gocmd/cmd
+github.com/jfrog/gocmd/executers
 github.com/jfrog/gocmd/executers/utils
 # github.com/jfrog/gofrog v1.1.0
 ## explicit; go 1.13
 github.com/jfrog/gofrog/io
 github.com/jfrog/gofrog/parallel
-# github.com/jfrog/jfrog-cli-core/v2 v2.4.2
+github.com/jfrog/gofrog/stringutils
+# github.com/jfrog/jfrog-cli-core/v2 v2.5.0
 ## explicit; go 1.14
 github.com/jfrog/jfrog-cli-core/v2/artifactory/commands/generic
 github.com/jfrog/jfrog-cli-core/v2/artifactory/commands/utils
@@ -173,25 +180,19 @@ github.com/jfrog/jfrog-cli-core/v2/artifactory/utils
 github.com/jfrog/jfrog-cli-core/v2/common/spec
 github.com/jfrog/jfrog-cli-core/v2/utils/config
 github.com/jfrog/jfrog-cli-core/v2/utils/coreutils
-github.com/jfrog/jfrog-cli-core/v2/utils/golang
-github.com/jfrog/jfrog-cli-core/v2/utils/gradle
 github.com/jfrog/jfrog-cli-core/v2/utils/ioutils
 github.com/jfrog/jfrog-cli-core/v2/utils/lock
 github.com/jfrog/jfrog-cli-core/v2/utils/log
-github.com/jfrog/jfrog-cli-core/v2/utils/mvn
 github.com/jfrog/jfrog-cli-core/v2/utils/npm
-github.com/jfrog/jfrog-cli-core/v2/utils/pip
 github.com/jfrog/jfrog-cli-core/v2/xray/commands
-github.com/jfrog/jfrog-cli-core/v2/xray/commands/audit
 github.com/jfrog/jfrog-cli-core/v2/xray/utils
-# github.com/jfrog/jfrog-client-go v1.5.2
-## explicit
+# github.com/jfrog/jfrog-client-go v1.6.1
+## explicit; go 1.17
 github.com/jfrog/jfrog-client-go/access
 github.com/jfrog/jfrog-client-go/access/auth
 github.com/jfrog/jfrog-client-go/access/services
 github.com/jfrog/jfrog-client-go/artifactory
 github.com/jfrog/jfrog-client-go/artifactory/auth
-github.com/jfrog/jfrog-client-go/artifactory/buildinfo
 github.com/jfrog/jfrog-client-go/artifactory/services
 github.com/jfrog/jfrog-client-go/artifactory/services/fspatterns
 github.com/jfrog/jfrog-client-go/artifactory/services/go
@@ -378,8 +379,8 @@ golang.org/x/sys/windows
 # golang.org/x/term v0.0.0-20201126162022-7de9c90e9dd1
 ## explicit; go 1.11
 golang.org/x/term
-# golang.org/x/text v0.3.6
-## explicit; go 1.11
+# golang.org/x/text v0.3.7
+## explicit; go 1.17
 golang.org/x/text/transform
 golang.org/x/text/unicode/norm
 # gopkg.in/ini.v1 v1.62.0

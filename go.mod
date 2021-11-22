@@ -5,8 +5,8 @@ go 1.17
 require (
 	github.com/ArthurHlt/go-concourse-helper v0.0.0-20170620092918-e64471d7c7ec
 	github.com/blang/semver v3.5.1+incompatible
-	github.com/jfrog/jfrog-cli-core/v2 v2.4.2
-	github.com/jfrog/jfrog-client-go v1.5.2
+	github.com/jfrog/jfrog-cli-core/v2 v2.5.0
+	github.com/jfrog/jfrog-client-go v1.6.1
 )
 
 require (
@@ -31,7 +31,8 @@ require (
 	github.com/imdario/mergo v0.3.12 // indirect
 	github.com/jbenet/go-context v0.0.0-20150711004518-d14ea06fba99 // indirect
 	github.com/jedib0t/go-pretty/v6 v6.2.2 // indirect
-	github.com/jfrog/gocmd v0.5.2 // indirect
+	github.com/jfrog/build-info-go v0.1.1 // indirect
+	github.com/jfrog/gocmd v0.5.4 // indirect
 	github.com/jfrog/gofrog v1.1.0 // indirect
 	github.com/juju/ansiterm v0.0.0-20180109212912-720a0952cc2a // indirect
 	github.com/kevinburke/ssh_config v0.0.0-20201106050909-4977a11b4351 // indirect
@@ -71,7 +72,7 @@ require (
 	golang.org/x/net v0.0.0-20210428140749-89ef3d95e781 // indirect
 	golang.org/x/sys v0.0.0-20210615035016-665e8c7367d1 // indirect
 	golang.org/x/term v0.0.0-20201126162022-7de9c90e9dd1 // indirect
-	golang.org/x/text v0.3.6 // indirect
+	golang.org/x/text v0.3.7 // indirect
 	gopkg.in/ini.v1 v1.62.0 // indirect
 	gopkg.in/warnings.v0 v0.1.2 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
