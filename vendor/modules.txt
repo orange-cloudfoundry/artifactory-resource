@@ -156,12 +156,12 @@ github.com/jbenet/go-context/io
 ## explicit; go 1.13
 github.com/jedib0t/go-pretty/v6/table
 github.com/jedib0t/go-pretty/v6/text
-# github.com/jfrog/build-info-go v0.1.2
+# github.com/jfrog/build-info-go v0.1.3
 ## explicit; go 1.15
 github.com/jfrog/build-info-go/build
 github.com/jfrog/build-info-go/entities
 github.com/jfrog/build-info-go/utils
-# github.com/jfrog/gocmd v0.5.5
+# github.com/jfrog/gocmd v0.6.0
 ## explicit; go 1.15
 github.com/jfrog/gocmd/cache
 github.com/jfrog/gocmd/cmd
@@ -186,7 +186,7 @@ github.com/jfrog/jfrog-cli-core/v2/utils/log
 github.com/jfrog/jfrog-cli-core/v2/utils/npm
 github.com/jfrog/jfrog-cli-core/v2/xray/commands
 github.com/jfrog/jfrog-cli-core/v2/xray/utils
-# github.com/jfrog/jfrog-client-go v1.6.2
+# github.com/jfrog/jfrog-client-go v1.6.3
 ## explicit; go 1.17
 github.com/jfrog/jfrog-client-go/access
 github.com/jfrog/jfrog-client-go/access/auth
