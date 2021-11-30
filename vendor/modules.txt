@@ -172,7 +172,7 @@ github.com/jfrog/gocmd/executers/utils
 github.com/jfrog/gofrog/io
 github.com/jfrog/gofrog/parallel
 github.com/jfrog/gofrog/stringutils
-# github.com/jfrog/jfrog-cli-core/v2 v2.5.1
+# github.com/jfrog/jfrog-cli-core/v2 v2.6.0
 ## explicit; go 1.14
 github.com/jfrog/jfrog-cli-core/v2/artifactory/commands/generic
 github.com/jfrog/jfrog-cli-core/v2/artifactory/commands/utils
@@ -368,7 +368,7 @@ golang.org/x/crypto/ssh/terminal
 golang.org/x/net/context
 golang.org/x/net/internal/socks
 golang.org/x/net/proxy
-# golang.org/x/sys v0.0.0-20210615035016-665e8c7367d1
+# golang.org/x/sys v0.0.0-20210616045830-e2b7044e8c71
 ## explicit; go 1.17
 golang.org/x/sys/cpu
 golang.org/x/sys/execabs
