@@ -156,7 +156,7 @@ github.com/jbenet/go-context/io
 ## explicit; go 1.13
 github.com/jedib0t/go-pretty/v6/table
 github.com/jedib0t/go-pretty/v6/text
-# github.com/jfrog/build-info-go v0.1.3
+# github.com/jfrog/build-info-go v0.1.4
 ## explicit; go 1.15
 github.com/jfrog/build-info-go/build
 github.com/jfrog/build-info-go/entities
@@ -172,11 +172,12 @@ github.com/jfrog/gocmd/executers/utils
 github.com/jfrog/gofrog/io
 github.com/jfrog/gofrog/parallel
 github.com/jfrog/gofrog/stringutils
-# github.com/jfrog/jfrog-cli-core/v2 v2.6.0
+# github.com/jfrog/jfrog-cli-core/v2 v2.7.0
 ## explicit; go 1.14
 github.com/jfrog/jfrog-cli-core/v2/artifactory/commands/generic
 github.com/jfrog/jfrog-cli-core/v2/artifactory/commands/utils
 github.com/jfrog/jfrog-cli-core/v2/artifactory/utils
+github.com/jfrog/jfrog-cli-core/v2/artifactory/utils/container
 github.com/jfrog/jfrog-cli-core/v2/common/spec
 github.com/jfrog/jfrog-cli-core/v2/utils/config
 github.com/jfrog/jfrog-cli-core/v2/utils/coreutils
@@ -185,8 +186,9 @@ github.com/jfrog/jfrog-cli-core/v2/utils/lock
 github.com/jfrog/jfrog-cli-core/v2/utils/log
 github.com/jfrog/jfrog-cli-core/v2/utils/npm
 github.com/jfrog/jfrog-cli-core/v2/xray/commands
+github.com/jfrog/jfrog-cli-core/v2/xray/commands/scan
 github.com/jfrog/jfrog-cli-core/v2/xray/utils
-# github.com/jfrog/jfrog-client-go v1.6.3
+# github.com/jfrog/jfrog-client-go v1.6.4
 ## explicit; go 1.17
 github.com/jfrog/jfrog-client-go/access
 github.com/jfrog/jfrog-client-go/access/auth
