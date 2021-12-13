@@ -45,9 +45,9 @@ github.com/c-bata/go-prompt/internal/term
 # github.com/chzyer/readline v0.0.0-20180603132655-2972be24d48e
 ## explicit
 github.com/chzyer/readline
-# github.com/codegangsta/cli v1.20.0
-## explicit
-github.com/codegangsta/cli
+# github.com/cpuguy83/go-md2man/v2 v2.0.0-20190314233015-f79a8a8ca69d
+## explicit; go 1.12
+github.com/cpuguy83/go-md2man/v2/md2man
 # github.com/dsnet/compress v0.0.2-0.20210315054119-f66993602bf5
 ## explicit; go 1.9
 github.com/dsnet/compress
@@ -156,23 +156,18 @@ github.com/jbenet/go-context/io
 ## explicit; go 1.13
 github.com/jedib0t/go-pretty/v6/table
 github.com/jedib0t/go-pretty/v6/text
-# github.com/jfrog/build-info-go v0.1.4
+# github.com/jfrog/build-info-go v0.1.5
 ## explicit; go 1.15
 github.com/jfrog/build-info-go/build
 github.com/jfrog/build-info-go/entities
 github.com/jfrog/build-info-go/utils
-# github.com/jfrog/gocmd v0.6.0
-## explicit; go 1.15
-github.com/jfrog/gocmd/cache
-github.com/jfrog/gocmd/cmd
-github.com/jfrog/gocmd/executers
-github.com/jfrog/gocmd/executers/utils
-# github.com/jfrog/gofrog v1.1.0
+# github.com/jfrog/gofrog v1.1.1
 ## explicit; go 1.13
 github.com/jfrog/gofrog/io
 github.com/jfrog/gofrog/parallel
 github.com/jfrog/gofrog/stringutils
-# github.com/jfrog/jfrog-cli-core/v2 v2.7.3
+github.com/jfrog/gofrog/version
+# github.com/jfrog/jfrog-cli-core/v2 v2.7.4
 ## explicit; go 1.14
 github.com/jfrog/jfrog-cli-core/v2/artifactory/commands/generic
 github.com/jfrog/jfrog-cli-core/v2/artifactory/commands/utils
@@ -188,7 +183,7 @@ github.com/jfrog/jfrog-cli-core/v2/utils/npm
 github.com/jfrog/jfrog-cli-core/v2/xray/commands
 github.com/jfrog/jfrog-cli-core/v2/xray/commands/scan
 github.com/jfrog/jfrog-cli-core/v2/xray/utils
-# github.com/jfrog/jfrog-client-go v1.6.5
+# github.com/jfrog/jfrog-client-go v1.6.6
 ## explicit; go 1.17
 github.com/jfrog/jfrog-client-go/access
 github.com/jfrog/jfrog-client-go/access/auth
@@ -216,8 +211,6 @@ github.com/jfrog/jfrog-client-go/utils/errorutils
 github.com/jfrog/jfrog-client-go/utils/io
 github.com/jfrog/jfrog-client-go/utils/io/content
 github.com/jfrog/jfrog-client-go/utils/io/fileutils
-github.com/jfrog/jfrog-client-go/utils/io/fileutils/checksum
-github.com/jfrog/jfrog-client-go/utils/io/fileutils/checksum/utils
 github.com/jfrog/jfrog-client-go/utils/io/httputils
 github.com/jfrog/jfrog-client-go/utils/log
 github.com/jfrog/jfrog-client-go/utils/version
@@ -306,9 +299,15 @@ github.com/pkg/errors
 # github.com/pkg/term v1.1.0
 ## explicit; go 1.14
 github.com/pkg/term/termios
+# github.com/russross/blackfriday/v2 v2.0.1
+## explicit
+github.com/russross/blackfriday/v2
 # github.com/sergi/go-diff v1.1.0
 ## explicit; go 1.12
 github.com/sergi/go-diff/diffmatchpatch
+# github.com/shurcooL/sanitized_anchor_name v1.0.0
+## explicit
+github.com/shurcooL/sanitized_anchor_name
 # github.com/spf13/afero v1.6.0
 ## explicit; go 1.13
 github.com/spf13/afero
@@ -334,6 +333,9 @@ github.com/ulikunitz/xz
 github.com/ulikunitz/xz/internal/hash
 github.com/ulikunitz/xz/internal/xlog
 github.com/ulikunitz/xz/lzma
+# github.com/urfave/cli v1.22.5
+## explicit; go 1.11
+github.com/urfave/cli
 # github.com/xanzy/ssh-agent v0.3.0
 ## explicit
 github.com/xanzy/ssh-agent

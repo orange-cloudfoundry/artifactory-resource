@@ -5,8 +5,8 @@ go 1.17
 require (
 	github.com/ArthurHlt/go-concourse-helper v0.0.0-20170620092918-e64471d7c7ec
 	github.com/blang/semver v3.5.1+incompatible
-	github.com/jfrog/jfrog-cli-core/v2 v2.7.3
-	github.com/jfrog/jfrog-client-go v1.6.5
+	github.com/jfrog/jfrog-cli-core/v2 v2.7.4
+	github.com/jfrog/jfrog-client-go v1.6.6
 )
 
 require (
@@ -17,7 +17,7 @@ require (
 	github.com/buger/jsonparser v1.1.1 // indirect
 	github.com/c-bata/go-prompt v0.2.5 // indirect
 	github.com/chzyer/readline v0.0.0-20180603132655-2972be24d48e // indirect
-	github.com/codegangsta/cli v1.20.0 // indirect
+	github.com/cpuguy83/go-md2man/v2 v2.0.0-20190314233015-f79a8a8ca69d // indirect
 	github.com/dsnet/compress v0.0.2-0.20210315054119-f66993602bf5 // indirect
 	github.com/emirpasic/gods v1.12.0 // indirect
 	github.com/fsnotify/fsnotify v1.4.9 // indirect
@@ -31,9 +31,8 @@ require (
 	github.com/imdario/mergo v0.3.12 // indirect
 	github.com/jbenet/go-context v0.0.0-20150711004518-d14ea06fba99 // indirect
 	github.com/jedib0t/go-pretty/v6 v6.2.2 // indirect
-	github.com/jfrog/build-info-go v0.1.4 // indirect
-	github.com/jfrog/gocmd v0.6.0 // indirect
-	github.com/jfrog/gofrog v1.1.0 // indirect
+	github.com/jfrog/build-info-go v0.1.5 // indirect
+	github.com/jfrog/gofrog v1.1.1 // indirect
 	github.com/juju/ansiterm v0.0.0-20180109212912-720a0952cc2a // indirect
 	github.com/kevinburke/ssh_config v0.0.0-20201106050909-4977a11b4351 // indirect
 	github.com/klauspost/compress v1.11.4 // indirect
@@ -57,7 +56,9 @@ require (
 	github.com/pierrec/lz4/v4 v4.1.2 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pkg/term v1.1.0 // indirect
+	github.com/russross/blackfriday/v2 v2.0.1 // indirect
 	github.com/sergi/go-diff v1.1.0 // indirect
+	github.com/shurcooL/sanitized_anchor_name v1.0.0 // indirect
 	github.com/spf13/afero v1.6.0 // indirect
 	github.com/spf13/cast v1.3.1 // indirect
 	github.com/spf13/jwalterweatherman v1.1.0 // indirect
@@ -65,6 +66,7 @@ require (
 	github.com/spf13/viper v1.8.1 // indirect
 	github.com/subosito/gotenv v1.2.0 // indirect
 	github.com/ulikunitz/xz v0.5.9 // indirect
+	github.com/urfave/cli v1.22.5 // indirect
 	github.com/xanzy/ssh-agent v0.3.0 // indirect
 	github.com/xi2/xz v0.0.0-20171230120015-48954b6210f8 // indirect
 	github.com/xo/terminfo v0.0.0-20210125001918-ca9a967f8778 // indirect
