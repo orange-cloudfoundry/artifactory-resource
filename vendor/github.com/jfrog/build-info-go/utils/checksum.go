@@ -1,12 +1,11 @@
-package checksum
+package utils
 
 import (
 	"bufio"
 	"crypto/md5"
 	"crypto/sha1"
 	"fmt"
-	"github.com/jfrog/jfrog-client-go/utils/errorutils"
-	"github.com/jfrog/jfrog-client-go/utils/io/fileutils/checksum/utils"
+	"github.com/jfrog/build-info-go/entities"
 	"hash"
 	"io"
 	"os"
@@ -20,15 +19,31 @@ const (
 	SHA256
 )
 
-var algorithmFunc = map[Algorithm](func() hash.Hash){
+var algorithmFunc = map[Algorithm]func() hash.Hash{
 	MD5:  md5.New,
 	SHA1: sha1.New,
-	// TODO - Uncomment `Sha256` population when Artifactory support Sha256 checksum validation
-	//SHA256: sha256.New,
 }
 
-// Calc all hashes at once using AsyncMultiWriter therefore the file is read only once.
-func Calc(reader io.Reader, checksumType ...Algorithm) (map[Algorithm]string, error) {
+func GetFileChecksums(filePath string) (checksums *entities.Checksum, err error) {
+	file, err := os.Open(filePath)
+	if err != nil {
+		return nil, err
+	}
+	defer func() {
+		e := file.Close()
+		if err == nil {
+			err = e
+		}
+	}()
+	checksumInfo, err := CalcChecksums(file)
+	if err != nil {
+		return nil, err
+	}
+	return &entities.Checksum{Md5: checksumInfo[MD5], Sha1: checksumInfo[SHA1]}, nil
+}
+
+// CalcChecksums calculates all hashes at once using AsyncMultiWriter. The file is therefore read only once.
+func CalcChecksums(reader io.Reader, checksumType ...Algorithm) (map[Algorithm]string, error) {
 	hashes := getChecksumByAlgorithm(checksumType...)
 	var multiWriter io.Writer
 	pageSize := os.Getpagesize()
@@ -37,9 +52,9 @@ func Calc(reader io.Reader, checksumType ...Algorithm) (map[Algorithm]string, er
 	for _, v := range hashes {
 		hashWriter = append(hashWriter, v)
 	}
-	multiWriter = utils.AsyncMultiWriter(hashWriter...)
+	multiWriter = AsyncMultiWriter(hashWriter...)
 	_, err := io.Copy(multiWriter, sizedReader)
-	if errorutils.CheckError(err) != nil {
+	if err != nil {
 		return nil, err
 	}
 	results := sumResults(hashes)
