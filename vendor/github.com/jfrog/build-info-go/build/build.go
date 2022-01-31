@@ -81,6 +81,10 @@ func (b *Build) AddGradleModule(srcPath string) (*GradleModule, error) {
 	return newGradleModule(b, srcPath)
 }
 
+func (b *Build) AddNpmModule(srcPath string) (*NpmModule, error) {
+	return newNpmModule(srcPath, b)
+}
+
 func (b *Build) CollectEnv() error {
 	envMap := make(map[string]string)
 	for _, e := range os.Environ() {
@@ -98,7 +102,7 @@ func (b *Build) Clean() error {
 	if err != nil {
 		return err
 	}
-	exists, err := utils.IsDirExists(tempDirPath)
+	exists, err := utils.IsDirExists(tempDirPath, true)
 	if err != nil {
 		return err
 	}
@@ -135,14 +139,14 @@ func (b *Build) getGeneratedBuildsInfo() ([]*entities.BuildInfo, error) {
 	if err != nil {
 		return nil, err
 	}
-	buildFiles, err := utils.ListFiles(buildDir)
+	buildFiles, err := utils.ListFiles(buildDir, true)
 	if err != nil {
 		return nil, err
 	}
 
 	var generatedBuildsInfo []*entities.BuildInfo
 	for _, buildFile := range buildFiles {
-		dir, err := utils.IsDirExists(buildFile)
+		dir, err := utils.IsDirExists(buildFile, true)
 		if err != nil {
 			return nil, err
 		}
@@ -273,12 +277,12 @@ func (b *Build) readPartialBuildInfoFiles() (entities.Partials, error) {
 	if err != nil {
 		return nil, err
 	}
-	buildFiles, err := utils.ListFiles(partialsBuildDir)
+	buildFiles, err := utils.ListFiles(partialsBuildDir, true)
 	if err != nil {
 		return nil, err
 	}
 	for _, buildFile := range buildFiles {
-		dir, err := utils.IsDirExists(buildFile)
+		dir, err := utils.IsDirExists(buildFile, true)
 		if err != nil {
 			return nil, err
 		}
@@ -306,7 +310,7 @@ func (b *Build) readBuildInfoGeneralDetails() (*entities.General, error) {
 		return nil, err
 	}
 	generalDetailsFilePath := filepath.Join(partialsBuildDir, BuildInfoDetails)
-	fileExists, err := utils.IsFileExists(generalDetailsFilePath)
+	fileExists, err := utils.IsFileExists(generalDetailsFilePath, true)
 	if err != nil {
 		return nil, err
 	}
@@ -336,7 +340,7 @@ type partialModule struct {
 	moduleType   entities.ModuleType
 	artifacts    map[string]entities.Artifact
 	dependencies map[string]entities.Dependency
-	checksum     *entities.Checksum
+	checksum     entities.Checksum
 }
 
 func extractBuildInfoData(partials entities.Partials) ([]entities.Module, entities.Env, []entities.Vcs, entities.Issues, error) {
@@ -347,7 +351,12 @@ func extractBuildInfoData(partials entities.Partials) ([]entities.Module, entiti
 	issuesMap := make(map[string]*entities.AffectedIssue)
 	for _, partial := range partials {
 		moduleId := partial.ModuleId
-		if partialModules[moduleId] == nil {
+		// If type is not set but module has artifacts / dependencies, throw error.
+		if (partial.Artifacts != nil || partial.Dependencies != nil) && partial.ModuleType == "" {
+			return nil, nil, nil, entities.Issues{}, errors.New("module with artifacts or dependencies but no Type is not supported")
+		}
+		// Avoid adding redundant modules without type (for issues, env, etc)
+		if partialModules[moduleId] == nil && partial.ModuleType != "" {
 			partialModules[moduleId] = &partialModule{moduleType: partial.ModuleType}
 		}
 		switch {
@@ -438,7 +447,7 @@ func dependenciesMapToList(dependenciesMap map[string]entities.Dependency) []ent
 	return dependencies
 }
 
-func createModule(moduleId string, moduleType entities.ModuleType, checksum *entities.Checksum, artifacts []entities.Artifact, dependencies []entities.Dependency) *entities.Module {
+func createModule(moduleId string, moduleType entities.ModuleType, checksum entities.Checksum, artifacts []entities.Artifact, dependencies []entities.Dependency) *entities.Module {
 	module := createDefaultModule(moduleId)
 	module.Type = moduleType
 	module.Checksum = checksum
