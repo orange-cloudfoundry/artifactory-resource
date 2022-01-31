@@ -3,7 +3,6 @@ package utils
 import (
 	"fmt"
 	"github.com/jfrog/jfrog-client-go/utils/log"
-	"strconv"
 	"time"
 )
 
@@ -38,21 +37,31 @@ func (runner *RetryExecutor) Execute() error {
 			return err
 		}
 
-		log.Warn(runner.getLogRetryMessage(i, err))
+		// Print retry log message
+		runner.LogRetry(i, err)
+
 		// Going to sleep for RetryInterval milliseconds
 		if runner.RetriesIntervalMilliSecs > 0 && i < runner.MaxRetries {
-			log.Info("Waiting ", strconv.Itoa(runner.RetriesIntervalMilliSecs), "ms before trying again")
 			time.Sleep(time.Millisecond * time.Duration(runner.RetriesIntervalMilliSecs))
 		}
 	}
-
+	log.Info(fmt.Sprintf("%s executor timeout after %v attempts with %v milliseconds wait intervals", runner.LogMsgPrefix, runner.MaxRetries, runner.RetriesIntervalMilliSecs))
 	return err
 }
 
-func (runner *RetryExecutor) getLogRetryMessage(attemptNumber int, err error) (message string) {
-	message = fmt.Sprintf("%sAttempt %v - %s", runner.LogMsgPrefix, attemptNumber, runner.ErrorMessage)
-	if err != nil {
-		message = fmt.Sprintf("%s - %s", message, err.Error())
+func (runner *RetryExecutor) LogRetry(attemptNumber int, err error) {
+	message := fmt.Sprintf("%s(Attempt %v)", runner.LogMsgPrefix, attemptNumber+1)
+	if runner.ErrorMessage != "" {
+		message = fmt.Sprintf("%s - %s", message, runner.ErrorMessage)
 	}
-	return
+	if err != nil {
+		message = fmt.Sprintf("%s: %s", message, err.Error())
+	}
+
+	if err != nil || runner.ErrorMessage != "" {
+		log.Warn(message)
+	} else {
+		log.Info(message)
+	}
+
 }

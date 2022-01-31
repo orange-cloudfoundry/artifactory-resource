@@ -1,6 +1,9 @@
 # github.com/ArthurHlt/go-concourse-helper v0.0.0-20170620092918-e64471d7c7ec
 ## explicit
 github.com/ArthurHlt/go-concourse-helper
+# github.com/CycloneDX/cyclonedx-go v0.4.0
+## explicit; go 1.14
+github.com/CycloneDX/cyclonedx-go
 # github.com/Microsoft/go-winio v0.4.16
 ## explicit; go 1.12
 github.com/Microsoft/go-winio
@@ -156,7 +159,7 @@ github.com/jbenet/go-context/io
 ## explicit; go 1.13
 github.com/jedib0t/go-pretty/v6/table
 github.com/jedib0t/go-pretty/v6/text
-# github.com/jfrog/build-info-go v0.1.6
+# github.com/jfrog/build-info-go v1.0.1
 ## explicit; go 1.15
 github.com/jfrog/build-info-go/build
 github.com/jfrog/build-info-go/entities
@@ -167,7 +170,7 @@ github.com/jfrog/gofrog/io
 github.com/jfrog/gofrog/parallel
 github.com/jfrog/gofrog/stringutils
 github.com/jfrog/gofrog/version
-# github.com/jfrog/jfrog-cli-core/v2 v2.8.3
+# github.com/jfrog/jfrog-cli-core/v2 v2.9.0
 ## explicit; go 1.14
 github.com/jfrog/jfrog-cli-core/v2/artifactory/commands/generic
 github.com/jfrog/jfrog-cli-core/v2/artifactory/commands/utils
@@ -178,11 +181,10 @@ github.com/jfrog/jfrog-cli-core/v2/utils/coreutils
 github.com/jfrog/jfrog-cli-core/v2/utils/ioutils
 github.com/jfrog/jfrog-cli-core/v2/utils/lock
 github.com/jfrog/jfrog-cli-core/v2/utils/log
-github.com/jfrog/jfrog-cli-core/v2/utils/npm
 github.com/jfrog/jfrog-cli-core/v2/xray/commands
 github.com/jfrog/jfrog-cli-core/v2/xray/commands/scan
 github.com/jfrog/jfrog-cli-core/v2/xray/utils
-# github.com/jfrog/jfrog-client-go v1.7.1
+# github.com/jfrog/jfrog-client-go v1.8.0
 ## explicit; go 1.17
 github.com/jfrog/jfrog-client-go/access
 github.com/jfrog/jfrog-client-go/access/auth
@@ -212,7 +214,6 @@ github.com/jfrog/jfrog-client-go/utils/io/content
 github.com/jfrog/jfrog-client-go/utils/io/fileutils
 github.com/jfrog/jfrog-client-go/utils/io/httputils
 github.com/jfrog/jfrog-client-go/utils/log
-github.com/jfrog/jfrog-client-go/utils/version
 github.com/jfrog/jfrog-client-go/xray
 github.com/jfrog/jfrog-client-go/xray/auth
 github.com/jfrog/jfrog-client-go/xray/services
@@ -234,6 +235,9 @@ github.com/klauspost/compress/snappy
 github.com/klauspost/compress/zip
 github.com/klauspost/compress/zstd
 github.com/klauspost/compress/zstd/internal/xxhash
+# github.com/klauspost/cpuid/v2 v2.0.6
+## explicit; go 1.13
+github.com/klauspost/cpuid/v2
 # github.com/klauspost/pgzip v1.2.5
 ## explicit
 github.com/klauspost/pgzip
@@ -257,15 +261,15 @@ github.com/mattn/go-isatty
 # github.com/mattn/go-runewidth v0.0.9
 ## explicit; go 1.9
 github.com/mattn/go-runewidth
-# github.com/mattn/go-shellwords v1.0.3
-## explicit
-github.com/mattn/go-shellwords
 # github.com/mattn/go-tty v0.0.3
 ## explicit; go 1.14
 github.com/mattn/go-tty
 # github.com/mholt/archiver/v3 v3.5.1-0.20210618180617-81fac4ba96e4
 ## explicit; go 1.13
 github.com/mholt/archiver/v3
+# github.com/minio/sha256-simd v1.0.1-0.20210617151322-99e45fae3395
+## explicit; go 1.13
+github.com/minio/sha256-simd
 # github.com/mitchellh/colorstring v0.0.0-20190213212951-d06e56a500db
 ## explicit
 github.com/mitchellh/colorstring

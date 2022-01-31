@@ -5,11 +5,12 @@ go 1.17
 require (
 	github.com/ArthurHlt/go-concourse-helper v0.0.0-20170620092918-e64471d7c7ec
 	github.com/blang/semver v3.5.1+incompatible
-	github.com/jfrog/jfrog-cli-core/v2 v2.8.3
-	github.com/jfrog/jfrog-client-go v1.7.1
+	github.com/jfrog/jfrog-cli-core/v2 v2.9.0
+	github.com/jfrog/jfrog-client-go v1.8.0
 )
 
 require (
+	github.com/CycloneDX/cyclonedx-go v0.4.0 // indirect
 	github.com/Microsoft/go-winio v0.4.16 // indirect
 	github.com/ProtonMail/go-crypto v0.0.0-20210428141323-04723f9f07d7 // indirect
 	github.com/acomagu/bufpipe v1.0.3 // indirect
@@ -31,11 +32,12 @@ require (
 	github.com/imdario/mergo v0.3.12 // indirect
 	github.com/jbenet/go-context v0.0.0-20150711004518-d14ea06fba99 // indirect
 	github.com/jedib0t/go-pretty/v6 v6.2.2 // indirect
-	github.com/jfrog/build-info-go v0.1.6 // indirect
+	github.com/jfrog/build-info-go v1.0.1 // indirect
 	github.com/jfrog/gofrog v1.1.1 // indirect
 	github.com/juju/ansiterm v0.0.0-20180109212912-720a0952cc2a // indirect
 	github.com/kevinburke/ssh_config v0.0.0-20201106050909-4977a11b4351 // indirect
 	github.com/klauspost/compress v1.11.4 // indirect
+	github.com/klauspost/cpuid/v2 v2.0.6 // indirect
 	github.com/klauspost/pgzip v1.2.5 // indirect
 	github.com/lunixbochs/vtclean v0.0.0-20180621232353-2d01aacdc34a // indirect
 	github.com/magiconair/properties v1.8.5 // indirect
@@ -43,9 +45,9 @@ require (
 	github.com/mattn/go-colorable v0.1.7 // indirect
 	github.com/mattn/go-isatty v0.0.12 // indirect
 	github.com/mattn/go-runewidth v0.0.9 // indirect
-	github.com/mattn/go-shellwords v1.0.3 // indirect
 	github.com/mattn/go-tty v0.0.3 // indirect
 	github.com/mholt/archiver/v3 v3.5.1-0.20210618180617-81fac4ba96e4 // indirect
+	github.com/minio/sha256-simd v1.0.1-0.20210617151322-99e45fae3395 // indirect
 	github.com/mitchellh/colorstring v0.0.0-20190213212951-d06e56a500db // indirect
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
 	github.com/mitchellh/mapstructure v1.4.1 // indirect

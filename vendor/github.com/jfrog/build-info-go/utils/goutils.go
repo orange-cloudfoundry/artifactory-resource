@@ -3,17 +3,19 @@ package utils
 import (
 	"errors"
 	"fmt"
-	"github.com/jfrog/gofrog/version"
 	"regexp"
 	"runtime"
 
-	gofrogcmd "github.com/jfrog/gofrog/io"
+	"github.com/jfrog/gofrog/version"
+
 	"io"
 	"io/ioutil"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"strings"
+
+	gofrogcmd "github.com/jfrog/gofrog/io"
 )
 
 const credentialsInUrlRegexp = `(http|https|git)://.+@`
@@ -138,11 +140,11 @@ func GetDependenciesList(projectDir string, log Log) (map[string]bool, error) {
 	if err != nil {
 		return nil, err
 	}
-	output, err := runDependenciesCmd(projectDir, append(cmdArgs, "-f", "{{with .Module}}{{.Path}}@{{.Version}}{{end}}", "all"), log)
+	output, err := runDependenciesCmd(projectDir, append(cmdArgs, "-f", "{{with .Module}}{{.Path}}:{{.Version}}{{end}}", "all"), log)
 	if err != nil {
 		// Errors occurred while running "go list". Run again and this time ignore errors (with '-e')
 		log.Warn("Errors occurred while building the Go dependency tree. The dependency tree may be incomplete:" + err.Error())
-		output, err = runDependenciesCmd(projectDir, append(cmdArgs, "-e", "-f", "{{with .Module}}{{.Path}}@{{.Version}}{{end}}", "all"), log)
+		output, err = runDependenciesCmd(projectDir, append(cmdArgs, "-e", "-f", "{{with .Module}}{{.Path}}:{{.Version}}{{end}}", "all"), log)
 		if err != nil {
 			return nil, err
 		}
@@ -228,52 +230,12 @@ func runDependenciesCmd(projectDir string, commandArgs []string, log Log) (outpu
 
 // Returns the root dir where the go.mod located.
 func GetProjectRoot() (string, error) {
-	// Create a map to store all paths visited, to avoid running in circles.
-	visitedPaths := make(map[string]bool)
 	// Get the current directory.
 	wd, err := os.Getwd()
 	if err != nil {
 		return wd, err
 	}
-	defer os.Chdir(wd)
-
-	// Get the OS root.
-	osRoot := os.Getenv("SYSTEMDRIVE")
-	if osRoot != "" {
-		// If this is a Windows machine:
-		osRoot += "\\"
-	} else {
-		// Unix:
-		osRoot = "/"
-	}
-
-	// Check if the current directory includes the go.mod file. If not, check the parent directory
-	// and so on.
-	for {
-		// If the go.mod is found the current directory, return the path.
-		exists, err := IsFileExists(filepath.Join(wd, "go.mod"))
-		if err != nil || exists {
-			return wd, err
-		}
-
-		// If this the OS root, we can stop.
-		if wd == osRoot {
-			break
-		}
-
-		// Save this path.
-		visitedPaths[wd] = true
-		// CD to the parent directory.
-		wd = filepath.Dir(wd)
-		os.Chdir(wd)
-
-		// If we already visited this directory, it means that there's a loop, and we can stop.
-		if visitedPaths[wd] {
-			return "", errors.New("Could not find go.mod for project.")
-		}
-	}
-
-	return "", errors.New("Could not find go.mod for project.")
+	return FindFileInDirAndParents(wd, "go.mod")
 }
 
 // Go performs password redaction from url since version 1.13.
@@ -396,7 +358,7 @@ func parseGoPath(goPath string) string {
 }
 
 func getGoSum(rootProjectDir string, log Log) (sumFileContent []byte, sumFileStat os.FileInfo, err error) {
-	sumFileExists, err := IsFileExists(filepath.Join(rootProjectDir, "go.sum"))
+	sumFileExists, err := IsFileExists(filepath.Join(rootProjectDir, "go.sum"), true)
 	if err == nil && sumFileExists {
 		log.Debug("Sum file exists:", rootProjectDir)
 		sumFileContent, sumFileStat, err = GetFileContentAndInfo(filepath.Join(rootProjectDir, "go.sum"))
@@ -408,8 +370,8 @@ func listToMap(output string) map[string]bool {
 	lineOutput := strings.Split(output, "\n")
 	mapOfDeps := map[string]bool{}
 	for _, line := range lineOutput {
-		// The expected syntax : github.com/name@v1.2.3
-		if len(strings.Split(line, "@")) == 2 && mapOfDeps[line] == false {
+		// The expected syntax : github.com/name:v1.2.3
+		if len(strings.Split(line, ":")) == 2 && mapOfDeps[line] == false {
 			mapOfDeps[line] = true
 			continue
 		}
@@ -422,7 +384,7 @@ func graphToMap(output string) map[string][]string {
 	mapOfDeps := map[string][]string{}
 	for _, line := range lineOutput {
 		// The expected syntax : github.com/parentname@v1.2.3 github.com/childname@v1.2.3
-		line = strings.ReplaceAll(line, "@v", ":")
+		line = strings.ReplaceAll(line, "@v", ":v")
 		splitLine := strings.Split(line, " ")
 		if len(splitLine) == 2 {
 			parent := splitLine[0]

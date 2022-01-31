@@ -17,7 +17,7 @@ const (
 	GradleExtractorFileName          = "build-info-extractor-gradle-%s-uber.jar"
 	gradleInitScriptTemplate         = "gradle.init"
 	GradleExtractorRemotePath        = "org/jfrog/buildinfo/build-info-extractor-gradle/%s"
-	GradleExtractorDependencyVersion = "4.25.0"
+	GradleExtractorDependencyVersion = "4.26.0"
 )
 
 type GradleModule struct {
@@ -59,7 +59,7 @@ func newGradleModule(containingBuild *Build, srcPath string) (*GradleModule, err
 		containingBuild: containingBuild,
 		gradleExtractorDetails: &gradleExtractorDetails{
 			localPath: extractorLocalPath,
-			tasks:     []string{"aP"},
+			tasks:     []string{"artifactoryPublish"},
 			propsDir:  filepath.Join(containingBuild.tempDirPath, PropertiesTempfolderName),
 			props:     map[string]string{},
 		},
@@ -110,8 +110,7 @@ func (gm *GradleModule) createGradleRunConfig() (*gradleRunConfig, error) {
 		return nil, err
 	}
 	buildInfoPath, err := createEmptyBuildInfoFile(gm.containingBuild)
-	gm.gradleExtractorDetails.props[buildInfoPathKey] = buildInfoPath
-	extractorPropsFile, err := utils.CreateExtractorPropsFile(gm.gradleExtractorDetails.propsDir, gm.gradleExtractorDetails.props)
+	extractorPropsFile, err := utils.CreateExtractorPropsFile(gm.gradleExtractorDetails.propsDir, buildInfoPath, gm.containingBuild.buildName, gm.containingBuild.buildNumber, gm.containingBuild.projectKey, gm.gradleExtractorDetails.props)
 	if err != nil {
 		return nil, err
 	}
@@ -138,7 +137,7 @@ func getInitScript(gradleDependenciesDir, gradlePluginFilename string) (string, 
 	}
 	initScriptPath := filepath.Join(gradleDependenciesDir, gradleInitScriptTemplate)
 
-	exists, err := utils.IsFileExists(initScriptPath)
+	exists, err := utils.IsFileExists(initScriptPath, true)
 	if exists || err != nil {
 		return initScriptPath, err
 	}
