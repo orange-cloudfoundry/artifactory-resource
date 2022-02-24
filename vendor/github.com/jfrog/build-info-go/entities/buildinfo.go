@@ -7,14 +7,16 @@ import (
 	"github.com/pkg/errors"
 
 	cdx "github.com/CycloneDX/cyclonedx-go"
+	"github.com/jfrog/build-info-go/utils"
 	"github.com/jfrog/gofrog/stringutils"
 )
 
 type ModuleType string
 
 const (
-	TimeFormat         = "2006-01-02T15:04:05.000-0700"
-	BuildInfoEnvPrefix = "buildInfo.env."
+	TimeFormat           = "2006-01-02T15:04:05.000-0700"
+	BuildInfoEnvPrefix   = "buildInfo.env."
+	RequestedByMaxLength = 10
 
 	// Build type
 	Build ModuleType = "build"
@@ -346,7 +348,7 @@ type Module struct {
 }
 
 func (m *Module) isEqual(other Module) bool {
-	return m.Id == other.Id && m.Type == other.Type && isEqualArtifactSlices(m.Artifacts, other.Artifacts) && isEqualDependencySlices(m.Dependencies, other.Dependencies)
+	return m.Id == other.Id && m.Type == other.Type && m.Checksum.IsEqual(other.Checksum) && isEqualArtifactSlices(m.Artifacts, other.Artifacts) && isEqualDependencySlices(m.Dependencies, other.Dependencies)
 }
 
 func IsEqualModuleSlices(a, b []Module) bool {
@@ -379,7 +381,7 @@ type Artifact struct {
 }
 
 func (a *Artifact) isEqual(other Artifact) bool {
-	return a.Name == other.Name && a.Path == other.Path && a.Type == other.Type && a.Sha1 == other.Sha1 && a.Md5 == other.Md5 && a.Sha256 == other.Sha256
+	return a.Name == other.Name && a.Path == other.Path && a.Type == other.Type && a.Checksum.IsEqual(other.Checksum)
 }
 
 func isEqualArtifactSlices(a, b []Artifact) bool {
@@ -409,7 +411,11 @@ type Dependency struct {
 }
 
 func (d *Dependency) IsEqual(other Dependency) bool {
-	return d.Id == other.Id && d.Type == other.Type && d.Sha1 == other.Sha1 && d.Md5 == other.Md5 && d.Sha256 == other.Sha256
+	return d.Id == other.Id && d.Type == other.Type && d.Checksum.IsEqual(other.Checksum) && utils.IsEqualSlices(d.Scopes, other.Scopes) && utils.IsEqual2DSlices(d.RequestedBy, other.RequestedBy)
+}
+
+func IsEqualDependencySlices(a, b []Dependency) bool {
+	return IsEqualModuleSlices([]Module{{Dependencies: a}}, []Module{{Dependencies: b}})
 }
 
 func isEqualDependencySlices(a, b []Dependency) bool {
@@ -468,6 +474,10 @@ type Checksum struct {
 
 func (c *Checksum) IsEmpty() bool {
 	return c.Md5 == "" && c.Sha1 == "" && c.Sha256 == ""
+}
+
+func (c *Checksum) IsEqual(other Checksum) bool {
+	return c.Md5 == other.Md5 && c.Sha1 == other.Sha1 && c.Sha256 == other.Sha256
 }
 
 type Env map[string]string
