@@ -3,7 +3,7 @@ package coreutils
 import (
 	"bytes"
 	"fmt"
-	"golang.org/x/crypto/ssh/terminal"
+	"golang.org/x/term"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -20,7 +20,6 @@ import (
 
 const (
 	GettingStartedGuideUrl = "https://github.com/jfrog/jfrog-cli/blob/v2/guides/getting-started-with-jfrog-using-the-cli.md"
-	GitHubIssuesUrl        = "https://github.com/jfrog/jfrog-cli/issues"
 )
 
 // Error modes (how should the application behave when the CheckError function is invoked):
@@ -208,7 +207,7 @@ func GetWorkingDirectory() (string, error) {
 
 // IsTerminal checks whether stdout is a terminal.
 func IsTerminal() bool {
-	return terminal.IsTerminal(int(os.Stdout.Fd()))
+	return term.IsTerminal(int(os.Stdout.Fd()))
 }
 
 type Credentials interface {
@@ -400,11 +399,4 @@ func SetCliExecutableName(executableName string) {
 
 func GetCliExecutableName() string {
 	return cliExecutableName
-}
-
-func GetFeedbackMessage() string {
-	return PrintBold("Your feedback is important.") + "\n" +
-		"We'd love to get your feedback and answer any questions you may have.\n" +
-		"Communicate with us by opening a GitHub issue -\n" +
-		PrintLink(GitHubIssuesUrl)
 }
