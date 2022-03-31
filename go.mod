@@ -6,7 +6,7 @@ require (
 	github.com/ArthurHlt/go-concourse-helper v0.0.0-20170620092918-e64471d7c7ec
 	github.com/blang/semver v3.5.1+incompatible
 	github.com/jfrog/jfrog-cli-core/v2 v2.11.3
-	github.com/jfrog/jfrog-client-go v1.11.3
+	github.com/jfrog/jfrog-client-go v1.11.4
 )
 
 require (
@@ -25,14 +25,14 @@ require (
 	github.com/go-git/gcfg v1.5.0 // indirect
 	github.com/go-git/go-billy/v5 v5.3.1 // indirect
 	github.com/go-git/go-git/v5 v5.4.2 // indirect
-	github.com/golang-jwt/jwt/v4 v4.3.0 // indirect
+	github.com/golang-jwt/jwt/v4 v4.4.1 // indirect
 	github.com/golang/snappy v0.0.2 // indirect
 	github.com/gookit/color v1.5.0 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/imdario/mergo v0.3.12 // indirect
 	github.com/jbenet/go-context v0.0.0-20150711004518-d14ea06fba99 // indirect
 	github.com/jedib0t/go-pretty/v6 v6.2.2 // indirect
-	github.com/jfrog/build-info-go v1.2.1 // indirect
+	github.com/jfrog/build-info-go v1.2.2 // indirect
 	github.com/jfrog/gofrog v1.1.1 // indirect
 	github.com/juju/ansiterm v0.0.0-20180109212912-720a0952cc2a // indirect
 	github.com/kevinburke/ssh_config v0.0.0-20201106050909-4977a11b4351 // indirect
@@ -72,7 +72,7 @@ require (
 	github.com/xanzy/ssh-agent v0.3.1 // indirect
 	github.com/xi2/xz v0.0.0-20171230120015-48954b6210f8 // indirect
 	github.com/xo/terminfo v0.0.0-20210125001918-ca9a967f8778 // indirect
-	golang.org/x/crypto v0.0.0-20220307211146-efcb8507fb70 // indirect
+	golang.org/x/crypto v0.0.0-20220321153916-2c7772ba3064 // indirect
 	golang.org/x/net v0.0.0-20211112202133-69e39bad7dc2 // indirect
 	golang.org/x/sys v0.0.0-20210630005230-0f9fa26af87c // indirect
 	golang.org/x/term v0.0.0-20210927222741-03fcf44c2211 // indirect
