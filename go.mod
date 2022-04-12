@@ -5,7 +5,7 @@ go 1.17
 require (
 	github.com/ArthurHlt/go-concourse-helper v0.0.0-20170620092918-e64471d7c7ec
 	github.com/blang/semver v3.5.1+incompatible
-	github.com/jfrog/jfrog-cli-core/v2 v2.12.2
+	github.com/jfrog/jfrog-cli-core/v2 v2.12.3
 	github.com/jfrog/jfrog-client-go v1.12.0
 )
 
