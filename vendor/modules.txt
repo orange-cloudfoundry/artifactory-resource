@@ -4,11 +4,11 @@ github.com/ArthurHlt/go-concourse-helper
 # github.com/CycloneDX/cyclonedx-go v0.5.1
 ## explicit; go 1.15
 github.com/CycloneDX/cyclonedx-go
-# github.com/Microsoft/go-winio v0.5.0
-## explicit; go 1.12
+# github.com/Microsoft/go-winio v0.5.2
+## explicit; go 1.13
 github.com/Microsoft/go-winio
 github.com/Microsoft/go-winio/pkg/guid
-# github.com/ProtonMail/go-crypto v0.0.0-20210428141323-04723f9f07d7
+# github.com/ProtonMail/go-crypto v0.0.0-20220407094043-a94812496cf5
 ## explicit; go 1.13
 github.com/ProtonMail/go-crypto/bitcurves
 github.com/ProtonMail/go-crypto/brainpool
@@ -29,7 +29,7 @@ github.com/ProtonMail/go-crypto/openpgp/s2k
 # github.com/acomagu/bufpipe v1.0.3
 ## explicit; go 1.12
 github.com/acomagu/bufpipe
-# github.com/andybalholm/brotli v1.0.1
+# github.com/andybalholm/brotli v1.0.4
 ## explicit; go 1.12
 github.com/andybalholm/brotli
 # github.com/blang/semver v3.5.1+incompatible
@@ -59,8 +59,8 @@ github.com/dsnet/compress/bzip2/internal/sais
 github.com/dsnet/compress/internal
 github.com/dsnet/compress/internal/errors
 github.com/dsnet/compress/internal/prefix
-# github.com/emirpasic/gods v1.12.0
-## explicit
+# github.com/emirpasic/gods v1.16.0
+## explicit; go 1.2
 github.com/emirpasic/gods/containers
 github.com/emirpasic/gods/lists
 github.com/emirpasic/gods/lists/arraylist
@@ -131,7 +131,7 @@ github.com/go-git/go-git/v5/utils/merkletrie/noder
 # github.com/golang-jwt/jwt/v4 v4.4.1
 ## explicit; go 1.16
 github.com/golang-jwt/jwt/v4
-# github.com/golang/snappy v0.0.3
+# github.com/golang/snappy v0.0.4
 ## explicit
 github.com/golang/snappy
 # github.com/gookit/color v1.5.0
@@ -221,21 +221,22 @@ github.com/jfrog/jfrog-client-go/xray
 github.com/jfrog/jfrog-client-go/xray/auth
 github.com/jfrog/jfrog-client-go/xray/services
 github.com/jfrog/jfrog-client-go/xray/services/utils
-# github.com/kevinburke/ssh_config v0.0.0-20201106050909-4977a11b4351
+# github.com/kevinburke/ssh_config v1.2.0
 ## explicit
 github.com/kevinburke/ssh_config
-# github.com/klauspost/compress v1.11.4
-## explicit; go 1.13
+# github.com/klauspost/compress v1.15.1
+## explicit; go 1.15
+github.com/klauspost/compress
 github.com/klauspost/compress/flate
 github.com/klauspost/compress/fse
 github.com/klauspost/compress/gzip
 github.com/klauspost/compress/huff0
-github.com/klauspost/compress/snappy
+github.com/klauspost/compress/internal/snapref
 github.com/klauspost/compress/zip
 github.com/klauspost/compress/zstd
 github.com/klauspost/compress/zstd/internal/xxhash
-# github.com/klauspost/cpuid/v2 v2.0.6
-## explicit; go 1.13
+# github.com/klauspost/cpuid/v2 v2.0.12
+## explicit; go 1.15
 github.com/klauspost/cpuid/v2
 # github.com/klauspost/pgzip v1.2.5
 ## explicit
@@ -257,7 +258,7 @@ github.com/mattn/go-isatty
 # github.com/mattn/go-runewidth v0.0.13
 ## explicit; go 1.9
 github.com/mattn/go-runewidth
-# github.com/mattn/go-tty v0.0.3
+# github.com/mattn/go-tty v0.0.4
 ## explicit; go 1.14
 github.com/mattn/go-tty
 # github.com/mholt/archiver/v3 v3.5.1
@@ -275,7 +276,7 @@ github.com/mitchellh/go-homedir
 # github.com/mitchellh/mapstructure v1.4.3
 ## explicit; go 1.14
 github.com/mitchellh/mapstructure
-# github.com/nwaples/rardecode v1.1.0
+# github.com/nwaples/rardecode v1.1.3
 ## explicit
 github.com/nwaples/rardecode
 # github.com/onsi/ginkgo v1.16.5
@@ -285,7 +286,7 @@ github.com/nwaples/rardecode
 # github.com/pelletier/go-toml v1.9.4
 ## explicit; go 1.12
 github.com/pelletier/go-toml
-# github.com/pierrec/lz4/v4 v4.1.2
+# github.com/pierrec/lz4/v4 v4.1.14
 ## explicit; go 1.14
 github.com/pierrec/lz4/v4
 github.com/pierrec/lz4/v4/internal/lz4block
@@ -304,10 +305,10 @@ github.com/rivo/uniseg
 # github.com/russross/blackfriday/v2 v2.1.0
 ## explicit
 github.com/russross/blackfriday/v2
-# github.com/sergi/go-diff v1.1.0
+# github.com/sergi/go-diff v1.2.0
 ## explicit; go 1.12
 github.com/sergi/go-diff/diffmatchpatch
-# github.com/spf13/afero v1.6.0
+# github.com/spf13/afero v1.8.2
 ## explicit; go 1.13
 github.com/spf13/afero
 github.com/spf13/afero/mem
@@ -331,7 +332,7 @@ github.com/spf13/viper/internal/encoding/yaml
 # github.com/subosito/gotenv v1.2.0
 ## explicit
 github.com/subosito/gotenv
-# github.com/ulikunitz/xz v0.5.9
+# github.com/ulikunitz/xz v0.5.10
 ## explicit; go 1.12
 github.com/ulikunitz/xz
 github.com/ulikunitz/xz/internal/hash
@@ -349,7 +350,7 @@ github.com/xi2/xz
 # github.com/xo/terminfo v0.0.0-20210125001918-ca9a967f8778
 ## explicit; go 1.15
 github.com/xo/terminfo
-# golang.org/x/crypto v0.0.0-20220321153916-2c7772ba3064
+# golang.org/x/crypto v0.0.0-20220411220226-7b82a4e95df4
 ## explicit; go 1.17
 golang.org/x/crypto/blowfish
 golang.org/x/crypto/cast5
@@ -369,12 +370,12 @@ golang.org/x/crypto/ssh
 golang.org/x/crypto/ssh/agent
 golang.org/x/crypto/ssh/internal/bcrypt_pbkdf
 golang.org/x/crypto/ssh/knownhosts
-# golang.org/x/net v0.0.0-20211112202133-69e39bad7dc2
+# golang.org/x/net v0.0.0-20220412020605-290c469a71a5
 ## explicit; go 1.17
 golang.org/x/net/context
 golang.org/x/net/internal/socks
 golang.org/x/net/proxy
-# golang.org/x/sys v0.0.0-20211210111614-af8b64212486
+# golang.org/x/sys v0.0.0-20220412211240-33da011f77ad
 ## explicit; go 1.17
 golang.org/x/sys/cpu
 golang.org/x/sys/execabs
@@ -382,14 +383,14 @@ golang.org/x/sys/internal/unsafeheader
 golang.org/x/sys/plan9
 golang.org/x/sys/unix
 golang.org/x/sys/windows
-# golang.org/x/term v0.0.0-20210927222741-03fcf44c2211
+# golang.org/x/term v0.0.0-20220411215600-e5f449aeb171
 ## explicit; go 1.17
 golang.org/x/term
 # golang.org/x/text v0.3.7
 ## explicit; go 1.17
 golang.org/x/text/transform
 golang.org/x/text/unicode/norm
-# gopkg.in/ini.v1 v1.66.2
+# gopkg.in/ini.v1 v1.66.4
 ## explicit
 gopkg.in/ini.v1
 # gopkg.in/warnings.v0 v0.1.2
