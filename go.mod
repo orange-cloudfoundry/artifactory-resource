@@ -5,8 +5,8 @@ go 1.18
 require (
 	github.com/ArthurHlt/go-concourse-helper v0.0.0-20170620092918-e64471d7c7ec
 	github.com/blang/semver v3.5.1+incompatible
-	github.com/jfrog/jfrog-cli-core/v2 v2.15.2
-	github.com/jfrog/jfrog-client-go v1.13.1
+	github.com/jfrog/jfrog-cli-core/v2 v2.16.0
+	github.com/jfrog/jfrog-client-go v1.14.0
 )
 
 require (
@@ -32,8 +32,8 @@ require (
 	github.com/imdario/mergo v0.3.12 // indirect
 	github.com/jbenet/go-context v0.0.0-20150711004518-d14ea06fba99 // indirect
 	github.com/jedib0t/go-pretty/v6 v6.3.0 // indirect
-	github.com/jfrog/build-info-go v1.2.6 // indirect
-	github.com/jfrog/gofrog v1.1.1 // indirect
+	github.com/jfrog/build-info-go v1.3.0 // indirect
+	github.com/jfrog/gofrog v1.1.2 // indirect
 	github.com/kevinburke/ssh_config v1.2.0 // indirect
 	github.com/klauspost/compress v1.15.1 // indirect
 	github.com/klauspost/cpuid/v2 v2.0.12 // indirect
