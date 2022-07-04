@@ -6,7 +6,7 @@ require (
 	github.com/ArthurHlt/go-concourse-helper v0.0.0-20170620092918-e64471d7c7ec
 	github.com/blang/semver v3.5.1+incompatible
 	github.com/jfrog/jfrog-cli-core/v2 v2.16.0
-	github.com/jfrog/jfrog-client-go v1.14.0
+	github.com/jfrog/jfrog-client-go v1.15.0
 )
 
 require (
@@ -21,6 +21,7 @@ require (
 	github.com/cpuguy83/go-md2man/v2 v2.0.2 // indirect
 	github.com/dsnet/compress v0.0.2-0.20210315054119-f66993602bf5 // indirect
 	github.com/emirpasic/gods v1.18.1 // indirect
+	github.com/forPelevin/gomoji v1.1.4 // indirect
 	github.com/fsnotify/fsnotify v1.5.4 // indirect
 	github.com/go-git/gcfg v1.5.0 // indirect
 	github.com/go-git/go-billy/v5 v5.3.1 // indirect
@@ -32,8 +33,8 @@ require (
 	github.com/imdario/mergo v0.3.13 // indirect
 	github.com/jbenet/go-context v0.0.0-20150711004518-d14ea06fba99 // indirect
 	github.com/jedib0t/go-pretty/v6 v6.3.3 // indirect
-	github.com/jfrog/build-info-go v1.3.0 // indirect
-	github.com/jfrog/gofrog v1.1.2 // indirect
+	github.com/jfrog/build-info-go v1.4.0 // indirect
+	github.com/jfrog/gofrog v1.2.0 // indirect
 	github.com/kevinburke/ssh_config v1.2.0 // indirect
 	github.com/klauspost/compress v1.15.7 // indirect
 	github.com/klauspost/cpuid/v2 v2.0.14 // indirect
