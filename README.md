@@ -4,7 +4,23 @@ A concourse resource for push and download files from/to artifactory with semver
 
 ## Source Configuration
 
-* `url`: *Required.* Url which target your artifactory.
+* `url`: *Required.* Artifactory base url
+
+* `repository`: *Required.* Directory to watch, read and write files
+
+* `filter`: *Optional.* Filter files in repository that match given regxp
+  * use named groups to extract content from filename and customize version sorting:
+    * `?P<version>`: sort as semver
+    * `?P<asc>`:  sort alphabetically, asc
+    * `?P<desc>`: sort alphabetically, desc
+  * when property **is not set**:
+    * all files in given repository path are considered
+    * artifactory's last modified timestamp is used for versioning
+  * when property **is set**:
+    * only files matching filter regex are considered
+    * given `<version>`, `asc` or `desc` named groups are used for versioning
+    * artifactory's last modified timestamp is used when none of `version`, `asc` or `desc`
+      are present in filter named groups
 
 * `user`: *Optional.* Artifactory username.
 
@@ -12,29 +28,28 @@ A concourse resource for push and download files from/to artifactory with semver
 
 * `ssh_key`: *Optional.* Artifactory ssh key.
 
-* `pattern`: *Required for check.* Pattern to use to find file (you can use glob format or regex if `regexp` set to `true`).
-
-* `props`: *Optional.* List of properties in the form of "key1=value1;key2=value2,..." Only artifacts with these properties will be downloaded.
-
-* `recursive`: *Default: true* Set to false if you do not wish to include the download of artifacts inside sub-folders in Artifactory.
-
-* `flat`: *Default: false* Set to true if you do not wish to have the Artifactory repository path structure created locally for your downloaded files.
-
-* `regexp`: *Default: false* If true, `pattern` will interpret as a regular expression.
-
-* `version`: *Optional.* If set resource will filter files found with matching semver set (e.g.: `0.5.x`)
-
-* `log_level`: *Default: `INFO`* Set the verbosity of logs, other values are: `ERROR`, `WARN`, `DEBUG`.
+* `log_level`: *Default: `ERROR`* Set the verbosity of logs, other values are: `ERROR`, `WARN`, `DEBUG`.
 
 * `ca_cert`: *Optional.* Pass a certificate to access to your artifactory.
 
+* `props`: *Optional.* Set of props to filter in check command and always include for out command
+  given with the following format:
+  ```yaml
+  prop1:
+    - value1
+    - value2
+  prop2: [ "value" ]
+  ```
 
+* `threads`: *Default: `3`* Number of transfer threads for in and out commands.
 
 ## Behavior
 
 ### `check`: Check for new files.
 
-Find all files matching the pattern and filter by their version if `version` is set.
+Find all files in `repository` matching the `filter` ordered according to used named groups
+`version` (semver), `asc` (alphabetically), `desc` (reverse alphabetically) or ordered by the
+modified timestamp if no group is given.
 
 
 ### `in`: Download a file from Artifactory
@@ -42,32 +57,31 @@ Find all files matching the pattern and filter by their version if `version` is 
 
 #### Parameters
 
-* `filename`: *Optional.* If set filename for the downloaded file will be overwritten by this name.
+* `min_split`: *Default: 5120* The minimum size permitted for splitting. Files larger than the
+  specified number will be split into equally sized `split_count` segments. Any files smaller than
+  the specified number will be downloaded in a single thread. If set to -1, files are not split.
 
-* `not_flat`: *Optional.* If true artifacts are downloaded to the target path in the file system while maintaining their hierarchy in the source repository.
+* `split_count`: *Default: 3* The number of segments into which each file should be split for
+  download (provided the artifact is over --min-split in size). To download each file in a
+  single thread, set to 0.
 
-* `min_split`: *Default: 5120* The minimum size permitted for splitting. Files larger than the specified number will be split into equally sized `split_count` segments. 
-Any files smaller than the specified number will be downloaded in a single thread. If set to -1, files are not split.
-
-* `split_count`: *Default: 3* The number of segments into which each file should be split for download (provided the artifact is over --min-split in size). To download each file in a single thread, set to 0.
-
-* `props_filename`: *Optional.* Path to file where Artifactory properties of downloaded file will be stored. File will contain whole REST API response and properties values can be extracted with other tools like jq. If parameter is empty - no request to Artifactory will be made.
+* `props_filename`: *Optional.* When given, download properties associated to file and write it
+  to given filename. File is written as YAML with the same format as `source.props`.
 
 ### `out`: Upload a file to artifactory.
 
 #### Parameters
 
-* `target`: *Required.* An artifactory repository in the format of `[repository_name]/[repository_path]`.
+* `directory`: *Required.* Upload files from given directory that match `source.filter`. When
+  multiple files match, they are all uploaded and version and meta refers to last matching file.
 
-* `source`: *Required.* Pattern which target a set of files or a file (can use glob format).
+* `props`: *Optional.* Additional properties to add to uploaded file merged with `source.props`.
+  Properties take precedence over `source.props` on collisions and given with the same format
+  as `source.props`
 
-* `threads`: *Default: 3* The number of parallel threads that should be used to download where each thread downloads a single artifact at a time.
-
-* `explode_archive`: *Default: false* If true, the command will extract an archive containing multiple artifacts after it is deployed to Artifactory, while maintaining the archive's file structure.
-
-* `props`: *Optional.* List of properties in the form of "key1=value1;key2=value2,...". Those properties will be added to uploaded file. If both `props` and `props_from_file` are set values will be merged.
-
-* `props_from_file`: *Optional.* Path to file which will contain list of properties. List should be in the form of "key1=value1;key2=value2,...". Those properties will be added to uploaded file. If both `props` and `props_from_file` are set values will be merged.
+* `props_filename`: *Optional.* Load additional properties from given yaml file merged with
+  `source.props` and `params.props`. Defined properties takes precedence on collisions and given
+  with the same format as `source.props`.
 
 ## Example
 
@@ -77,6 +91,7 @@ resource_types:
   type: docker-image
   source:
     repository: orangeopensource/artifactory-resource
+
 resources:
 - name: artifactory-resource
   type: artifactory
@@ -84,16 +99,30 @@ resources:
     url: https://my.artifactory.com
     user: myuser
     password: mypassword
-    pattern: "bosh_release/**/credhub-*.tgz"
-    version: "0.5.x"
+    repository: bosh_release/credhub/
+    filter: "credhub-v(?P<version>)\\.tgz"
 
 jobs:
 - name: build-rootfs
   plan:
-  - get: artifactory-resource
-    filename: credhub.tgz
-  - put: artifactory-resource
+  -
+    # will fetch last available version of /bosh_release/credhub/credhub-*.tgz
+    # and will download properties in ./spec.yml
+    get: artifactory-resource
     params:
-      target: bosh_release/credhub/
-      source: credhub.tgz
+      props_filename: spec.yml
+  -
+    # some task that create ./output/credhub-v8.9.10.tgz
+    task: { ... }
+  -
+    # will upload ./output/credhub-v8.9.10.tgz to /bosh_release/credhub/credhub-v8.9.10.tgz
+    # and will set property built_by=concourse
+    put: artifactory-resource
+    params:
+      directory: ./output/
+      props_filename: inject.yml
+      props:
+        built_by:
+        - concourse
+
 ```

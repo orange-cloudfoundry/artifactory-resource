@@ -1,150 +1,185 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"os"
+	"path/filepath"
 	"time"
 
-	"strings"
-
-	chelper "github.com/ArthurHlt/go-concourse-helper"
 	"github.com/jfrog/jfrog-cli-core/v2/artifactory/commands/generic"
 	artutils "github.com/jfrog/jfrog-cli-core/v2/artifactory/utils"
 	"github.com/jfrog/jfrog-cli-core/v2/common/spec"
 	"github.com/jfrog/jfrog-cli-core/v2/utils/config"
 	"github.com/orange-cloudfoundry/artifactory-resource/model"
 	"github.com/orange-cloudfoundry/artifactory-resource/utils"
+	"gopkg.in/yaml.v3"
 )
 
 type Out struct {
-	cmd        *chelper.OutCommand
 	source     model.Source
 	params     model.OutParams
 	artdetails *config.ServerDetails
-	spec       *spec.SpecFiles
 }
 
 func main() {
+	request := model.OutRequest{}.Default()
+
+	err := utils.RetrieveJsonRequest(&request)
+	if err != nil {
+		utils.Fatal("error when parsing object given by concourse: " + err.Error())
+	}
+	utils.OverrideLoggerArtifactory(request.Source.LogLevel)
+
 	Out := &Out{
-		cmd: chelper.NewOutCommand(),
+		source: request.Source,
+		params: request.Params,
 	}
 	Out.Run()
 }
 
 func (c *Out) Run() {
-	cmd := c.cmd
-	msg := c.cmd.Messager()
-	err := cmd.Source(&c.source)
-
-	msg.FatalIf("Error when parsing source from concourse", err)
-	utils.OverrideLoggerArtifactory(c.source.LogLevel)
-
-	err = cmd.Params(&c.params)
-	msg.FatalIf("Error when parsing params from concourse", err)
-	if c.params.Target == "" {
-		msg.Fatal("You must set a target (in the form of: [repository_name]/[repository_path]) in out parameter.")
-	}
-
-	c.defaultingParams()
-
-	err = utils.CheckReqParams(c.source)
+	err := utils.CheckReqParams(c.source)
 	if err != nil {
-		msg.Fatal(err.Error())
+		utils.Fatal(err.Error())
 	}
+
 	c.artdetails, err = utils.RetrieveArtDetails(c.source)
-	if err != nil && !strings.Contains(err.Error(), "You must provide a pattern") {
-		msg.Fatal(err.Error())
+	if err != nil {
+		utils.Fatal(err.Error())
 	}
-	src := c.folderPath(c.params.Source)
-	target := utils.AddTrailingSlashIfNeeded(c.params.Target)
 
+	c.source.Repository = utils.AddTrailingSlashIfNeeded(c.source.Repository)
 	props := c.mergeProps()
+	toUpload := c.getUploadFiles()
+	spec := c.filesToSpec(toUpload, props)
 
-	builder := spec.NewBuilder()
-	c.spec = builder.
-		Pattern(src).
-		Target(target).
-		Props(props).
-		Regexp(c.source.Regexp).
-		Recursive(true).
-		Flat(true).
-		BuildSpec()
-
-	msg.Log("[blue]Uploading[reset] file(s) to target '[blue]%s[reset]'...", target)
+	// upload
+	for _, s := range spec.Files {
+		utils.Log("uploading '%s' to '%s'...", s.Pattern, c.source.Repository)
+	}
 	startDl := time.Now()
 	origStdout := os.Stdout
 	os.Stdout = os.Stderr
-	totalUploaded, totalFailed, err := c.Upload()
+	meta, err := c.upload(spec)
 	os.Stdout = origStdout
-	msg.FatalIf("Error when uploading", err)
-	if totalFailed > 0 {
-		msg.Fatal(fmt.Sprintf("%d files failed to upload", totalFailed))
+	if err != nil {
+		utils.Fatal("error when uploading: %s", err)
 	}
 	elapsed := time.Since(startDl)
-	msg.Log("[blue]Finished uploading[reset] file(s) to target '[blue]%s[reset]'.", target)
+	utils.Log("finished uploading files to '%s'", c.source.Repository)
 
-	json.NewEncoder(os.Stdout).Encode(chelper.Response{
-		Version: chelper.Version{
-			BuildNumber: src,
-		},
-		Metadata: []chelper.Metadata{
-			{
-				Name:  "total_uploaded",
-				Value: fmt.Sprintf("%d", totalUploaded),
-			},
-			{
-				Name:  "upload_time",
-				Value: elapsed.String(),
-			},
-		},
+	// use last file as version info
+	filter := utils.NewFilter(c.source.Filter)
+	ts := time.Now().Format(utils.TS_FORMAT)
+	version := model.Version{}
+	for _, file := range toUpload {
+		_, key := filter.Match(file, ts)
+		version = model.Version{
+			File: filepath.Join(c.source.Repository, file),
+			Version: key,
+		}
+	}
+
+	meta = append(meta, model.Metadata{
+		Name:  "elapsed",
+		Value: elapsed.String(),
+	})
+
+	utils.SendJsonResponse(model.Response{
+		Metadata: meta,
+		Version: version,
 	})
 }
 
-func (c *Out) defaultingParams() {
-	if c.params.Threads <= 0 {
-		c.params.Threads = 3
-	}
-}
 
-func (c Out) folderPath(p string) string {
-	src := utils.AddTrailingSlashIfNeeded(c.cmd.SourceFolder())
+
+func (c Out) getFilePath(p string) string {
+	src := utils.AddTrailingSlashIfNeeded(utils.BaseDirectory())
 	src += utils.RemoveStartingSlashIfNeeded(p)
 	return src
 }
 
-func (c Out) Upload() (int, int, error) {
+func (c Out) upload(spec *spec.SpecFiles) ([]model.Metadata, error) {
 	cmd := generic.NewUploadCommand()
 	cmd.SetUploadConfiguration(&artutils.UploadConfiguration{
-		Threads:        c.params.Threads,
-		ExplodeArchive: c.params.ExplodeArchive,
+		Threads: c.source.Threads,
 	}).SetBuildConfiguration(&artutils.BuildConfiguration{})
+
 	cmd.
 		SetServerDetails(c.artdetails).
-		SetSpec(c.spec)
+		SetDetailedSummary(true).
+		SetSpec(spec)
 
 	err := cmd.Run()
-	return cmd.Result().SuccessCount(), cmd.Result().FailCount(), err
+	if err != nil {
+		return nil, err
+	}
+
+	return utils.TransfertDetailsToMeta(cmd.Result()), nil
 }
 
-func (c Out) mergeProps() string {
-	msg := c.cmd.Messager()
-	props := ""
-	if c.params.Props != "" {
-		props = c.params.Props
-	}
-	if c.params.Props != "" && c.params.PropsFromFile != "" {
-		props += ";"
-	}
-	if c.params.PropsFromFile != "" {
-		dat, err := ioutil.ReadFile(c.folderPath(c.params.PropsFromFile))
-		if err != nil {
-			msg.Logln("Could not read file with props from path: %s; %v", c.params.PropsFromFile, err)
-			msg.Fatal("error opening file")
-		}
-		props += string(dat)
+func (c Out) getUploadFiles() []string {
+	files, err := ioutil.ReadDir(filepath.Join(utils.BaseDirectory(), c.params.Directory))
+	if err != nil {
+		utils.Fatal(fmt.Sprintf("could not list files in directory '%s': %s", c.params.Directory, err))
 	}
 
+	filter := utils.NewFilter(c.source.Filter)
+	ts := time.Now().Format(utils.TS_FORMAT)
+	res := []string{}
+	for _, file := range files {
+		match, _ := filter.Match(file.Name(), ts)
+		if !match {
+			continue
+		}
+		res = append(res, file.Name())
+	}
+
+	if len(res) == 0 {
+		utils.Fatal(fmt.Sprintf("could find any file matching filter '%s' in directory '%s'", c.source.Filter, c.params.Directory))
+	}
+
+	return res
+}
+
+func (c Out) filesToSpec(files []string, props model.Properties) *spec.SpecFiles {
+	res := &spec.SpecFiles{
+		Files: []spec.File{},
+	}
+
+	for _, file := range files {
+		absPath := filepath.Join(utils.BaseDirectory(), c.params.Directory, file)
+		builder := spec.NewBuilder()
+		spec := builder.
+			Pattern(absPath).
+			Target(c.source.Repository).
+			Props(props.String()).
+			Flat(true).
+			BuildSpec()
+		res.Files = append(res.Files, spec.Files...)
+	}
+
+	return res
+}
+
+func (c Out) mergeProps() model.Properties {
+	props := model.Properties{}
+	props.Merge(c.source.Props)
+	props.Merge(c.params.Props)
+
+	if c.params.PropsFilename != "" {
+		fProps := model.Properties{}
+
+		content, err := ioutil.ReadFile(c.getFilePath(c.params.PropsFilename))
+		if err != nil {
+			utils.Fatal(fmt.Sprintf("could not read properties from file '%s': %s", c.params.PropsFilename, err))
+		}
+		err = yaml.Unmarshal(content, fProps)
+		if err != nil {
+			utils.Fatal(fmt.Sprintf("invalid yaml format in file '%s': %s", c.params.PropsFilename, err))
+		}
+		props.Merge(fProps)
+	}
 	return props
 }
