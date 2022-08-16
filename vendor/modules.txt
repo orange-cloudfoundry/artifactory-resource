@@ -159,7 +159,7 @@ github.com/jbenet/go-context/io
 ## explicit; go 1.16
 github.com/jedib0t/go-pretty/v6/table
 github.com/jedib0t/go-pretty/v6/text
-# github.com/jfrog/build-info-go v1.4.0
+# github.com/jfrog/build-info-go v1.4.1
 ## explicit; go 1.17
 github.com/jfrog/build-info-go/build
 github.com/jfrog/build-info-go/build/utils
@@ -178,7 +178,7 @@ github.com/jfrog/gofrog/io
 github.com/jfrog/gofrog/parallel
 github.com/jfrog/gofrog/stringutils
 github.com/jfrog/gofrog/version
-# github.com/jfrog/jfrog-cli-core/v2 v2.19.3
+# github.com/jfrog/jfrog-cli-core/v2 v2.20.2
 ## explicit; go 1.17
 github.com/jfrog/jfrog-cli-core/v2/artifactory/commands/generic
 github.com/jfrog/jfrog-cli-core/v2/artifactory/commands/utils
