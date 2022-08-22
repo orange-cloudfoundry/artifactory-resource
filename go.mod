@@ -4,8 +4,8 @@ go 1.18
 
 require (
 	github.com/Masterminds/semver v1.5.0
-	github.com/jfrog/jfrog-cli-core/v2 v2.20.2
-	github.com/jfrog/jfrog-client-go v1.20.1
+	github.com/jfrog/jfrog-cli-core/v2 v2.20.3
+	github.com/jfrog/jfrog-client-go v1.21.0
 	gopkg.in/yaml.v3 v3.0.1
 )
 
