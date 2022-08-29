@@ -64,8 +64,8 @@ github.com/emirpasic/gods/lists/arraylist
 github.com/emirpasic/gods/trees
 github.com/emirpasic/gods/trees/binaryheap
 github.com/emirpasic/gods/utils
-# github.com/forPelevin/gomoji v1.1.4
-## explicit; go 1.17
+# github.com/forPelevin/gomoji v1.1.6
+## explicit; go 1.19
 github.com/forPelevin/gomoji
 # github.com/fsnotify/fsnotify v1.5.4
 ## explicit; go 1.16
@@ -159,8 +159,8 @@ github.com/jbenet/go-context/io
 ## explicit; go 1.16
 github.com/jedib0t/go-pretty/v6/table
 github.com/jedib0t/go-pretty/v6/text
-# github.com/jfrog/build-info-go v1.4.1
-## explicit; go 1.17
+# github.com/jfrog/build-info-go v1.5.0
+## explicit; go 1.18
 github.com/jfrog/build-info-go/build
 github.com/jfrog/build-info-go/build/utils
 github.com/jfrog/build-info-go/build/utils/dotnet
@@ -172,8 +172,8 @@ github.com/jfrog/build-info-go/entities
 github.com/jfrog/build-info-go/utils
 github.com/jfrog/build-info-go/utils/compareutils
 github.com/jfrog/build-info-go/utils/pythonutils
-# github.com/jfrog/gofrog v1.2.0
-## explicit; go 1.13
+# github.com/jfrog/gofrog v1.2.1
+## explicit; go 1.18
 github.com/jfrog/gofrog/io
 github.com/jfrog/gofrog/parallel
 github.com/jfrog/gofrog/stringutils
@@ -193,8 +193,8 @@ github.com/jfrog/jfrog-cli-core/v2/xray/commands
 github.com/jfrog/jfrog-cli-core/v2/xray/commands/scan
 github.com/jfrog/jfrog-cli-core/v2/xray/formats
 github.com/jfrog/jfrog-cli-core/v2/xray/utils
-# github.com/jfrog/jfrog-client-go v1.21.0
-## explicit; go 1.17
+# github.com/jfrog/jfrog-client-go v1.22.0
+## explicit; go 1.18
 github.com/jfrog/jfrog-client-go/access
 github.com/jfrog/jfrog-client-go/access/auth
 github.com/jfrog/jfrog-client-go/access/services
@@ -308,8 +308,8 @@ github.com/pkg/errors
 # github.com/pkg/term v1.2.0-beta.2
 ## explicit; go 1.14
 github.com/pkg/term/termios
-# github.com/rivo/uniseg v0.2.0
-## explicit; go 1.12
+# github.com/rivo/uniseg v0.3.4
+## explicit; go 1.18
 github.com/rivo/uniseg
 # github.com/russross/blackfriday/v2 v2.1.0
 ## explicit
@@ -353,7 +353,7 @@ github.com/ulikunitz/xz/lzma
 # github.com/urfave/cli v1.22.9
 ## explicit; go 1.11
 github.com/urfave/cli
-# github.com/xanzy/ssh-agent v0.3.1
+# github.com/xanzy/ssh-agent v0.3.2
 ## explicit; go 1.16
 github.com/xanzy/ssh-agent
 # github.com/xi2/xz v0.0.0-20171230120015-48954b6210f8
@@ -362,7 +362,7 @@ github.com/xi2/xz
 # github.com/xo/terminfo v0.0.0-20210125001918-ca9a967f8778
 ## explicit; go 1.15
 github.com/xo/terminfo
-# golang.org/x/crypto v0.0.0-20220622213112-05595931fe9d
+# golang.org/x/crypto v0.0.0-20220817201139-bc19a97f63c8
 ## explicit; go 1.17
 golang.org/x/crypto/blowfish
 golang.org/x/crypto/cast5
@@ -370,8 +370,8 @@ golang.org/x/crypto/chacha20
 golang.org/x/crypto/curve25519
 golang.org/x/crypto/curve25519/internal/field
 golang.org/x/crypto/ed25519
+golang.org/x/crypto/internal/alias
 golang.org/x/crypto/internal/poly1305
-golang.org/x/crypto/internal/subtle
 golang.org/x/crypto/openpgp
 golang.org/x/crypto/openpgp/armor
 golang.org/x/crypto/openpgp/elgamal
@@ -387,7 +387,7 @@ golang.org/x/crypto/ssh/knownhosts
 golang.org/x/net/context
 golang.org/x/net/internal/socks
 golang.org/x/net/proxy
-# golang.org/x/sys v0.0.0-20220708085239-5a0f0661e09d
+# golang.org/x/sys v0.0.0-20220715151400-c0bba94af5f8
 ## explicit; go 1.17
 golang.org/x/sys/cpu
 golang.org/x/sys/execabs
