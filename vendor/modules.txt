@@ -1,3 +1,7 @@
+# github.com/BurntSushi/toml v1.1.0
+## explicit; go 1.16
+github.com/BurntSushi/toml
+github.com/BurntSushi/toml/internal
 # github.com/CycloneDX/cyclonedx-go v0.6.0
 ## explicit; go 1.15
 github.com/CycloneDX/cyclonedx-go
@@ -159,7 +163,7 @@ github.com/jbenet/go-context/io
 ## explicit; go 1.16
 github.com/jedib0t/go-pretty/v6/table
 github.com/jedib0t/go-pretty/v6/text
-# github.com/jfrog/build-info-go v1.5.2
+# github.com/jfrog/build-info-go v1.6.0
 ## explicit; go 1.18
 github.com/jfrog/build-info-go/build
 github.com/jfrog/build-info-go/build/utils
@@ -174,11 +178,12 @@ github.com/jfrog/build-info-go/utils/compareutils
 github.com/jfrog/build-info-go/utils/pythonutils
 # github.com/jfrog/gofrog v1.2.1
 ## explicit; go 1.18
+github.com/jfrog/gofrog/datastructures
 github.com/jfrog/gofrog/io
 github.com/jfrog/gofrog/parallel
 github.com/jfrog/gofrog/stringutils
 github.com/jfrog/gofrog/version
-# github.com/jfrog/jfrog-cli-core/v2 v2.20.8
+# github.com/jfrog/jfrog-cli-core/v2 v2.21.1
 ## explicit; go 1.18
 github.com/jfrog/jfrog-cli-core/v2/artifactory/commands/generic
 github.com/jfrog/jfrog-cli-core/v2/artifactory/commands/utils
@@ -193,7 +198,7 @@ github.com/jfrog/jfrog-cli-core/v2/xray/commands
 github.com/jfrog/jfrog-cli-core/v2/xray/commands/scan
 github.com/jfrog/jfrog-cli-core/v2/xray/formats
 github.com/jfrog/jfrog-cli-core/v2/xray/utils
-# github.com/jfrog/jfrog-client-go v1.23.2
+# github.com/jfrog/jfrog-client-go v1.23.3
 ## explicit; go 1.18
 github.com/jfrog/jfrog-client-go/access
 github.com/jfrog/jfrog-client-go/access/auth
@@ -385,6 +390,7 @@ golang.org/x/crypto/ssh/knownhosts
 # golang.org/x/exp v0.0.0-20220827204233-334a2380cb91
 ## explicit; go 1.18
 golang.org/x/exp/constraints
+golang.org/x/exp/maps
 golang.org/x/exp/slices
 # golang.org/x/net v0.0.0-20220708220712-1185a9018129
 ## explicit; go 1.17
