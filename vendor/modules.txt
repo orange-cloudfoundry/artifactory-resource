@@ -200,7 +200,7 @@ github.com/jfrog/gofrog/io
 github.com/jfrog/gofrog/parallel
 github.com/jfrog/gofrog/stringutils
 github.com/jfrog/gofrog/version
-# github.com/jfrog/jfrog-cli-core/v2 v2.21.1
+# github.com/jfrog/jfrog-cli-core/v2 v2.21.2
 ## explicit; go 1.18
 github.com/jfrog/jfrog-cli-core/v2/artifactory/commands/generic
 github.com/jfrog/jfrog-cli-core/v2/artifactory/commands/utils
