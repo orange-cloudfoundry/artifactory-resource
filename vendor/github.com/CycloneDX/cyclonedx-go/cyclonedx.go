@@ -18,20 +18,19 @@
 package cyclonedx
 
 import (
-	"encoding/json"
 	"encoding/xml"
 	"errors"
 	"fmt"
-	"io"
 	"regexp"
 )
 
+//go:generate stringer -linecomment -output cyclonedx_string.go -type MediaType,SpecVersion
+
 const (
-	BOMFormat      = "CycloneDX"
-	defaultVersion = 1
-	SpecVersion    = "1.4"
-	XMLNamespace   = "http://cyclonedx.org/schema/bom/1.4"
+	BOMFormat = "CycloneDX"
 )
+
+var ErrInvalidSpecVersion = errors.New("invalid specification version")
 
 type Advisory struct {
 	Title string `json:"title,omitempty" xml:"title,omitempty"`
@@ -61,8 +60,8 @@ type BOM struct {
 	XMLNS   string   `json:"-" xml:"xmlns,attr"`
 
 	// JSON specific fields
-	BOMFormat   string `json:"bomFormat" xml:"-"`
-	SpecVersion string `json:"specVersion" xml:"-"`
+	BOMFormat   string      `json:"bomFormat" xml:"-"`
+	SpecVersion SpecVersion `json:"specVersion" xml:"-"`
 
 	SerialNumber       string               `json:"serialNumber,omitempty" xml:"serialNumber,attr,omitempty"`
 	Version            int                  `json:"version" xml:"version,attr"`
@@ -78,10 +77,10 @@ type BOM struct {
 
 func NewBOM() *BOM {
 	return &BOM{
-		XMLNS:       XMLNamespace,
+		XMLNS:       xmlNamespaces[SpecVersion1_4],
 		BOMFormat:   BOMFormat,
-		SpecVersion: SpecVersion,
-		Version:     defaultVersion,
+		SpecVersion: SpecVersion1_4,
+		Version:     1,
 	}
 }
 
@@ -98,24 +97,6 @@ func Bool(value bool) *bool {
 }
 
 type BOMReference string
-
-// bomReferenceXML is temporarily used for marshalling and unmarshalling BOMReference instances to and from XML
-type bomReferenceXML struct {
-	Ref string `json:"-" xml:"ref,attr"`
-}
-
-func (b BOMReference) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	return e.EncodeElement(bomReferenceXML{Ref: string(b)}, start)
-}
-
-func (b *BOMReference) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	bXML := bomReferenceXML{}
-	if err := d.DecodeElement(&bXML, &start); err != nil {
-		return err
-	}
-	*b = BOMReference(bXML.Ref)
-	return nil
-}
 
 type ComponentType string
 
@@ -186,19 +167,6 @@ type Copyright struct {
 	Text string `json:"text" xml:"-"`
 }
 
-func (c Copyright) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	return e.EncodeElement(c.Text, start)
-}
-
-func (c *Copyright) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	var text string
-	if err := d.DecodeElement(&text, &start); err != nil {
-		return err
-	}
-	(*c).Text = text
-	return nil
-}
-
 type Credits struct {
 	Organizations *[]OrganizationalEntity  `json:"organizations,omitempty" xml:"organizations>organization,omitempty"`
 	Individuals   *[]OrganizationalContact `json:"individuals,omitempty" xml:"individuals>individual,omitempty"`
@@ -219,54 +187,8 @@ const (
 )
 
 type Dependency struct {
-	Ref          string        `xml:"ref,attr"`
-	Dependencies *[]Dependency `xml:"dependency,omitempty"`
-}
-
-// dependencyJSON is temporarily used for marshalling and unmarshalling Dependency instances to and from JSON
-type dependencyJSON struct {
-	Ref       string   `json:"ref"`
-	DependsOn []string `json:"dependsOn,omitempty"`
-}
-
-func (d Dependency) MarshalJSON() ([]byte, error) {
-	if d.Dependencies == nil || len(*d.Dependencies) == 0 {
-		return json.Marshal(&dependencyJSON{
-			Ref: d.Ref,
-		})
-	}
-
-	dependencyRefs := make([]string, len(*d.Dependencies))
-	for i, dependency := range *d.Dependencies {
-		dependencyRefs[i] = dependency.Ref
-	}
-
-	return json.Marshal(&dependencyJSON{
-		Ref:       d.Ref,
-		DependsOn: dependencyRefs,
-	})
-}
-
-func (d *Dependency) UnmarshalJSON(bytes []byte) error {
-	dependency := new(dependencyJSON)
-	if err := json.Unmarshal(bytes, dependency); err != nil {
-		return err
-	}
-	d.Ref = dependency.Ref
-
-	if len(dependency.DependsOn) == 0 {
-		return nil
-	}
-
-	dependencies := make([]Dependency, len(dependency.DependsOn))
-	for i, dep := range dependency.DependsOn {
-		dependencies[i] = Dependency{
-			Ref: dep,
-		}
-	}
-	d.Dependencies = &dependencies
-
-	return nil
+	Ref          string    `json:"ref"`
+	Dependencies *[]string `json:"dependsOn,omitempty"`
 }
 
 type Diff struct {
@@ -321,6 +243,7 @@ const (
 	HashAlgoSHA384      HashAlgorithm = "SHA-384"
 	HashAlgoSHA512      HashAlgorithm = "SHA-512"
 	HashAlgoSHA3_256    HashAlgorithm = "SHA3-256"
+	HashAlgoSHA3_384    HashAlgorithm = "SHA3-384"
 	HashAlgoSHA3_512    HashAlgorithm = "SHA3-512"
 	HashAlgoBlake2b_256 HashAlgorithm = "BLAKE2b-256"
 	HashAlgoBlake2b_384 HashAlgorithm = "BLAKE2b-384"
@@ -395,73 +318,27 @@ type License struct {
 
 type Licenses []LicenseChoice
 
-func (l Licenses) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if len(l) == 0 {
-		return nil
-	}
-
-	if err := e.EncodeToken(start); err != nil {
-		return err
-	}
-
-	for _, choice := range l {
-		if choice.License != nil && choice.Expression != "" {
-			return fmt.Errorf("either license or expression must be set, but not both")
-		}
-
-		if choice.License != nil {
-			if err := e.EncodeElement(choice.License, xml.StartElement{Name: xml.Name{Local: "license"}}); err != nil {
-				return err
-			}
-		} else if choice.Expression != "" {
-			if err := e.EncodeElement(choice.Expression, xml.StartElement{Name: xml.Name{Local: "expression"}}); err != nil {
-				return err
-			}
-		}
-	}
-
-	return e.EncodeToken(start.End())
-}
-
-func (l *Licenses) UnmarshalXML(d *xml.Decoder, _ xml.StartElement) error {
-	licenses := make([]LicenseChoice, 0)
-
-	for {
-		token, err := d.Token()
-		if err != nil {
-			if errors.Is(err, io.EOF) {
-				break
-			}
-			return err
-		}
-
-		switch tokenType := token.(type) {
-		case xml.StartElement:
-			if tokenType.Name.Local == "expression" {
-				var expression string
-				if err = d.DecodeElement(&expression, &tokenType); err != nil {
-					return err
-				}
-				licenses = append(licenses, LicenseChoice{Expression: expression})
-			} else if tokenType.Name.Local == "license" {
-				var license License
-				if err = d.DecodeElement(&license, &tokenType); err != nil {
-					return err
-				}
-				licenses = append(licenses, LicenseChoice{License: &license})
-			} else {
-				return fmt.Errorf("unknown element: %s", tokenType.Name.Local)
-			}
-		}
-	}
-
-	*l = licenses
-	return nil
-}
-
 type LicenseChoice struct {
 	License    *License `json:"license,omitempty" xml:"-"`
 	Expression string   `json:"expression,omitempty" xml:"-"`
+}
+
+// MediaType defines the official media types for CycloneDX BOMs.
+// See https://cyclonedx.org/specification/overview/#registered-media-types
+type MediaType int
+
+const (
+	MediaTypeJSON     MediaType = iota + 1 // application/vnd.cyclonedx+json
+	MediaTypeXML                           // application/vnd.cyclonedx+xml
+	MediaTypeProtobuf                      // application/x.vnd.cyclonedx+protobuf
+)
+
+func (mt MediaType) WithVersion(specVersion SpecVersion) (string, error) {
+	if mt == MediaTypeJSON && specVersion < SpecVersion1_2 {
+		return "", fmt.Errorf("json format is not supported for specification versions lower than %s", SpecVersion1_2)
+	}
+
+	return fmt.Sprintf("%s; version=%s", mt, specVersion), nil
 }
 
 type Metadata struct {
@@ -589,6 +466,16 @@ type Source struct {
 	Name string `json:"name,omitempty" xml:"name,omitempty"`
 	URL  string `json:"url,omitempty" xml:"url,omitempty"`
 }
+
+type SpecVersion int
+
+const (
+	SpecVersion1_0 SpecVersion = iota + 1 // 1.0
+	SpecVersion1_1                        // 1.1
+	SpecVersion1_2                        // 1.2
+	SpecVersion1_3                        // 1.3
+	SpecVersion1_4                        // 1.4
+)
 
 type SWID struct {
 	Text       *AttachedText `json:"text,omitempty" xml:"text,omitempty"`

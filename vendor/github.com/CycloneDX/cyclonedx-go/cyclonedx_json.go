@@ -19,46 +19,32 @@ package cyclonedx
 
 import (
 	"encoding/json"
-	"encoding/xml"
-	"io"
 )
 
-type BOMDecoder interface {
-	Decode(bom *BOM) error
+func (sv SpecVersion) MarshalJSON() ([]byte, error) {
+	return json.Marshal(sv.String())
 }
 
-func NewBOMDecoder(reader io.Reader, format BOMFileFormat) BOMDecoder {
-	if format == BOMFileFormatJSON {
-		return &jsonBOMDecoder{reader: reader}
-	}
-	return &xmlBOMDecoder{reader: reader}
-}
-
-type jsonBOMDecoder struct {
-	reader io.Reader
-}
-
-// Decode implements the BOMDecoder interface.
-func (j jsonBOMDecoder) Decode(bom *BOM) error {
-	return json.NewDecoder(j.reader).Decode(bom)
-}
-
-type xmlBOMDecoder struct {
-	reader io.Reader
-}
-
-// Decode implements the BOMDecoder interface.
-func (x xmlBOMDecoder) Decode(bom *BOM) error {
-	err := xml.NewDecoder(x.reader).Decode(bom)
+func (sv *SpecVersion) UnmarshalJSON(bytes []byte) error {
+	var v string
+	err := json.Unmarshal(bytes, &v)
 	if err != nil {
 		return err
 	}
 
-	for specVersion, xmlNs := range xmlNamespaces {
-		if xmlNs == bom.XMLNS {
-			bom.SpecVersion = specVersion
-			break
-		}
+	switch v {
+	case SpecVersion1_0.String():
+		*sv = SpecVersion1_0
+	case SpecVersion1_1.String():
+		*sv = SpecVersion1_1
+	case SpecVersion1_2.String():
+		*sv = SpecVersion1_2
+	case SpecVersion1_3.String():
+		*sv = SpecVersion1_3
+	case SpecVersion1_4.String():
+		*sv = SpecVersion1_4
+	default:
+		return ErrInvalidSpecVersion
 	}
 
 	return nil
