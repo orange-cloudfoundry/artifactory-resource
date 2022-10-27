@@ -4,8 +4,8 @@ go 1.19
 
 require (
 	github.com/Masterminds/semver v1.5.0
-	github.com/jfrog/jfrog-cli-core/v2 v2.23.1
-	github.com/jfrog/jfrog-client-go v1.24.0
+	github.com/jfrog/jfrog-cli-core/v2 v2.23.2
+	github.com/jfrog/jfrog-client-go v1.24.1
 	gopkg.in/yaml.v3 v3.0.1
 )
 
@@ -78,7 +78,7 @@ require (
 	golang.org/x/net v0.0.0-20220923203811-8be639271d50 // indirect
 	golang.org/x/sys v0.0.0-20220919091848-fb04ddd9f9c8 // indirect
 	golang.org/x/term v0.0.0-20220919170432-7a66f970e087 // indirect
-	golang.org/x/text v0.3.7 // indirect
+	golang.org/x/text v0.3.8 // indirect
 	golang.org/x/tools v0.1.12 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/warnings.v0 v0.1.2 // indirect
