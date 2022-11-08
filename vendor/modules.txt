@@ -180,8 +180,8 @@ github.com/jbenet/go-context/io
 ## explicit; go 1.16
 github.com/jedib0t/go-pretty/v6/table
 github.com/jedib0t/go-pretty/v6/text
-# github.com/jfrog/build-info-go v1.8.0
-## explicit; go 1.18
+# github.com/jfrog/build-info-go v1.8.2
+## explicit; go 1.19
 github.com/jfrog/build-info-go/build
 github.com/jfrog/build-info-go/build/utils
 github.com/jfrog/build-info-go/build/utils/dotnet
@@ -193,8 +193,8 @@ github.com/jfrog/build-info-go/entities
 github.com/jfrog/build-info-go/utils
 github.com/jfrog/build-info-go/utils/compareutils
 github.com/jfrog/build-info-go/utils/pythonutils
-# github.com/jfrog/gofrog v1.2.4
-## explicit; go 1.18
+# github.com/jfrog/gofrog v1.2.5
+## explicit; go 1.19
 github.com/jfrog/gofrog/datastructures
 github.com/jfrog/gofrog/io
 github.com/jfrog/gofrog/parallel
@@ -215,8 +215,8 @@ github.com/jfrog/jfrog-cli-core/v2/xray/commands
 github.com/jfrog/jfrog-cli-core/v2/xray/commands/scan
 github.com/jfrog/jfrog-cli-core/v2/xray/formats
 github.com/jfrog/jfrog-cli-core/v2/xray/utils
-# github.com/jfrog/jfrog-client-go v1.24.1
-## explicit; go 1.18
+# github.com/jfrog/jfrog-client-go v1.24.3
+## explicit; go 1.19
 github.com/jfrog/jfrog-client-go/access
 github.com/jfrog/jfrog-client-go/access/auth
 github.com/jfrog/jfrog-client-go/access/services
