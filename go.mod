@@ -5,7 +5,7 @@ go 1.19
 require (
 	github.com/Masterminds/semver v1.5.0
 	github.com/jfrog/jfrog-cli-core/v2 v2.24.2
-	github.com/jfrog/jfrog-client-go v1.24.3
+	github.com/jfrog/jfrog-client-go v1.24.4
 	gopkg.in/yaml.v3 v3.0.1
 )
 
@@ -35,7 +35,7 @@ require (
 	github.com/imdario/mergo v0.3.13 // indirect
 	github.com/jbenet/go-context v0.0.0-20150711004518-d14ea06fba99 // indirect
 	github.com/jedib0t/go-pretty/v6 v6.3.9 // indirect
-	github.com/jfrog/build-info-go v1.8.2 // indirect
+	github.com/jfrog/build-info-go v1.8.3 // indirect
 	github.com/jfrog/gofrog v1.2.5 // indirect
 	github.com/kevinburke/ssh_config v1.2.0 // indirect
 	github.com/klauspost/compress v1.15.11 // indirect
