@@ -4,8 +4,8 @@ go 1.19
 
 require (
 	github.com/Masterminds/semver v1.5.0
-	github.com/jfrog/jfrog-cli-core/v2 v2.24.2
-	github.com/jfrog/jfrog-client-go v1.24.3
+	github.com/jfrog/jfrog-cli-core/v2 v2.25.0
+	github.com/jfrog/jfrog-client-go v1.24.4
 	gopkg.in/yaml.v3 v3.0.1
 )
 
@@ -14,6 +14,8 @@ require (
 	github.com/CycloneDX/cyclonedx-go v0.7.0 // indirect
 	github.com/Microsoft/go-winio v0.6.0 // indirect
 	github.com/ProtonMail/go-crypto v0.0.0-20220824120805-4b6e5c587895 // indirect
+	github.com/VividCortex/ewma v1.2.0 // indirect
+	github.com/acarl005/stripansi v0.0.0-20180116102854-5a71ef0e047d // indirect
 	github.com/acomagu/bufpipe v1.0.3 // indirect
 	github.com/andybalholm/brotli v1.0.4 // indirect
 	github.com/buger/jsonparser v1.1.1 // indirect
@@ -35,7 +37,7 @@ require (
 	github.com/imdario/mergo v0.3.13 // indirect
 	github.com/jbenet/go-context v0.0.0-20150711004518-d14ea06fba99 // indirect
 	github.com/jedib0t/go-pretty/v6 v6.3.9 // indirect
-	github.com/jfrog/build-info-go v1.8.2 // indirect
+	github.com/jfrog/build-info-go v1.8.3 // indirect
 	github.com/jfrog/gofrog v1.2.5 // indirect
 	github.com/kevinburke/ssh_config v1.2.0 // indirect
 	github.com/klauspost/compress v1.15.11 // indirect
@@ -69,6 +71,7 @@ require (
 	github.com/subosito/gotenv v1.4.1 // indirect
 	github.com/ulikunitz/xz v0.5.10 // indirect
 	github.com/urfave/cli v1.22.10 // indirect
+	github.com/vbauerster/mpb/v7 v7.5.2 // indirect
 	github.com/xanzy/ssh-agent v0.3.3-0.20220920102508-0fa644ba07f4 // indirect
 	github.com/xi2/xz v0.0.0-20171230120015-48954b6210f8 // indirect
 	github.com/xo/terminfo v0.0.0-20220910002029-abceb7e1c41e // indirect

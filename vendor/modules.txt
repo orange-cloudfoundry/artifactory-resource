@@ -33,6 +33,12 @@ github.com/ProtonMail/go-crypto/openpgp/internal/ecc
 github.com/ProtonMail/go-crypto/openpgp/internal/encoding
 github.com/ProtonMail/go-crypto/openpgp/packet
 github.com/ProtonMail/go-crypto/openpgp/s2k
+# github.com/VividCortex/ewma v1.2.0
+## explicit; go 1.12
+github.com/VividCortex/ewma
+# github.com/acarl005/stripansi v0.0.0-20180116102854-5a71ef0e047d
+## explicit
+github.com/acarl005/stripansi
 # github.com/acomagu/bufpipe v1.0.3
 ## explicit; go 1.12
 github.com/acomagu/bufpipe
@@ -180,7 +186,7 @@ github.com/jbenet/go-context/io
 ## explicit; go 1.16
 github.com/jedib0t/go-pretty/v6/table
 github.com/jedib0t/go-pretty/v6/text
-# github.com/jfrog/build-info-go v1.8.2
+# github.com/jfrog/build-info-go v1.8.3
 ## explicit; go 1.19
 github.com/jfrog/build-info-go/build
 github.com/jfrog/build-info-go/build/utils
@@ -200,7 +206,7 @@ github.com/jfrog/gofrog/io
 github.com/jfrog/gofrog/parallel
 github.com/jfrog/gofrog/stringutils
 github.com/jfrog/gofrog/version
-# github.com/jfrog/jfrog-cli-core/v2 v2.24.2
+# github.com/jfrog/jfrog-cli-core/v2 v2.25.0
 ## explicit; go 1.19
 github.com/jfrog/jfrog-cli-core/v2/artifactory/commands/generic
 github.com/jfrog/jfrog-cli-core/v2/artifactory/commands/utils
@@ -211,11 +217,12 @@ github.com/jfrog/jfrog-cli-core/v2/utils/coreutils
 github.com/jfrog/jfrog-cli-core/v2/utils/ioutils
 github.com/jfrog/jfrog-cli-core/v2/utils/lock
 github.com/jfrog/jfrog-cli-core/v2/utils/log
+github.com/jfrog/jfrog-cli-core/v2/utils/progressbar
 github.com/jfrog/jfrog-cli-core/v2/xray/commands
 github.com/jfrog/jfrog-cli-core/v2/xray/commands/scan
 github.com/jfrog/jfrog-cli-core/v2/xray/formats
 github.com/jfrog/jfrog-cli-core/v2/xray/utils
-# github.com/jfrog/jfrog-client-go v1.24.3
+# github.com/jfrog/jfrog-client-go v1.24.4
 ## explicit; go 1.19
 github.com/jfrog/jfrog-client-go/access
 github.com/jfrog/jfrog-client-go/access/auth
@@ -376,6 +383,12 @@ github.com/ulikunitz/xz/lzma
 # github.com/urfave/cli v1.22.10
 ## explicit; go 1.11
 github.com/urfave/cli
+# github.com/vbauerster/mpb/v7 v7.5.2
+## explicit; go 1.14
+github.com/vbauerster/mpb/v7
+github.com/vbauerster/mpb/v7/cwriter
+github.com/vbauerster/mpb/v7/decor
+github.com/vbauerster/mpb/v7/internal
 # github.com/xanzy/ssh-agent v0.3.3-0.20220920102508-0fa644ba07f4
 ## explicit; go 1.16
 github.com/xanzy/ssh-agent
