@@ -158,14 +158,14 @@ func (scanCmd *ScanCommand) Run() (err error) {
 	}
 
 	// Validate Xray minimum version for graph scan command
-	err = commands.ValidateXrayMinimumVersion(xrayVersion, commands.GraphScanMinXrayVersion)
+	err = coreutils.ValidateMinimumVersion(coreutils.Xray, xrayVersion, commands.GraphScanMinXrayVersion)
 	if err != nil {
 		return err
 	}
 
 	if scanCmd.bypassArchiveLimits {
 		// Validate Xray minimum version for BypassArchiveLimits flag for indexer
-		err = commands.ValidateXrayMinimumVersion(xrayVersion, commands.BypassArchiveLimitsMinXrayVersion)
+		err = coreutils.ValidateMinimumVersion(coreutils.Xray, xrayVersion, commands.BypassArchiveLimitsMinXrayVersion)
 		if err != nil {
 			return err
 		}
@@ -381,12 +381,12 @@ func collectPatternMatchingFiles(fileData spec.File, rootPath string, dataHandle
 		return err
 	}
 
-	paths, err := fspatterns.GetPaths(rootPath, recursive, false, false)
+	paths, err := fspatterns.ListFiles(rootPath, recursive, false, false, excludePathPattern)
 	if err != nil {
 		return err
 	}
 	for _, path := range paths {
-		matches, isDir, _, err := fspatterns.PrepareAndFilterPaths(path, excludePathPattern, false, false, patternRegex)
+		matches, isDir, err := fspatterns.SearchPatterns(path, false, false, patternRegex)
 		if err != nil {
 			return err
 		}
