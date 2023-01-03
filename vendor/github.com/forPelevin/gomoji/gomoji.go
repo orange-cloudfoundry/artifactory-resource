@@ -49,20 +49,54 @@ func AllEmojis() []Emoji {
 
 // RemoveEmojis removes all emojis from the s string and returns a new string.
 func RemoveEmojis(s string) string {
+	return ReplaceEmojisWithFunc(s, nil)
+}
+
+// ReplaceEmojisWith replaces all emojis from the s string with the specified rune and returns a new string.
+func ReplaceEmojisWith(s string, c rune) string {
+	replacerStr := string(c)
+	return ReplaceEmojisWithFunc(s, func(em Emoji) string {
+		return replacerStr
+	})
+}
+
+// ReplaceEmojisWithSlug replaces all emojis from the s string with the emoji's slug and returns a new string.
+func ReplaceEmojisWithSlug(s string) string {
+	return ReplaceEmojisWithFunc(s, func(em Emoji) string {
+		return em.Slug
+	})
+}
+
+type replacerFn func(e Emoji) string
+
+// ReplaceEmojisWithFunc replaces all emojis from the s string with the result of the replacerFn function and returns a new string.
+func ReplaceEmojisWithFunc(s string, replacer replacerFn) string {
 	cleanBuf := bytes.Buffer{}
 
 	gr := uniseg.NewGraphemes(s)
 	for gr.Next() {
-		if _, ok := emojiMap[gr.Str()]; !ok {
+		em, ok := emojiMap[gr.Str()]
+		if !ok {
 			cleanBuf.Write(gr.Bytes())
+			continue
+		}
+
+		if replacer != nil {
+			cleanBuf.WriteString(replacer(em))
 		}
 	}
 
 	res := cleanBuf
 	res.Reset()
 	for _, r := range cleanBuf.String() {
-		if _, ok := emojiMap[string(r)]; !ok {
+		em, ok := emojiMap[string(r)]
+		if !ok {
 			res.WriteRune(r)
+			continue
+		}
+
+		if replacer != nil {
+			res.WriteString(replacer(em))
 		}
 	}
 
@@ -85,7 +119,6 @@ func GetInfo(emoji string) (Emoji, error) {
 // CollectAll finds all emojis in given string. Unlike FindAll, this does not
 // distinct repeating occurrences of emoji. If there are no emojis it returns a nil-slice.
 func CollectAll(s string) []Emoji {
-
 	var emojis []Emoji
 
 	gr := uniseg.NewGraphemes(s)
