@@ -23,6 +23,7 @@ type fieldInfo struct {
 	omitEmpty    bool
 	IndexChain   []int
 	defaultValue string
+	partial      bool
 }
 
 func (f fieldInfo) getFirstKey() string {
@@ -31,7 +32,7 @@ func (f fieldInfo) getFirstKey() string {
 
 func (f fieldInfo) matchesKey(key string) bool {
 	for _, k := range f.keys {
-		if key == k || strings.TrimSpace(key) == k {
+		if key == k || strings.TrimSpace(key) == k || (f.partial && strings.Contains(key, k)) {
 			return true
 		}
 	}
@@ -82,16 +83,25 @@ func getFieldInfos(rType reflect.Type, parentIndexChain []int, parentKeys []stri
 				currFieldInfo.keys = []string{normalizeName(field.Name)}
 			}
 
-			if len(parentKeys) > 0 && currFieldInfo != nil && !canMarshal(field.Type) {
-				// create cartesian product of keys
-				// eg: parent keys x field keys
-				keys := make([]string, 0, len(parentKeys)*len(currFieldInfo.keys))
-				for _, pkey := range parentKeys {
-					for _, ckey := range currFieldInfo.keys {
-						keys = append(keys, normalizeName(fmt.Sprintf("%s.%s", pkey, ckey)))
+			if len(parentKeys) > 0 && currFieldInfo != nil {
+
+				if !canMarshal(field.Type) {
+					// create cartesian product of keys
+					// eg: parent keys x field keys
+					keys := make([]string, 0, len(parentKeys)*len(currFieldInfo.keys))
+					for _, pkey := range parentKeys {
+						for _, ckey := range currFieldInfo.keys {
+							keys = append(keys, normalizeName(fmt.Sprintf("%s.%s", pkey, ckey)))
+						}
+						currFieldInfo.keys = keys
+					}
+				} else {
+					keys := make([]string, 0, len(parentKeys))
+					for _, pkey := range parentKeys {
+						keys = append(keys, normalizeName(fmt.Sprintf("%s.%s", pkey, normalizeName(field.Name))))
+						currFieldInfo.keys = keys
 					}
 				}
-				currFieldInfo.keys = keys
 			}
 		}
 
@@ -145,6 +155,7 @@ func getFieldInfos(rType reflect.Type, parentIndexChain []int, parentKeys []stri
 							IndexChain:   append(cpy3, childFieldInfo.IndexChain...),
 							omitEmpty:    childFieldInfo.omitEmpty,
 							defaultValue: childFieldInfo.defaultValue,
+							partial:      childFieldInfo.partial,
 						}
 
 						// create cartesian product of keys
@@ -169,6 +180,7 @@ func getFieldInfos(rType reflect.Type, parentIndexChain []int, parentKeys []stri
 						IndexChain:   append(cpy2, idx),
 						omitEmpty:    currFieldInfo.omitEmpty,
 						defaultValue: currFieldInfo.defaultValue,
+						partial:      currFieldInfo.partial,
 					}
 
 					for _, akey := range currFieldInfo.keys {
@@ -198,6 +210,8 @@ func filterTags(tagName string, indexChain []int, field reflect.StructField) (*f
 		trimmedFieldTagEntry := strings.TrimSpace(fieldTagEntry) // handles cases like `csv:"foo, omitempty, default=test"`
 		if trimmedFieldTagEntry == "omitempty" {
 			currFieldInfo.omitEmpty = true
+		} else if strings.HasPrefix(trimmedFieldTagEntry, "partial") {
+			currFieldInfo.partial = true
 		} else if strings.HasPrefix(trimmedFieldTagEntry, "default=") {
 			currFieldInfo.defaultValue = strings.TrimPrefix(trimmedFieldTagEntry, "default=")
 		} else {
