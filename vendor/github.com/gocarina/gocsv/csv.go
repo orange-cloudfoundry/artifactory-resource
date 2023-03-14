@@ -11,6 +11,7 @@ import (
 	"encoding/csv"
 	"fmt"
 	"io"
+	"mime/multipart"
 	"os"
 	"reflect"
 	"strings"
@@ -34,6 +35,9 @@ var TagName = "csv"
 
 // TagSeparator defines seperator string for multiple csv tags in struct fields
 var TagSeparator = ","
+
+// FieldSeperator defines how to combine parent struct with child struct
+var FieldsCombiner = "."
 
 // Normalizer is a function that takes and returns a string. It is applied to
 // struct and header field values before they are compared. It can be used to alter
@@ -183,6 +187,11 @@ func MarshalCSVWithoutHeaders(in interface{}, out CSVWriter) (err error) {
 // UnmarshalFile parses the CSV from the file in the interface.
 func UnmarshalFile(in *os.File, out interface{}) error {
 	return Unmarshal(in, out)
+}
+
+// UnmarshalMultipartFile parses the CSV from the multipart file in the interface.
+func UnmarshalMultipartFile(in *multipart.File, out interface{}) error {
+	return Unmarshal(convertTo(in), out)
 }
 
 // UnmarshalFile parses the CSV from the file in the interface.
