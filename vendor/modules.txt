@@ -219,7 +219,7 @@ github.com/jfrog/gofrog/parallel
 github.com/jfrog/gofrog/stringutils
 github.com/jfrog/gofrog/unarchive
 github.com/jfrog/gofrog/version
-# github.com/jfrog/jfrog-cli-core/v2 v2.36.1
+# github.com/jfrog/jfrog-cli-core/v2 v2.37.0
 ## explicit; go 1.20
 github.com/jfrog/jfrog-cli-core/v2/artifactory/commands/generic
 github.com/jfrog/jfrog-cli-core/v2/artifactory/commands/transferfiles/api
@@ -239,7 +239,7 @@ github.com/jfrog/jfrog-cli-core/v2/xray/commands/scan
 github.com/jfrog/jfrog-cli-core/v2/xray/commands/utils
 github.com/jfrog/jfrog-cli-core/v2/xray/formats
 github.com/jfrog/jfrog-cli-core/v2/xray/utils
-# github.com/jfrog/jfrog-client-go v1.30.1
+# github.com/jfrog/jfrog-client-go v1.31.0
 ## explicit; go 1.20
 github.com/jfrog/jfrog-client-go/access
 github.com/jfrog/jfrog-client-go/access/auth
@@ -259,6 +259,9 @@ github.com/jfrog/jfrog-client-go/distribution/services
 github.com/jfrog/jfrog-client-go/distribution/services/utils
 github.com/jfrog/jfrog-client-go/http/httpclient
 github.com/jfrog/jfrog-client-go/http/jfroghttpclient
+github.com/jfrog/jfrog-client-go/lifecycle
+github.com/jfrog/jfrog-client-go/lifecycle/auth
+github.com/jfrog/jfrog-client-go/lifecycle/services
 github.com/jfrog/jfrog-client-go/pipelines
 github.com/jfrog/jfrog-client-go/pipelines/auth
 github.com/jfrog/jfrog-client-go/pipelines/services
