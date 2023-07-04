@@ -9,6 +9,11 @@ import (
 	"reflect"
 )
 
+var (
+	ErrUnmatchedStructTags = errors.New("unmatched struct tags")
+	ErrDoubleHeaderNames   = errors.New("double header names")
+)
+
 // Decoder .
 type Decoder interface {
 	GetCSVRows() ([][]string, error)
@@ -104,7 +109,7 @@ func mismatchHeaderFields(structInfo []fieldInfo, headers []string) []string {
 func maybeMissingStructFields(structInfo []fieldInfo, headers []string) error {
 	missing := mismatchStructFields(structInfo, headers)
 	if len(missing) != 0 {
-		return fmt.Errorf("found unmatched struct field with tags %v", missing)
+		return fmt.Errorf("found unmatched struct field with tags %v, %w", missing, ErrUnmatchedStructTags)
 	}
 	return nil
 }
@@ -114,7 +119,7 @@ func maybeDoubleHeaderNames(headers []string) error {
 	headerMap := make(map[string]bool, len(headers))
 	for _, v := range headers {
 		if _, ok := headerMap[v]; ok {
-			return fmt.Errorf("repeated header name: %v", v)
+			return fmt.Errorf("repeated header name: %v, %w", v, ErrDoubleHeaderNames)
 		}
 		headerMap[v] = true
 	}
@@ -241,7 +246,7 @@ func readToWithErrorHandler(decoder Decoder, errHandler ErrorHandler, out interf
 	return nil
 }
 
-func readEach(decoder SimpleDecoder, c interface{}) error {
+func readEach(decoder SimpleDecoder, errHandler ErrorHandler, c interface{}) error {
 	outValue, outType := getConcreteReflectValueAndType(c) // Get the concrete type (not pointer)
 	if outType.Kind() != reflect.Chan {
 		return fmt.Errorf("cannot use %v with type %s, only channel supported", c, outType)
@@ -296,10 +301,14 @@ func readEach(decoder SimpleDecoder, c interface{}) error {
 		for j, csvColumnContent := range line {
 			if fieldInfo, ok := csvHeadersLabels[j]; ok { // Position found accordingly to header name
 				if err := setInnerField(&outInner, outInnerWasPointer, fieldInfo.IndexChain, csvColumnContent, fieldInfo.omitEmpty); err != nil { // Set field of struct
-					return &csv.ParseError{
+					parseError := &csv.ParseError{
 						Line:   i + 2, //add 2 to account for the header & 0-indexing of arrays
 						Column: j + 1,
 						Err:    err,
+					}
+
+					if errHandler == nil || !errHandler(parseError) {
+						return parseError
 					}
 				}
 			}
@@ -456,7 +465,9 @@ func setInnerField(outInner *reflect.Value, outInnerWasPointer bool, index []int
 	if outInnerWasPointer {
 		// initialize nil pointer
 		if oi.IsNil() {
-			setField(oi, "", omitEmpty)
+			if err := setField(oi, "", omitEmpty); err != nil {
+				return err
+			}
 		}
 		oi = outInner.Elem()
 	}
