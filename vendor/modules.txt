@@ -174,6 +174,9 @@ github.com/golang/groupcache/lru
 # github.com/golang/snappy v0.0.4
 ## explicit
 github.com/golang/snappy
+# github.com/google/uuid v1.3.0
+## explicit
+github.com/google/uuid
 # github.com/gookit/color v1.5.3
 ## explicit; go 1.18
 github.com/gookit/color
@@ -221,7 +224,7 @@ github.com/jfrog/gofrog/parallel
 github.com/jfrog/gofrog/stringutils
 github.com/jfrog/gofrog/unarchive
 github.com/jfrog/gofrog/version
-# github.com/jfrog/jfrog-cli-core/v2 v2.37.1
+# github.com/jfrog/jfrog-cli-core/v2 v2.38.0
 ## explicit; go 1.20
 github.com/jfrog/jfrog-cli-core/v2/artifactory/commands/generic
 github.com/jfrog/jfrog-cli-core/v2/artifactory/commands/transferfiles/api
@@ -353,6 +356,9 @@ github.com/pierrec/lz4/v4/internal/xxh32
 github.com/pjbgf/sha1cd
 github.com/pjbgf/sha1cd/internal
 github.com/pjbgf/sha1cd/ubc
+# github.com/pkg/browser v0.0.0-20210911075715-681adbf594b8
+## explicit; go 1.14
+github.com/pkg/browser
 # github.com/pkg/errors v0.9.1
 ## explicit
 github.com/pkg/errors
