@@ -1,14 +1,13 @@
 package utils
 
 import (
-	"hash"
 	"crypto/md5"
 	"crypto/sha1"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"hash"
 	"io"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -27,7 +26,7 @@ import (
 
 const (
 	ART_SECURITY_FOLDER = "security/"
-	TS_FORMAT = "2006-01-02T15:04:05.000Z"
+	TS_FORMAT           = "2006-01-02T15:04:05.000Z"
 )
 
 func CheckReqParamsWithPattern(source model.Source) error {
@@ -90,14 +89,14 @@ func createCert(caCert string) error {
 	}
 	securityPath := confPath + ART_SECURITY_FOLDER
 	os.MkdirAll(securityPath, os.ModePerm)
-	return ioutil.WriteFile(securityPath+"cert.pem", []byte(caCert), 0644)
+	return os.WriteFile(securityPath+"cert.pem", []byte(caCert), 0644)
 }
 
 func createSshKeyPath(sshKey string) (string, error) {
 	if sshKey == "" {
 		return "", nil
 	}
-	file, err := ioutil.TempFile(os.TempDir(), "ssh-key")
+	file, err := os.CreateTemp(os.TempDir(), "ssh-key")
 	if err != nil {
 		return "", err
 	}
@@ -119,7 +118,6 @@ func OverrideLoggerArtifactory(logLevel string) {
 	artlog.SetLogger(logger)
 }
 
-
 func HashFile(path string, hasher hash.Hash) (string, error) {
 	file, err := os.Open(path)
 	if err != nil {
@@ -133,7 +131,6 @@ func HashFile(path string, hasher hash.Hash) (string, error) {
 	return fmt.Sprintf("%x", hasher.Sum(nil)), nil
 }
 
-
 func TransfertDetailsToMeta(result *cmdutils.Result) []model.Metadata {
 	metadata := []model.Metadata{}
 	if result != nil && result.Reader() != nil {
@@ -142,19 +139,19 @@ func TransfertDetailsToMeta(result *cmdutils.Result) []model.Metadata {
 		for d := new(clientutils.FileTransferDetails); reader.NextRecord(d) == nil; d = new(clientutils.FileTransferDetails) {
 			if val, err := HashFile(d.SourcePath, sha1.New()); err == nil {
 				metadata = append(metadata, model.Metadata{
-					Name: "sha1",
+					Name:  "sha1",
 					Value: val,
 				})
 			}
 			if val, err := HashFile(d.SourcePath, md5.New()); err == nil {
 				metadata = append(metadata, model.Metadata{
-					Name: "md5",
+					Name:  "md5",
 					Value: val,
 				})
 			}
 			if d.Sha256 != "" {
 				metadata = append(metadata, model.Metadata{
-					Name: "sha256",
+					Name:  "sha256",
 					Value: d.Sha256,
 				})
 			}
@@ -163,18 +160,17 @@ func TransfertDetailsToMeta(result *cmdutils.Result) []model.Metadata {
 	return metadata
 }
 
-
 type Filter struct {
-	re *regexp.Regexp
+	re    *regexp.Regexp
 	index int
-	mode string
+	mode  string
 }
 
 func NewFilter(filter string) *Filter {
 	f := &Filter{
-		re: regexp.MustCompile(filter),
+		re:    regexp.MustCompile(filter),
 		index: -1,
-		mode: "ts",
+		mode:  "ts",
 	}
 	for _, key := range []string{"version", "asc", "desc"} {
 		if idx := f.re.SubexpIndex(key); idx != -1 {
@@ -242,7 +238,7 @@ func BaseDirectory() string {
 }
 
 func Log(format string, args ...interface{}) {
-	fmt.Fprintf(os.Stderr, format + "\n", args...)
+	fmt.Fprintf(os.Stderr, format+"\n", args...)
 }
 
 func Fatal(message string, args ...interface{}) {
@@ -254,6 +250,6 @@ func RetrieveJsonRequest(v interface{}) error {
 	return json.NewDecoder(os.Stdin).Decode(v)
 }
 
-func  SendJsonResponse(v interface{}) {
+func SendJsonResponse(v interface{}) {
 	json.NewEncoder(os.Stdout).Encode(v)
 }

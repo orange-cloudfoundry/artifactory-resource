@@ -66,7 +66,6 @@ func (c *Check) Run() {
 
 	matches := c.filter(results)
 
-
 	versions := []model.Version{}
 	for _, m := range matches {
 		versions = append(versions, model.Version{

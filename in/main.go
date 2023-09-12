@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"time"
@@ -33,8 +32,8 @@ func main() {
 	}
 	utils.OverrideLoggerArtifactory(request.Source.LogLevel)
 	cmd := In{
-		source: request.Source,
-		params: request.Params,
+		source:  request.Source,
+		params:  request.Params,
 		version: request.Version,
 	}
 	cmd.Run()
@@ -52,7 +51,7 @@ func (c *In) Run() {
 	}
 
 	c.source.Repository = utils.AddTrailingSlashIfNeeded(c.source.Repository)
-	dest   := utils.AddTrailingSlashIfNeeded(filepath.Join(utils.BaseDirectory(), c.params.Destination))
+	dest := utils.AddTrailingSlashIfNeeded(filepath.Join(utils.BaseDirectory(), c.params.Destination))
 	builder := spec.NewBuilder()
 	c.spec = builder.
 		Pattern(c.version.File).
@@ -74,8 +73,8 @@ func (c *In) Run() {
 
 	elapsed := time.Since(startDl)
 	utils.Log("finished downloading '%s' to '%s'", c.version.File, dest)
-	meta = append(meta,  model.Metadata{
-		Name: "elapsed",
+	meta = append(meta, model.Metadata{
+		Name:  "elapsed",
 		Value: elapsed.String(),
 	})
 
@@ -88,7 +87,7 @@ func (c *In) Run() {
 
 	utils.SendJsonResponse(model.Response{
 		Metadata: meta,
-		Version: c.version,
+		Version:  c.version,
 	})
 }
 
@@ -113,10 +112,9 @@ func (c In) download() ([]model.Metadata, error) {
 	return utils.TransfertDetailsToMeta(cmd.Result()), nil
 }
 
-
 func (c In) downloadProps(remoteFile string, propsFilename string) string {
 	builder := spec.NewBuilder()
-	spec := builder.
+	spc := builder.
 		Pattern(remoteFile).
 		Props(model.Properties{}.String()).
 		BuildSpec()
@@ -124,7 +122,7 @@ func (c In) downloadProps(remoteFile string, propsFilename string) string {
 	cmd := generic.NewSearchCommand()
 	cmd.
 		SetServerDetails(c.artdetails).
-		SetSpec(spec)
+		SetSpec(spc)
 
 	err := cmd.Run()
 	if err != nil {
@@ -138,14 +136,14 @@ func (c In) downloadProps(remoteFile string, propsFilename string) string {
 		utils.Fatal(fmt.Sprintf("error while reading properties for file '%s': %s", c.version.File, err))
 	}
 
-	if len, _ := reader.Length(); len != 1 {
+	if length, _ := reader.Length(); length != 1 {
 		utils.Fatal(fmt.Sprintf("error: found more than one property set for '%s'", c.version.File))
 	}
 
 	for res := new(artutils.SearchResult); reader.NextRecord(res) == nil; res = new(artutils.SearchResult) {
 		content, _ := yaml.Marshal(res.Props)
 		path := filepath.Join(utils.BaseDirectory(), propsFilename)
-		err = ioutil.WriteFile(path, content, 0644)
+		err = os.WriteFile(path, content, 0644)
 		if err != nil {
 			utils.Fatal(fmt.Sprintf("unable to write prop file '%s': %s", path, err))
 		}

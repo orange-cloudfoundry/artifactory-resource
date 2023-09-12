@@ -76,7 +76,7 @@ func (c *Out) Run() {
 	for _, file := range toUpload {
 		_, key := filter.Match(file, ts)
 		version = model.Version{
-			File: filepath.Join(c.source.Repository, file),
+			File:    filepath.Join(c.source.Repository, file),
 			Version: key,
 		}
 	}
@@ -88,11 +88,9 @@ func (c *Out) Run() {
 
 	utils.SendJsonResponse(model.Response{
 		Metadata: meta,
-		Version: version,
+		Version:  version,
 	})
 }
-
-
 
 func (c Out) getFilePath(p string) string {
 	src := utils.AddTrailingSlashIfNeeded(utils.BaseDirectory())
