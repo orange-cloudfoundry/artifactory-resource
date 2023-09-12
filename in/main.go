@@ -32,8 +32,8 @@ func main() {
 	}
 	utils.OverrideLoggerArtifactory(request.Source.LogLevel)
 	cmd := In{
-		source: request.Source,
-		params: request.Params,
+		source:  request.Source,
+		params:  request.Params,
 		version: request.Version,
 	}
 	cmd.Run()
@@ -51,7 +51,7 @@ func (c *In) Run() {
 	}
 
 	c.source.Repository = utils.AddTrailingSlashIfNeeded(c.source.Repository)
-	dest   := utils.AddTrailingSlashIfNeeded(filepath.Join(utils.BaseDirectory(), c.params.Destination))
+	dest := utils.AddTrailingSlashIfNeeded(filepath.Join(utils.BaseDirectory(), c.params.Destination))
 	builder := spec.NewBuilder()
 	c.spec = builder.
 		Pattern(c.version.File).
@@ -73,8 +73,8 @@ func (c *In) Run() {
 
 	elapsed := time.Since(startDl)
 	utils.Log("finished downloading '%s' to '%s'", c.version.File, dest)
-	meta = append(meta,  model.Metadata{
-		Name: "elapsed",
+	meta = append(meta, model.Metadata{
+		Name:  "elapsed",
 		Value: elapsed.String(),
 	})
 
@@ -87,7 +87,7 @@ func (c *In) Run() {
 
 	utils.SendJsonResponse(model.Response{
 		Metadata: meta,
-		Version: c.version,
+		Version:  c.version,
 	})
 }
 

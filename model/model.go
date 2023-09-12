@@ -35,7 +35,6 @@ func (p Properties) Merge(other Properties) {
 	}
 }
 
-
 type Version struct {
 	Version string `json:"version"`
 	File    string `json:"file"`
