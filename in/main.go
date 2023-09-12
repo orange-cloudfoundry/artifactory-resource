@@ -112,10 +112,9 @@ func (c In) download() ([]model.Metadata, error) {
 	return utils.TransfertDetailsToMeta(cmd.Result()), nil
 }
 
-
 func (c In) downloadProps(remoteFile string, propsFilename string) string {
 	builder := spec.NewBuilder()
-	spec := builder.
+	spc := builder.
 		Pattern(remoteFile).
 		Props(model.Properties{}.String()).
 		BuildSpec()
@@ -123,7 +122,7 @@ func (c In) downloadProps(remoteFile string, propsFilename string) string {
 	cmd := generic.NewSearchCommand()
 	cmd.
 		SetServerDetails(c.artdetails).
-		SetSpec(spec)
+		SetSpec(spc)
 
 	err := cmd.Run()
 	if err != nil {
