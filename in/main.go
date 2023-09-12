@@ -136,7 +136,7 @@ func (c In) downloadProps(remoteFile string, propsFilename string) string {
 		utils.Fatal(fmt.Sprintf("error while reading properties for file '%s': %s", c.version.File, err))
 	}
 
-	if len, _ := reader.Length(); len != 1 {
+	if length, _ := reader.Length(); length != 1 {
 		utils.Fatal(fmt.Sprintf("error: found more than one property set for '%s'", c.version.File))
 	}
 
