@@ -8,7 +8,6 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -90,14 +89,14 @@ func createCert(caCert string) error {
 	}
 	securityPath := confPath + ART_SECURITY_FOLDER
 	os.MkdirAll(securityPath, os.ModePerm)
-	return ioutil.WriteFile(securityPath+"cert.pem", []byte(caCert), 0644)
+	return os.WriteFile(securityPath+"cert.pem", []byte(caCert), 0644)
 }
 
 func createSshKeyPath(sshKey string) (string, error) {
 	if sshKey == "" {
 		return "", nil
 	}
-	file, err := ioutil.TempFile(os.TempDir(), "ssh-key")
+	file, err := os.CreateTemp(os.TempDir(), "ssh-key")
 	if err != nil {
 		return "", err
 	}

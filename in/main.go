@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"time"
@@ -145,7 +144,7 @@ func (c In) downloadProps(remoteFile string, propsFilename string) string {
 	for res := new(artutils.SearchResult); reader.NextRecord(res) == nil; res = new(artutils.SearchResult) {
 		content, _ := yaml.Marshal(res.Props)
 		path := filepath.Join(utils.BaseDirectory(), propsFilename)
-		err = ioutil.WriteFile(path, content, 0644)
+		err = os.WriteFile(path, content, 0644)
 		if err != nil {
 			utils.Fatal(fmt.Sprintf("unable to write prop file '%s': %s", path, err))
 		}
