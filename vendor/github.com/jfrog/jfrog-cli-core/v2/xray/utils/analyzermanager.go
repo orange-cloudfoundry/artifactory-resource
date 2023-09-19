@@ -8,6 +8,7 @@ import (
 	"os/exec"
 	"path"
 	"path/filepath"
+	"strings"
 
 	"github.com/jfrog/jfrog-cli-core/v2/utils/config"
 	"github.com/jfrog/jfrog-cli-core/v2/utils/coreutils"
@@ -22,7 +23,7 @@ const (
 	EntitlementsMinVersion                    = "3.66.5"
 	ApplicabilityFeatureId                    = "contextual_analysis"
 	AnalyzerManagerZipName                    = "analyzerManager.zip"
-	defaultAnalyzerManagerVersion             = "1.2.4.1953469"
+	defaultAnalyzerManagerVersion             = "1.3.2.2019257"
 	minAnalyzerManagerVersionForSast          = "1.3"
 	analyzerManagerDownloadPath               = "xsc-gen-exe-analyzer-manager-local/v1"
 	analyzerManagerDirName                    = "analyzerManager"
@@ -49,6 +50,10 @@ const (
 	NotScanned                ApplicabilityStatus = ""
 )
 
+func (as ApplicabilityStatus) String() string {
+	return string(as)
+}
+
 type JasScanType string
 
 const (
@@ -58,9 +63,13 @@ const (
 	Sast          JasScanType = "Sast"
 )
 
-func (st JasScanType) FormattedError(err error) error {
+func (jst JasScanType) String() string {
+	return string(jst)
+}
+
+func (jst JasScanType) FormattedError(err error) error {
 	if err != nil {
-		return fmt.Errorf(ErrFailedScannerRun, st, err.Error())
+		return fmt.Errorf(ErrFailedScannerRun, jst, err.Error())
 	}
 	return nil
 }
@@ -94,19 +103,25 @@ type AnalyzerManager struct {
 
 func (am *AnalyzerManager) Exec(configFile, scanCommand, workingDir string, serverDetails *config.ServerDetails) (err error) {
 	if err = SetAnalyzerManagerEnvVariables(serverDetails); err != nil {
-		return err
+		return
 	}
 	cmd := exec.Command(am.AnalyzerManagerFullPath, scanCommand, configFile, am.MultiScanId)
 	defer func() {
-		if !cmd.ProcessState.Exited() {
+		if cmd.ProcessState != nil && !cmd.ProcessState.Exited() {
 			if killProcessError := cmd.Process.Kill(); errorutils.CheckError(killProcessError) != nil {
 				err = errors.Join(err, killProcessError)
 			}
 		}
 	}()
 	cmd.Dir = workingDir
-	err = cmd.Run()
-	return errorutils.CheckError(err)
+	output, err := cmd.CombinedOutput()
+	if err != nil {
+		if len(output) > 0 {
+			log.Debug(fmt.Sprintf("%s %q output: %s", workingDir, strings.Join(cmd.Args, " "), string(output)))
+		}
+		err = errorutils.CheckError(err)
+	}
+	return
 }
 
 func GetAnalyzerManagerDownloadPath() (string, error) {
@@ -118,7 +133,7 @@ func GetAnalyzerManagerDownloadPath() (string, error) {
 }
 
 func GetAnalyzerManagerVersion() string {
-	if analyzerManagerVersion, exists := os.LookupEnv(jfrogCliAnalyzerManagerVersionEnvVariable); exists {
+	if analyzerManagerVersion := os.Getenv(jfrogCliAnalyzerManagerVersionEnvVariable); analyzerManagerVersion != "" {
 		return analyzerManagerVersion
 	}
 	return defaultAnalyzerManagerVersion

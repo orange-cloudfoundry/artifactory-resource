@@ -92,48 +92,16 @@ func printScanResultsTables(results *ExtendedScanResults, isBinaryScan, includeV
 			return
 		}
 	}
-	ConvertRunsPathsToRelative(results.SecretsScanResults)
 	if err = PrintSecretsTable(results.SecretsScanResults, results.EntitledForJas); err != nil {
 		return
 	}
-	ConvertRunsPathsToRelative(results.IacScanResults)
 	if err = PrintIacTable(results.IacScanResults, results.EntitledForJas); err != nil {
 		return
 	}
 	if !IsSastSupported() {
 		return
 	}
-	ConvertRunsPathsToRelative(results.SastScanResults)
 	return PrintSastTable(results.SastScanResults, results.EntitledForJas)
-}
-
-// The paths at Sarif runs are absolute.
-// Use this method if you need to translate the file paths to relative
-func ConvertRunsPathsToRelative(runs []*sarif.Run) {
-	for _, sarifRun := range runs {
-		for _, invocation := range sarifRun.Invocations {
-			if wd := GetInvocationWorkingDirectory(invocation); len(wd) > 0 {
-				ConvertRunPathsToRelative(sarifRun, wd)
-			}
-		}
-	}
-}
-
-func ConvertRunPathsToRelative(sarifRun *sarif.Run, wd string) {
-	for _, sarifResult := range sarifRun.Results {
-		// Convert paths in locations
-		for _, location := range sarifResult.Locations {
-			SetLocationFileName(location, ExtractRelativePath(GetLocationFileName(location), wd))
-		}
-		// Convert paths in code flows
-		for _, codeFlows := range sarifResult.CodeFlows {
-			for _, threadFlows := range codeFlows.ThreadFlows {
-				for _, location := range threadFlows.Locations {
-					SetLocationFileName(location.Location, ExtractRelativePath(GetLocationFileName(location.Location), wd))
-				}
-			}
-		}
-	}
 }
 
 func printMessages(messages []string) {
@@ -240,7 +208,7 @@ func addXrayCveIssueToSarifRun(cves []formats.CveRow, issueId, severity, file st
 	if err != nil {
 		return err
 	}
-	cveId := getCves(cves, issueId)
+	cveId := GetIssueIdentifier(cves, issueId)
 	msg := getVulnerabilityOrViolationSarifHeadline(impactedDependencyName, impactedDependencyVersion, cveId)
 	location := sarif.NewLocation().WithPhysicalLocation(sarif.NewPhysicalLocation().WithArtifactLocation(sarif.NewArtifactLocation().WithUri(file)))
 
@@ -324,20 +292,20 @@ func convertScanToSimpleJson(extendedResults *ExtendedScanResults, errors []form
 	return jsonTable, nil
 }
 
-func getCves(cvesRow []formats.CveRow, issueId string) string {
-	var cvesStr string
+func GetIssueIdentifier(cvesRow []formats.CveRow, issueId string) string {
+	var identifier string
 	if len(cvesRow) != 0 {
 		var cvesBuilder strings.Builder
 		for _, cve := range cvesRow {
 			cvesBuilder.WriteString(cve.Id + ", ")
 		}
-		cvesStr = strings.TrimSuffix(cvesBuilder.String(), ", ")
+		identifier = strings.TrimSuffix(cvesBuilder.String(), ", ")
 	}
-	if cvesStr == "" {
-		cvesStr = issueId
+	if identifier == "" {
+		identifier = issueId
 	}
 
-	return cvesStr
+	return identifier
 }
 
 func getVulnerabilityOrViolationSarifHeadline(depName, version, key string) string {
@@ -359,7 +327,7 @@ func getSarifTableDescription(formattedDirectDependencies, maxCveScore, applicab
 	if len(fixedVersions) > 0 {
 		descriptionFixVersions = strings.Join(fixedVersions, ", ")
 	}
-	if applicable == string(NotScanned) {
+	if applicable == NotScanned.String() {
 		return fmt.Sprintf("| Severity Score | Direct Dependencies | Fixed Versions     |\n| :---:        |    :----:   |          :---: |\n| %s      | %s       | %s   |",
 			maxCveScore, formattedDirectDependencies, descriptionFixVersions)
 	}
