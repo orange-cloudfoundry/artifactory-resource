@@ -18,7 +18,7 @@ github.com/Microsoft/go-winio/internal/fs
 github.com/Microsoft/go-winio/internal/socket
 github.com/Microsoft/go-winio/internal/stringbuffer
 github.com/Microsoft/go-winio/pkg/guid
-# github.com/ProtonMail/go-crypto v0.0.0-20230828082145-3c4c8a2d2371
+# github.com/ProtonMail/go-crypto v0.0.0-20230923063757-afb1ddc0824c
 ## explicit; go 1.13
 github.com/ProtonMail/go-crypto/bitcurves
 github.com/ProtonMail/go-crypto/brainpool
@@ -203,7 +203,7 @@ github.com/jbenet/go-context/io
 ## explicit; go 1.16
 github.com/jedib0t/go-pretty/v6/table
 github.com/jedib0t/go-pretty/v6/text
-# github.com/jfrog/build-info-go v1.9.10
+# github.com/jfrog/build-info-go v1.9.12
 ## explicit; go 1.20
 github.com/jfrog/build-info-go/build
 github.com/jfrog/build-info-go/build/utils
@@ -225,7 +225,7 @@ github.com/jfrog/gofrog/parallel
 github.com/jfrog/gofrog/stringutils
 github.com/jfrog/gofrog/unarchive
 github.com/jfrog/gofrog/version
-# github.com/jfrog/jfrog-cli-core/v2 v2.43.3
+# github.com/jfrog/jfrog-cli-core/v2 v2.44.0
 ## explicit; go 1.20
 github.com/jfrog/jfrog-cli-core/v2/artifactory/commands/generic
 github.com/jfrog/jfrog-cli-core/v2/artifactory/commands/transferfiles/api
@@ -244,7 +244,7 @@ github.com/jfrog/jfrog-cli-core/v2/xray/commands/scan
 github.com/jfrog/jfrog-cli-core/v2/xray/formats
 github.com/jfrog/jfrog-cli-core/v2/xray/scangraph
 github.com/jfrog/jfrog-cli-core/v2/xray/utils
-# github.com/jfrog/jfrog-client-go v1.32.3
+# github.com/jfrog/jfrog-client-go v1.34.0
 ## explicit; go 1.20
 github.com/jfrog/jfrog-client-go/access
 github.com/jfrog/jfrog-client-go/access/auth
@@ -330,7 +330,7 @@ github.com/mitchellh/mapstructure
 # github.com/nwaples/rardecode v1.1.3
 ## explicit
 github.com/nwaples/rardecode
-# github.com/owenrumney/go-sarif/v2 v2.2.0
+# github.com/owenrumney/go-sarif/v2 v2.2.2
 ## explicit; go 1.16
 github.com/owenrumney/go-sarif/v2/sarif
 # github.com/pelletier/go-toml/v2 v2.0.8
