@@ -5,7 +5,7 @@ go 1.21
 require (
 	github.com/Masterminds/semver v1.5.0
 	github.com/jfrog/jfrog-cli-core/v2 v2.46.2
-	github.com/jfrog/jfrog-client-go v1.34.5
+	github.com/jfrog/jfrog-client-go v1.35.0
 	gopkg.in/yaml.v3 v3.0.1
 )
 
@@ -38,8 +38,8 @@ require (
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/jbenet/go-context v0.0.0-20150711004518-d14ea06fba99 // indirect
 	github.com/jedib0t/go-pretty/v6 v6.4.8 // indirect
-	github.com/jfrog/build-info-go v1.9.15 // indirect
-	github.com/jfrog/gofrog v1.3.1 // indirect
+	github.com/jfrog/build-info-go v1.9.16 // indirect
+	github.com/jfrog/gofrog v1.3.2 // indirect
 	github.com/kevinburke/ssh_config v1.2.0 // indirect
 	github.com/klauspost/compress v1.17.0 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.5 // indirect
