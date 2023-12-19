@@ -88,8 +88,8 @@ github.com/jfrog/build-info-go v1.9.17 h1:sUA6V3P8i+awYlK7dkwm4l6IuLE2W964F5Pb18
 github.com/jfrog/build-info-go v1.9.17/go.mod h1:/5VZXH2Ud0IK3cOFwPykjwPOaEcHhzzbjnRiou+YKpM=
 github.com/jfrog/gofrog v1.3.2 h1:TktKP+PdZdxjkYZxWWIq4DkTGSYtr9Slsy+egZpEhUY=
 github.com/jfrog/gofrog v1.3.2/go.mod h1:AQo5Fq0G9nDEF6icH7MYQK0iohR4HuEAXl8jaxRuT6Q=
-github.com/jfrog/jfrog-cli-core/v2 v2.47.5 h1:UN4xy1FuYSFaZYuF2hEpVDUeHgLnLoWQakBKSQMSQv4=
-github.com/jfrog/jfrog-cli-core/v2 v2.47.5/go.mod h1:ACQGeGw1fRjIkI37SMaqyrcTrqh4N6w8yJ6HGYPfM/Q=
+github.com/jfrog/jfrog-cli-core/v2 v2.47.6 h1:k8elejLkXA+4SCExynlMElYDFtMUb0TSWc7CFkpFVMc=
+github.com/jfrog/jfrog-cli-core/v2 v2.47.6/go.mod h1:p/hr1BkO3BVSVOMkAL599FAQaBK7O+HPHHvcdwm+jKs=
 github.com/jfrog/jfrog-client-go v1.35.2 h1:JtGqf7KK+wcx/Pf5b0MUrkvMc+tCtIi0cB5TxFjQxnk=
 github.com/jfrog/jfrog-client-go v1.35.2/go.mod h1:p80RAyfQQ78M2r5LUw1uUTA8yxTmTNoPy7eJ4IzOge0=
 github.com/kevinburke/ssh_config v1.2.0 h1:x584FjTGwHzMwvHx18PXxbBVzfnxogHaAReU4gf13a4=
@@ -236,8 +236,8 @@ golang.org/x/crypto v0.0.0-20210921155107-089bfa567519/go.mod h1:GvvjBRRGRdwPK5y
 golang.org/x/crypto v0.0.0-20220622213112-05595931fe9d/go.mod h1:IxCIyHEi3zRg3s0A5j5BB6A9Jmi73HwBIUl50j+osU4=
 golang.org/x/crypto v0.3.1-0.20221117191849-2c476679df9a/go.mod h1:hebNnKkNXi2UzZN1eVRvBB7co0a+JxK6XbPiWVs/3J4=
 golang.org/x/crypto v0.7.0/go.mod h1:pYwdfH91IfpZVANVyUOhSIPZaFoJGxTFbZhFTx+dXZU=
-golang.org/x/crypto v0.16.0 h1:mMMrFzRSCF0GvB7Ne27XVtVAaXLrPmgPC7/v0tkwHaY=
-golang.org/x/crypto v0.16.0/go.mod h1:gCAAfMLgwOJRpTjQ2zCCt2OcSfYMTeZVSRtQlPC7Nq4=
+golang.org/x/crypto v0.17.0 h1:r8bRNjWL3GshPW3gkd+RpvzWrZAwPS49OmTGZ/uhM4k=
+golang.org/x/crypto v0.17.0/go.mod h1:gCAAfMLgwOJRpTjQ2zCCt2OcSfYMTeZVSRtQlPC7Nq4=
 golang.org/x/exp v0.0.0-20231214170342-aacd6d4b4611 h1:qCEDpW1G+vcj3Y7Fy52pEM1AWm3abj8WimGYejI3SC4=
 golang.org/x/exp v0.0.0-20231214170342-aacd6d4b4611/go.mod h1:iRJReGqOEeBhDZGkGbynYwcHlctCvnjTYIamk7uXpHI=
 golang.org/x/mod v0.6.0-dev.0.20220419223038-86c51ed26bb4/go.mod h1:jJ57K6gSWd91VN4djpZkiMVwK6gcyfeH4XE8wZrZaV4=
