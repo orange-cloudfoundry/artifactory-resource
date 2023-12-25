@@ -205,7 +205,7 @@ github.com/jfrog/build-info-go/entities
 github.com/jfrog/build-info-go/utils
 github.com/jfrog/build-info-go/utils/compareutils
 github.com/jfrog/build-info-go/utils/pythonutils
-# github.com/jfrog/gofrog v1.3.2
+# github.com/jfrog/gofrog v1.4.0
 ## explicit; go 1.20
 github.com/jfrog/gofrog/datastructures
 github.com/jfrog/gofrog/io
@@ -227,7 +227,7 @@ github.com/jfrog/jfrog-cli-core/v2/xray/commands/scan
 github.com/jfrog/jfrog-cli-core/v2/xray/formats
 github.com/jfrog/jfrog-cli-core/v2/xray/scangraph
 github.com/jfrog/jfrog-cli-core/v2/xray/utils
-# github.com/jfrog/jfrog-client-go v1.35.3
+# github.com/jfrog/jfrog-client-go v1.35.4
 ## explicit; go 1.20
 github.com/jfrog/jfrog-client-go/access
 github.com/jfrog/jfrog-client-go/access/auth
