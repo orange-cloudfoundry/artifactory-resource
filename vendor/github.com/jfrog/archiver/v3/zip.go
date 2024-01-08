@@ -223,8 +223,9 @@ func (z *Zip) Unarchive(source, destination string) error {
 		}
 	}
 
+	dirModeKeeper := make(map[string]os.FileMode)
 	for {
-		err := z.extractNext(destination)
+		err := z.extractNext(destination, dirModeKeeper)
 		if err == io.EOF {
 			break
 		}
@@ -237,10 +238,10 @@ func (z *Zip) Unarchive(source, destination string) error {
 		}
 	}
 
-	return nil
+	return restoreDirMode(dirModeKeeper)
 }
 
-func (z *Zip) extractNext(to string) error {
+func (z *Zip) extractNext(to string, dirModeKeeper map[string]os.FileMode) error {
 	f, err := z.Read()
 	if err != nil {
 		return err // don't wrap error; calling loop must break on io.EOF
@@ -267,17 +268,18 @@ func (z *Zip) extractNext(to string) error {
 			header.Name = header.Name[slash+1:]
 		}
 	}
+
+	to = filepath.Join(to, header.Name)
+	// if a directory, no content; simply make the directory and return
+	if f.IsDir() {
+		addDirAndModeToKeeper(dirModeKeeper, to, f)
+		return mkdir(to, 0755)
+	}
+
 	return z.extractFile(f, to, &header)
 }
 
 func (z *Zip) extractFile(f File, to string, header *zip.FileHeader) error {
-	to = filepath.Join(to, header.Name)
-
-	// if a directory, no content; simply make the directory and return
-	if f.IsDir() {
-		return mkdir(to, f.Mode())
-	}
-
 	// do not overwrite existing files, if configured
 	if !z.OverwriteExisting && fileExists(to) {
 		return fmt.Errorf("file already exists: %s", to)

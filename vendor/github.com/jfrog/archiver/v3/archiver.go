@@ -289,6 +289,23 @@ func mkdir(dirPath string, dirMode os.FileMode) error {
 	return nil
 }
 
+// Restore the original directories mode after the Unarchive operation
+func restoreDirMode(dirModeKeeper map[string]os.FileMode) error {
+	for dirname, mode := range dirModeKeeper {
+		if err := os.Chmod(dirname, mode); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func addDirAndModeToKeeper(dirModeKeeper map[string]os.FileMode, destination string, f File) {
+	if f.IsDir() {
+		// Keep the Octal representation
+		dirModeKeeper[destination] = f.Mode().Perm()
+	}
+}
+
 func writeNewFile(fpath string, in io.Reader, fm os.FileMode) error {
 	err := os.MkdirAll(filepath.Dir(fpath), 0755)
 	if err != nil {

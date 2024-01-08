@@ -5,7 +5,7 @@ go 1.21
 require (
 	github.com/Masterminds/semver v1.5.0
 	github.com/jfrog/jfrog-cli-core/v2 v2.47.9
-	github.com/jfrog/jfrog-client-go v1.35.5
+	github.com/jfrog/jfrog-client-go v1.35.6
 	gopkg.in/yaml.v3 v3.0.1
 )
 
@@ -37,8 +37,9 @@ require (
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/jbenet/go-context v0.0.0-20150711004518-d14ea06fba99 // indirect
 	github.com/jedib0t/go-pretty/v6 v6.4.8 // indirect
-	github.com/jfrog/build-info-go v1.9.19 // indirect
-	github.com/jfrog/gofrog v1.4.0 // indirect
+	github.com/jfrog/archiver/v3 v3.5.3 // indirect
+	github.com/jfrog/build-info-go v1.9.20 // indirect
+	github.com/jfrog/gofrog v1.4.1 // indirect
 	github.com/kevinburke/ssh_config v1.2.0 // indirect
 	github.com/klauspost/compress v1.17.0 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.5 // indirect
@@ -48,7 +49,6 @@ require (
 	github.com/mattn/go-isatty v0.0.19 // indirect
 	github.com/mattn/go-runewidth v0.0.14 // indirect
 	github.com/mattn/go-tty v0.0.5 // indirect
-	github.com/mholt/archiver/v3 v3.5.1 // indirect
 	github.com/minio/sha256-simd v1.0.1 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/nwaples/rardecode v1.1.3 // indirect

@@ -103,8 +103,9 @@ func (r *Rar) Unarchive(source, destination string) error {
 	}
 	defer r.Close()
 
+	dirModeKeeper := make(map[string]os.FileMode)
 	for {
-		err := r.unrarNext(destination)
+		err := r.unrarNext(destination, dirModeKeeper)
 		if err == io.EOF {
 			break
 		}
@@ -117,7 +118,7 @@ func (r *Rar) Unarchive(source, destination string) error {
 		}
 	}
 
-	return nil
+	return restoreDirMode(dirModeKeeper)
 }
 
 // addTopLevelFolder scans the files contained inside
@@ -155,7 +156,7 @@ func (r *Rar) addTopLevelFolder(sourceArchive, destination string) (string, erro
 	return destination, nil
 }
 
-func (r *Rar) unrarNext(to string) error {
+func (r *Rar) unrarNext(to string, dirModeKeeper map[string]os.FileMode) error {
 	f, err := r.Read()
 	if err != nil {
 		return err // don't wrap error; calling loop must break on io.EOF
@@ -183,7 +184,10 @@ func (r *Rar) unrarNext(to string) error {
 		}
 	}
 
-	return r.unrarFile(f, filepath.Join(to, header.Name))
+	to = filepath.Join(to, header.Name)
+	addDirAndModeToKeeper(dirModeKeeper, to, f)
+
+	return r.unrarFile(f, to)
 }
 
 func (r *Rar) unrarFile(f File, to string) error {
@@ -199,12 +203,12 @@ func (r *Rar) unrarFile(f File, to string) error {
 
 	if f.IsDir() {
 		if fileExists("testdata") {
-			err := os.Chmod(to, hdr.Mode())
+			err := os.Chmod(to, 0755)
 			if err != nil {
 				return fmt.Errorf("changing dir mode: %v", err)
 			}
 		} else {
-			err := mkdir(to, hdr.Mode())
+			err := mkdir(to, 0755)
 			if err != nil {
 				return fmt.Errorf("making directories: %v", err)
 			}
