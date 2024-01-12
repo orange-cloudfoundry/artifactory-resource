@@ -5,7 +5,7 @@ dario.cat/mergo
 ## explicit; go 1.16
 github.com/BurntSushi/toml
 github.com/BurntSushi/toml/internal
-# github.com/CycloneDX/cyclonedx-go v0.7.2
+# github.com/CycloneDX/cyclonedx-go v0.8.0
 ## explicit; go 1.18
 github.com/CycloneDX/cyclonedx-go
 # github.com/Masterminds/semver v1.5.0
@@ -38,9 +38,10 @@ github.com/ProtonMail/go-crypto/openpgp/internal/ecc
 github.com/ProtonMail/go-crypto/openpgp/internal/encoding
 github.com/ProtonMail/go-crypto/openpgp/packet
 github.com/ProtonMail/go-crypto/openpgp/s2k
-# github.com/andybalholm/brotli v1.0.5
-## explicit; go 1.12
+# github.com/andybalholm/brotli v1.1.0
+## explicit; go 1.13
 github.com/andybalholm/brotli
+github.com/andybalholm/brotli/matchfinder
 # github.com/buger/jsonparser v1.1.1
 ## explicit; go 1.13
 github.com/buger/jsonparser
@@ -51,7 +52,10 @@ github.com/c-bata/go-prompt/internal/bisect
 github.com/c-bata/go-prompt/internal/debug
 github.com/c-bata/go-prompt/internal/strings
 github.com/c-bata/go-prompt/internal/term
-# github.com/cloudflare/circl v1.3.3
+# github.com/chzyer/readline v1.5.1
+## explicit; go 1.15
+github.com/chzyer/readline
+# github.com/cloudflare/circl v1.3.7
 ## explicit; go 1.19
 github.com/cloudflare/circl/dh/x25519
 github.com/cloudflare/circl/dh/x448
@@ -65,9 +69,6 @@ github.com/cloudflare/circl/math/mlsbset
 github.com/cloudflare/circl/sign
 github.com/cloudflare/circl/sign/ed25519
 github.com/cloudflare/circl/sign/ed448
-# github.com/cpuguy83/go-md2man/v2 v2.0.2
-## explicit; go 1.11
-github.com/cpuguy83/go-md2man/v2/md2man
 # github.com/cyphar/filepath-securejoin v0.2.4
 ## explicit; go 1.13
 github.com/cyphar/filepath-securejoin
@@ -188,8 +189,8 @@ github.com/hashicorp/hcl/json/token
 # github.com/jbenet/go-context v0.0.0-20150711004518-d14ea06fba99
 ## explicit
 github.com/jbenet/go-context/io
-# github.com/jedib0t/go-pretty/v6 v6.4.8
-## explicit; go 1.16
+# github.com/jedib0t/go-pretty/v6 v6.5.2
+## explicit; go 1.17
 github.com/jedib0t/go-pretty/v6/table
 github.com/jedib0t/go-pretty/v6/text
 # github.com/jfrog/archiver/v3 v3.5.3
@@ -208,7 +209,7 @@ github.com/jfrog/build-info-go/entities
 github.com/jfrog/build-info-go/utils
 github.com/jfrog/build-info-go/utils/compareutils
 github.com/jfrog/build-info-go/utils/pythonutils
-# github.com/jfrog/gofrog v1.4.1
+# github.com/jfrog/gofrog v1.5.0
 ## explicit; go 1.20
 github.com/jfrog/gofrog/datastructures
 github.com/jfrog/gofrog/io
@@ -216,14 +217,18 @@ github.com/jfrog/gofrog/parallel
 github.com/jfrog/gofrog/stringutils
 github.com/jfrog/gofrog/unarchive
 github.com/jfrog/gofrog/version
-# github.com/jfrog/jfrog-cli-core/v2 v2.47.9
+# github.com/jfrog/jfrog-cli-core/v2 v2.47.10
 ## explicit; go 1.20
 github.com/jfrog/jfrog-cli-core/v2/artifactory/commands/generic
 github.com/jfrog/jfrog-cli-core/v2/artifactory/commands/utils
 github.com/jfrog/jfrog-cli-core/v2/artifactory/utils
+github.com/jfrog/jfrog-cli-core/v2/common/build
+github.com/jfrog/jfrog-cli-core/v2/common/format
+github.com/jfrog/jfrog-cli-core/v2/common/project
 github.com/jfrog/jfrog-cli-core/v2/common/spec
 github.com/jfrog/jfrog-cli-core/v2/utils/config
 github.com/jfrog/jfrog-cli-core/v2/utils/coreutils
+github.com/jfrog/jfrog-cli-core/v2/utils/ioutils
 github.com/jfrog/jfrog-cli-core/v2/utils/lock
 github.com/jfrog/jfrog-cli-core/v2/utils/log
 github.com/jfrog/jfrog-cli-core/v2/xray/commands/scan
@@ -271,8 +276,8 @@ github.com/jfrog/jfrog-client-go/xray/services/utils
 # github.com/kevinburke/ssh_config v1.2.0
 ## explicit
 github.com/kevinburke/ssh_config
-# github.com/klauspost/compress v1.17.0
-## explicit; go 1.18
+# github.com/klauspost/compress v1.17.4
+## explicit; go 1.19
 github.com/klauspost/compress
 github.com/klauspost/compress/flate
 github.com/klauspost/compress/fse
@@ -283,7 +288,7 @@ github.com/klauspost/compress/internal/snapref
 github.com/klauspost/compress/zip
 github.com/klauspost/compress/zstd
 github.com/klauspost/compress/zstd/internal/xxhash
-# github.com/klauspost/cpuid/v2 v2.2.5
+# github.com/klauspost/cpuid/v2 v2.2.6
 ## explicit; go 1.15
 github.com/klauspost/cpuid/v2
 # github.com/klauspost/pgzip v1.2.6
@@ -292,13 +297,18 @@ github.com/klauspost/pgzip
 # github.com/magiconair/properties v1.8.7
 ## explicit; go 1.19
 github.com/magiconair/properties
+# github.com/manifoldco/promptui v0.9.0
+## explicit; go 1.12
+github.com/manifoldco/promptui
+github.com/manifoldco/promptui/list
+github.com/manifoldco/promptui/screenbuf
 # github.com/mattn/go-colorable v0.1.13
 ## explicit; go 1.15
 github.com/mattn/go-colorable
-# github.com/mattn/go-isatty v0.0.19
+# github.com/mattn/go-isatty v0.0.20
 ## explicit; go 1.15
 github.com/mattn/go-isatty
-# github.com/mattn/go-runewidth v0.0.14
+# github.com/mattn/go-runewidth v0.0.15
 ## explicit; go 1.9
 github.com/mattn/go-runewidth
 # github.com/mattn/go-tty v0.0.5
@@ -316,14 +326,14 @@ github.com/nwaples/rardecode
 # github.com/owenrumney/go-sarif/v2 v2.3.0
 ## explicit; go 1.16
 github.com/owenrumney/go-sarif/v2/sarif
-# github.com/pelletier/go-toml/v2 v2.1.0
+# github.com/pelletier/go-toml/v2 v2.1.1
 ## explicit; go 1.16
 github.com/pelletier/go-toml/v2
 github.com/pelletier/go-toml/v2/internal/characters
 github.com/pelletier/go-toml/v2/internal/danger
 github.com/pelletier/go-toml/v2/internal/tracker
 github.com/pelletier/go-toml/v2/unstable
-# github.com/pierrec/lz4/v4 v4.1.18
+# github.com/pierrec/lz4/v4 v4.1.21
 ## explicit; go 1.14
 github.com/pierrec/lz4/v4
 github.com/pierrec/lz4/v4/internal/lz4block
@@ -335,7 +345,7 @@ github.com/pierrec/lz4/v4/internal/xxh32
 github.com/pjbgf/sha1cd
 github.com/pjbgf/sha1cd/internal
 github.com/pjbgf/sha1cd/ubc
-# github.com/pkg/browser v0.0.0-20210911075715-681adbf594b8
+# github.com/pkg/browser v0.0.0-20240102092130-5ac0b6a4141c
 ## explicit; go 1.14
 github.com/pkg/browser
 # github.com/pkg/term v1.2.0-beta.2
@@ -344,9 +354,6 @@ github.com/pkg/term/termios
 # github.com/rivo/uniseg v0.4.4
 ## explicit; go 1.18
 github.com/rivo/uniseg
-# github.com/russross/blackfriday/v2 v2.1.0
-## explicit
-github.com/russross/blackfriday/v2
 # github.com/sagikazarmark/locafero v0.4.0
 ## explicit; go 1.20
 github.com/sagikazarmark/locafero
@@ -397,9 +404,6 @@ github.com/ulikunitz/xz
 github.com/ulikunitz/xz/internal/hash
 github.com/ulikunitz/xz/internal/xlog
 github.com/ulikunitz/xz/lzma
-# github.com/urfave/cli v1.22.14
-## explicit; go 1.11
-github.com/urfave/cli
 # github.com/xanzy/ssh-agent v0.3.3
 ## explicit; go 1.16
 github.com/xanzy/ssh-agent
@@ -409,13 +413,10 @@ github.com/xi2/xz
 # github.com/xo/terminfo v0.0.0-20220910002029-abceb7e1c41e
 ## explicit; go 1.19
 github.com/xo/terminfo
-# go.uber.org/atomic v1.9.0
-## explicit; go 1.13
-go.uber.org/atomic
-# go.uber.org/multierr v1.9.0
+# go.uber.org/multierr v1.11.0
 ## explicit; go 1.19
 go.uber.org/multierr
-# golang.org/x/crypto v0.17.0
+# golang.org/x/crypto v0.18.0
 ## explicit; go 1.18
 golang.org/x/crypto/argon2
 golang.org/x/crypto/blake2b
@@ -432,7 +433,7 @@ golang.org/x/crypto/ssh
 golang.org/x/crypto/ssh/agent
 golang.org/x/crypto/ssh/internal/bcrypt_pbkdf
 golang.org/x/crypto/ssh/knownhosts
-# golang.org/x/exp v0.0.0-20231226003508-02704c960a9b
+# golang.org/x/exp v0.0.0-20240110193028-0dcbfd608b1e
 ## explicit; go 1.20
 golang.org/x/exp/constraints
 golang.org/x/exp/maps
@@ -443,19 +444,19 @@ golang.org/x/exp/slog/internal/buffer
 # golang.org/x/mod v0.14.0
 ## explicit; go 1.18
 golang.org/x/mod/semver
-# golang.org/x/net v0.19.0
+# golang.org/x/net v0.20.0
 ## explicit; go 1.18
 golang.org/x/net/context
 golang.org/x/net/internal/socks
 golang.org/x/net/proxy
-# golang.org/x/sys v0.15.0
+# golang.org/x/sys v0.16.0
 ## explicit; go 1.18
 golang.org/x/sys/cpu
 golang.org/x/sys/execabs
 golang.org/x/sys/plan9
 golang.org/x/sys/unix
 golang.org/x/sys/windows
-# golang.org/x/term v0.15.0
+# golang.org/x/term v0.16.0
 ## explicit; go 1.18
 golang.org/x/term
 # golang.org/x/text v0.14.0
@@ -474,7 +475,7 @@ golang.org/x/text/language
 golang.org/x/text/runes
 golang.org/x/text/transform
 golang.org/x/text/unicode/norm
-# golang.org/x/tools v0.16.0
+# golang.org/x/tools v0.17.0
 ## explicit; go 1.18
 golang.org/x/tools/cmd/stringer
 golang.org/x/tools/go/gcexportdata

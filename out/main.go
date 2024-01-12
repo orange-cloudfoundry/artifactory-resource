@@ -9,6 +9,7 @@ import (
 
 	"github.com/jfrog/jfrog-cli-core/v2/artifactory/commands/generic"
 	artutils "github.com/jfrog/jfrog-cli-core/v2/artifactory/utils"
+	buildutils "github.com/jfrog/jfrog-cli-core/v2/common/build"
 	"github.com/jfrog/jfrog-cli-core/v2/common/spec"
 	"github.com/jfrog/jfrog-cli-core/v2/utils/config"
 	"github.com/orange-cloudfoundry/artifactory-resource/model"
@@ -102,7 +103,7 @@ func (c Out) upload(spec *spec.SpecFiles) ([]model.Metadata, error) {
 	cmd := generic.NewUploadCommand()
 	cmd.SetUploadConfiguration(&artutils.UploadConfiguration{
 		Threads: c.source.Threads,
-	}).SetBuildConfiguration(&artutils.BuildConfiguration{})
+	}).SetBuildConfiguration(&buildutils.BuildConfiguration{})
 
 	cmd.
 		SetServerDetails(c.artdetails).

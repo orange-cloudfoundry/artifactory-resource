@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	buildutils "github.com/jfrog/jfrog-cli-core/v2/common/build"
 	"os"
 	"path/filepath"
 	"time"
@@ -97,7 +98,7 @@ func (c In) download() ([]model.Metadata, error) {
 		Threads:      c.source.Threads,
 		SplitCount:   c.params.SplitCount,
 		MinSplitSize: int64(c.params.MinSplit),
-	}).SetBuildConfiguration(&artutils.BuildConfiguration{})
+	}).SetBuildConfiguration(&buildutils.BuildConfiguration{})
 
 	cmd.
 		SetServerDetails(c.artdetails).
