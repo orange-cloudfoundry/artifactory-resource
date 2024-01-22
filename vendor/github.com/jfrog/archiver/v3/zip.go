@@ -5,7 +5,6 @@ import (
 	"compress/flate"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"log"
 	"os"
 	"path"
@@ -117,7 +116,7 @@ func registerDecompressor(zr *zip.Reader) {
 		if err != nil {
 			return nil
 		}
-		return ioutil.NopCloser(xr)
+		return io.NopCloser(xr)
 	})
 }
 
