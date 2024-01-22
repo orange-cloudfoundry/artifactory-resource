@@ -8,3 +8,8 @@ _gitignore
 builds/
 *.test
 .*.sw*
+
+# IDEs
+.vscode
+.idea
+*.iml

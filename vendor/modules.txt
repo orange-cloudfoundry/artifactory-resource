@@ -18,7 +18,7 @@ github.com/Microsoft/go-winio/internal/fs
 github.com/Microsoft/go-winio/internal/socket
 github.com/Microsoft/go-winio/internal/stringbuffer
 github.com/Microsoft/go-winio/pkg/guid
-# github.com/ProtonMail/go-crypto v0.0.0-20230923063757-afb1ddc0824c
+# github.com/ProtonMail/go-crypto v1.0.0
 ## explicit; go 1.13
 github.com/ProtonMail/go-crypto/bitcurves
 github.com/ProtonMail/go-crypto/brainpool
@@ -193,10 +193,10 @@ github.com/jbenet/go-context/io
 ## explicit; go 1.17
 github.com/jedib0t/go-pretty/v6/table
 github.com/jedib0t/go-pretty/v6/text
-# github.com/jfrog/archiver/v3 v3.5.3
-## explicit; go 1.13
+# github.com/jfrog/archiver/v3 v3.6.0
+## explicit; go 1.20
 github.com/jfrog/archiver/v3
-# github.com/jfrog/build-info-go v1.9.20
+# github.com/jfrog/build-info-go v1.9.21
 ## explicit; go 1.20
 github.com/jfrog/build-info-go/build
 github.com/jfrog/build-info-go/build/utils
@@ -209,7 +209,7 @@ github.com/jfrog/build-info-go/entities
 github.com/jfrog/build-info-go/utils
 github.com/jfrog/build-info-go/utils/compareutils
 github.com/jfrog/build-info-go/utils/pythonutils
-# github.com/jfrog/gofrog v1.5.0
+# github.com/jfrog/gofrog v1.5.1
 ## explicit; go 1.20
 github.com/jfrog/gofrog/datastructures
 github.com/jfrog/gofrog/io
@@ -235,7 +235,7 @@ github.com/jfrog/jfrog-cli-core/v2/xray/commands/scan
 github.com/jfrog/jfrog-cli-core/v2/xray/formats
 github.com/jfrog/jfrog-cli-core/v2/xray/scangraph
 github.com/jfrog/jfrog-cli-core/v2/xray/utils
-# github.com/jfrog/jfrog-client-go v1.35.6
+# github.com/jfrog/jfrog-client-go v1.36.0
 ## explicit; go 1.20
 github.com/jfrog/jfrog-client-go/access
 github.com/jfrog/jfrog-client-go/access/auth
@@ -433,7 +433,7 @@ golang.org/x/crypto/ssh
 golang.org/x/crypto/ssh/agent
 golang.org/x/crypto/ssh/internal/bcrypt_pbkdf
 golang.org/x/crypto/ssh/knownhosts
-# golang.org/x/exp v0.0.0-20240110193028-0dcbfd608b1e
+# golang.org/x/exp v0.0.0-20240119083558-1b970713d09a
 ## explicit; go 1.20
 golang.org/x/exp/constraints
 golang.org/x/exp/maps
