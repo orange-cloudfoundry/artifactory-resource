@@ -189,7 +189,7 @@ github.com/hashicorp/hcl/json/token
 # github.com/jbenet/go-context v0.0.0-20150711004518-d14ea06fba99
 ## explicit
 github.com/jbenet/go-context/io
-# github.com/jedib0t/go-pretty/v6 v6.5.2
+# github.com/jedib0t/go-pretty/v6 v6.5.3
 ## explicit; go 1.17
 github.com/jedib0t/go-pretty/v6/table
 github.com/jedib0t/go-pretty/v6/text
@@ -217,7 +217,7 @@ github.com/jfrog/gofrog/parallel
 github.com/jfrog/gofrog/stringutils
 github.com/jfrog/gofrog/unarchive
 github.com/jfrog/gofrog/version
-# github.com/jfrog/jfrog-cli-core/v2 v2.47.10
+# github.com/jfrog/jfrog-cli-core/v2 v2.47.11
 ## explicit; go 1.20
 github.com/jfrog/jfrog-cli-core/v2/artifactory/commands/generic
 github.com/jfrog/jfrog-cli-core/v2/artifactory/commands/utils
@@ -231,10 +231,6 @@ github.com/jfrog/jfrog-cli-core/v2/utils/coreutils
 github.com/jfrog/jfrog-cli-core/v2/utils/ioutils
 github.com/jfrog/jfrog-cli-core/v2/utils/lock
 github.com/jfrog/jfrog-cli-core/v2/utils/log
-github.com/jfrog/jfrog-cli-core/v2/xray/commands/scan
-github.com/jfrog/jfrog-cli-core/v2/xray/formats
-github.com/jfrog/jfrog-cli-core/v2/xray/scangraph
-github.com/jfrog/jfrog-cli-core/v2/xray/utils
 # github.com/jfrog/jfrog-client-go v1.36.0
 ## explicit; go 1.20
 github.com/jfrog/jfrog-client-go/access
@@ -323,9 +319,6 @@ github.com/mitchellh/mapstructure
 # github.com/nwaples/rardecode v1.1.3
 ## explicit
 github.com/nwaples/rardecode
-# github.com/owenrumney/go-sarif/v2 v2.3.0
-## explicit; go 1.16
-github.com/owenrumney/go-sarif/v2/sarif
 # github.com/pelletier/go-toml/v2 v2.1.1
 ## explicit; go 1.16
 github.com/pelletier/go-toml/v2
