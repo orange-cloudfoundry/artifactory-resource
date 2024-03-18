@@ -5,7 +5,6 @@ import (
 
 	buildInfo "github.com/jfrog/build-info-go/entities"
 
-	"os"
 	"strconv"
 	"time"
 
@@ -81,7 +80,7 @@ func (uc *UploadCommand) upload() (err error) {
 	}
 
 	// Create Service Manager:
-	uc.uploadConfiguration.MinChecksumDeploySize, err = getMinChecksumDeploySize()
+	uc.uploadConfiguration.MinChecksumDeploySize, err = utils.GetMinChecksumDeploySize()
 	if err != nil {
 		return
 	}
@@ -197,19 +196,6 @@ func (uc *UploadCommand) upload() (err error) {
 	return
 }
 
-func getMinChecksumDeploySize() (int64, error) {
-	minChecksumDeploySize := os.Getenv("JFROG_CLI_MIN_CHECKSUM_DEPLOY_SIZE_KB")
-	if minChecksumDeploySize == "" {
-		return 10240, nil
-	}
-	minSize, err := strconv.ParseInt(minChecksumDeploySize, 10, 64)
-	err = errorutils.CheckError(err)
-	if err != nil {
-		return 0, err
-	}
-	return minSize * 1000, nil
-}
-
 func getUploadParams(f *spec.File, configuration *utils.UploadConfiguration, buildProps string, addVcsProps bool) (uploadParams services.UploadParams, err error) {
 	uploadParams = services.NewUploadParams()
 	uploadParams.CommonParams, err = f.ToCommonParams()
@@ -218,6 +204,8 @@ func getUploadParams(f *spec.File, configuration *utils.UploadConfiguration, bui
 	}
 	uploadParams.Deb = configuration.Deb
 	uploadParams.MinChecksumDeploy = configuration.MinChecksumDeploySize
+	uploadParams.MinSplitSize = configuration.MinSplitSizeMB * rtServicesUtils.SizeMiB
+	uploadParams.SplitCount = configuration.SplitCount
 	uploadParams.AddVcsProps = addVcsProps
 	uploadParams.BuildProps = buildProps
 	uploadParams.Archive = f.Archive
