@@ -196,7 +196,7 @@ github.com/jedib0t/go-pretty/v6/text
 # github.com/jfrog/archiver/v3 v3.6.0
 ## explicit; go 1.20
 github.com/jfrog/archiver/v3
-# github.com/jfrog/build-info-go v1.9.23
+# github.com/jfrog/build-info-go v1.9.24
 ## explicit; go 1.20
 github.com/jfrog/build-info-go/build
 github.com/jfrog/build-info-go/build/utils
@@ -209,7 +209,7 @@ github.com/jfrog/build-info-go/entities
 github.com/jfrog/build-info-go/utils
 github.com/jfrog/build-info-go/utils/compareutils
 github.com/jfrog/build-info-go/utils/pythonutils
-# github.com/jfrog/gofrog v1.6.0
+# github.com/jfrog/gofrog v1.6.3
 ## explicit; go 1.20
 github.com/jfrog/gofrog/datastructures
 github.com/jfrog/gofrog/io
@@ -232,7 +232,7 @@ github.com/jfrog/jfrog-cli-core/v2/utils/ioutils
 github.com/jfrog/jfrog-cli-core/v2/utils/lock
 github.com/jfrog/jfrog-cli-core/v2/utils/log
 github.com/jfrog/jfrog-cli-core/v2/utils/osutils
-# github.com/jfrog/jfrog-client-go v1.37.1
+# github.com/jfrog/jfrog-client-go v1.38.0
 ## explicit; go 1.20
 github.com/jfrog/jfrog-client-go/access
 github.com/jfrog/jfrog-client-go/access/auth
