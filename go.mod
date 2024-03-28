@@ -4,7 +4,7 @@ go 1.21
 
 require (
 	github.com/Masterminds/semver v1.5.0
-	github.com/jfrog/jfrog-cli-core/v2 v2.49.0
+	github.com/jfrog/jfrog-cli-core/v2 v2.50.0
 	github.com/jfrog/jfrog-client-go v1.39.0
 	gopkg.in/yaml.v3 v3.0.1
 )
@@ -36,7 +36,7 @@ require (
 	github.com/gookit/color v1.5.4 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/jbenet/go-context v0.0.0-20150711004518-d14ea06fba99 // indirect
-	github.com/jedib0t/go-pretty/v6 v6.5.4 // indirect
+	github.com/jedib0t/go-pretty/v6 v6.5.6 // indirect
 	github.com/jfrog/archiver/v3 v3.6.0 // indirect
 	github.com/jfrog/build-info-go v1.9.25 // indirect
 	github.com/jfrog/gofrog v1.6.3 // indirect
@@ -75,7 +75,7 @@ require (
 	github.com/xo/terminfo v0.0.0-20220910002029-abceb7e1c41e // indirect
 	go.uber.org/multierr v1.11.0 // indirect
 	golang.org/x/crypto v0.21.0 // indirect
-	golang.org/x/exp v0.0.0-20240318143956-a85f2c67cd81 // indirect
+	golang.org/x/exp v0.0.0-20240325151524-a685a6edb6d8 // indirect
 	golang.org/x/mod v0.16.0 // indirect
 	golang.org/x/net v0.22.0 // indirect
 	golang.org/x/sys v0.18.0 // indirect

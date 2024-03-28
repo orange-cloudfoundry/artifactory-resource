@@ -189,7 +189,7 @@ github.com/hashicorp/hcl/json/token
 # github.com/jbenet/go-context v0.0.0-20150711004518-d14ea06fba99
 ## explicit
 github.com/jbenet/go-context/io
-# github.com/jedib0t/go-pretty/v6 v6.5.4
+# github.com/jedib0t/go-pretty/v6 v6.5.6
 ## explicit; go 1.17
 github.com/jedib0t/go-pretty/v6/table
 github.com/jedib0t/go-pretty/v6/text
@@ -217,7 +217,7 @@ github.com/jfrog/gofrog/parallel
 github.com/jfrog/gofrog/stringutils
 github.com/jfrog/gofrog/unarchive
 github.com/jfrog/gofrog/version
-# github.com/jfrog/jfrog-cli-core/v2 v2.49.0
+# github.com/jfrog/jfrog-cli-core/v2 v2.50.0
 ## explicit; go 1.20
 github.com/jfrog/jfrog-cli-core/v2/artifactory/commands/generic
 github.com/jfrog/jfrog-cli-core/v2/artifactory/commands/utils
@@ -427,7 +427,7 @@ golang.org/x/crypto/ssh
 golang.org/x/crypto/ssh/agent
 golang.org/x/crypto/ssh/internal/bcrypt_pbkdf
 golang.org/x/crypto/ssh/knownhosts
-# golang.org/x/exp v0.0.0-20240318143956-a85f2c67cd81
+# golang.org/x/exp v0.0.0-20240325151524-a685a6edb6d8
 ## explicit; go 1.20
 golang.org/x/exp/constraints
 golang.org/x/exp/maps
