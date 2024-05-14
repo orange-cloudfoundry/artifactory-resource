@@ -141,7 +141,7 @@ func (c In) downloadProps(remoteFile string, propsFilename string) string {
 		utils.Fatal(fmt.Sprintf("error: found more than one property set for '%s'", c.version.File))
 	}
 
-	for res := new(artutils.SearchResult); reader.NextRecord(res) == nil; res = new(artutils.SearchResult) {
+	for res := new(artutils.SearchResult); reader.NextRecord(res) == nil; {
 		content, _ := yaml.Marshal(res.Props)
 		path := filepath.Join(utils.BaseDirectory(), propsFilename)
 		err = os.WriteFile(path, content, 0644)
