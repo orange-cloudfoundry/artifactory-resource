@@ -86,10 +86,13 @@ func (c *In) Run() {
 		utils.Log("%s", val)
 	}
 
-	utils.SendJsonResponse(model.Response{
+	err = utils.SendJsonResponse(model.Response{
 		Metadata: meta,
 		Version:  c.version,
 	})
+	if err != nil {
+		utils.Log(err.Error())
+	}
 }
 
 func (c In) download() ([]model.Metadata, error) {

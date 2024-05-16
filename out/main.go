@@ -87,10 +87,13 @@ func (c *Out) Run() {
 		Value: elapsed.String(),
 	})
 
-	utils.SendJsonResponse(model.Response{
+	err = utils.SendJsonResponse(model.Response{
 		Metadata: meta,
 		Version:  version,
 	})
+	if err != nil {
+		utils.Log(fmt.Sprintf("error sending request to artifactory: %s", err.Error()))
+	}
 }
 
 func (c Out) getFilePath(p string) string {
