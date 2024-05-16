@@ -151,6 +151,7 @@ func (c In) downloadProps(remoteFile string, propsFilename string) string {
 		if err != nil {
 			utils.Fatal(fmt.Sprintf("unable to write prop file '%s': %s", path, err))
 		}
+		// nolint:staticcheck
 		return string(content)
 	}
 	return ""
