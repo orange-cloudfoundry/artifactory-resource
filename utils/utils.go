@@ -61,7 +61,7 @@ func RetrieveArtDetails(source model.Source) (*config.ServerDetails, error) {
 		User:           source.User,
 		Password:       source.Password,
 		SshKeyPath:     sshKeyPath,
-	}, nil
+	}, err
 
 }
 
@@ -88,7 +88,9 @@ func createCert(caCert string) error {
 		return err
 	}
 	securityPath := confPath + ART_SECURITY_FOLDER
-	os.MkdirAll(securityPath, os.ModePerm)
+	if err := os.MkdirAll(securityPath, os.ModePerm); err != nil {
+		return err
+	}
 	return os.WriteFile(securityPath+"cert.pem", []byte(caCert), 0644)
 }
 
@@ -250,6 +252,6 @@ func RetrieveJsonRequest(v interface{}) error {
 	return json.NewDecoder(os.Stdin).Decode(v)
 }
 
-func SendJsonResponse(v interface{}) {
-	json.NewEncoder(os.Stdout).Encode(v)
+func SendJsonResponse(v interface{}) error {
+	return json.NewEncoder(os.Stdout).Encode(v)
 }

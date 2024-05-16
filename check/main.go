@@ -73,7 +73,9 @@ func (c *Check) Run() {
 			File:    m.Path,
 		})
 	}
-	utils.SendJsonResponse(versions)
+	if err = utils.SendJsonResponse(versions); err != nil {
+		utils.Log(err.Error())
+	}
 }
 
 func (c Check) search(spec *spec.SpecFiles) ([]artutils.SearchResult, error) {

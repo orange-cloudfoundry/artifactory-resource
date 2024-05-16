@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"time"
@@ -53,16 +52,16 @@ func (c *Out) Run() {
 	c.source.Repository = utils.AddTrailingSlashIfNeeded(c.source.Repository)
 	props := c.mergeProps()
 	toUpload := c.getUploadFiles()
-	spec := c.filesToSpec(toUpload, props)
+	filesToSpec := c.filesToSpec(toUpload, props)
 
 	// upload
-	for _, s := range spec.Files {
+	for _, s := range filesToSpec.Files {
 		utils.Log("uploading '%s' to '%s'...", s.Pattern, c.source.Repository)
 	}
 	startDl := time.Now()
 	origStdout := os.Stdout
 	os.Stdout = os.Stderr
-	meta, err := c.upload(spec)
+	meta, err := c.upload(filesToSpec)
 	os.Stdout = origStdout
 	if err != nil {
 		utils.Fatal("error when uploading: %s", err)
@@ -87,10 +86,13 @@ func (c *Out) Run() {
 		Value: elapsed.String(),
 	})
 
-	utils.SendJsonResponse(model.Response{
+	err = utils.SendJsonResponse(model.Response{
 		Metadata: meta,
 		Version:  version,
 	})
+	if err != nil {
+		utils.Log(fmt.Sprintf("error sending request to artifactory: %s", err.Error()))
+	}
 }
 
 func (c Out) getFilePath(p string) string {
@@ -119,7 +121,7 @@ func (c Out) upload(spec *spec.SpecFiles) ([]model.Metadata, error) {
 }
 
 func (c Out) getUploadFiles() []string {
-	files, err := ioutil.ReadDir(filepath.Join(utils.BaseDirectory(), c.params.Directory))
+	files, err := os.ReadDir(filepath.Join(utils.BaseDirectory(), c.params.Directory))
 	if err != nil {
 		utils.Fatal(fmt.Sprintf("could not list files in directory '%s': %s", c.params.Directory, err))
 	}
@@ -150,13 +152,13 @@ func (c Out) filesToSpec(files []string, props model.Properties) *spec.SpecFiles
 	for _, file := range files {
 		absPath := filepath.Join(utils.BaseDirectory(), c.params.Directory, file)
 		builder := spec.NewBuilder()
-		spec := builder.
+		buildSpec := builder.
 			Pattern(absPath).
 			Target(c.source.Repository).
 			Props(props.String()).
 			Flat(true).
 			BuildSpec()
-		res.Files = append(res.Files, spec.Files...)
+		res.Files = append(res.Files, buildSpec.Files...)
 	}
 
 	return res
@@ -170,7 +172,7 @@ func (c Out) mergeProps() model.Properties {
 	if c.params.PropsFilename != "" {
 		fProps := model.Properties{}
 
-		content, err := ioutil.ReadFile(c.getFilePath(c.params.PropsFilename))
+		content, err := os.ReadFile(c.getFilePath(c.params.PropsFilename))
 		if err != nil {
 			utils.Fatal(fmt.Sprintf("could not read properties from file '%s': %s", c.params.PropsFilename, err))
 		}
