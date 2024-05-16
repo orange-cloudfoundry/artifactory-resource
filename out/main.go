@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"time"
@@ -122,7 +121,7 @@ func (c Out) upload(spec *spec.SpecFiles) ([]model.Metadata, error) {
 }
 
 func (c Out) getUploadFiles() []string {
-	files, err := ioutil.ReadDir(filepath.Join(utils.BaseDirectory(), c.params.Directory))
+	files, err := os.ReadDir(filepath.Join(utils.BaseDirectory(), c.params.Directory))
 	if err != nil {
 		utils.Fatal(fmt.Sprintf("could not list files in directory '%s': %s", c.params.Directory, err))
 	}
@@ -173,7 +172,7 @@ func (c Out) mergeProps() model.Properties {
 	if c.params.PropsFilename != "" {
 		fProps := model.Properties{}
 
-		content, err := ioutil.ReadFile(c.getFilePath(c.params.PropsFilename))
+		content, err := os.ReadFile(c.getFilePath(c.params.PropsFilename))
 		if err != nil {
 			utils.Fatal(fmt.Sprintf("could not read properties from file '%s': %s", c.params.PropsFilename, err))
 		}
