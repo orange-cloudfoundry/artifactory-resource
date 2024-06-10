@@ -196,8 +196,8 @@ github.com/jedib0t/go-pretty/v6/text
 # github.com/jfrog/archiver/v3 v3.6.0
 ## explicit; go 1.20
 github.com/jfrog/archiver/v3
-# github.com/jfrog/build-info-go v1.9.27
-## explicit; go 1.20
+# github.com/jfrog/build-info-go v1.9.29
+## explicit; go 1.22
 github.com/jfrog/build-info-go/build
 github.com/jfrog/build-info-go/build/utils
 github.com/jfrog/build-info-go/build/utils/dotnet
@@ -209,7 +209,7 @@ github.com/jfrog/build-info-go/entities
 github.com/jfrog/build-info-go/utils
 github.com/jfrog/build-info-go/utils/compareutils
 github.com/jfrog/build-info-go/utils/pythonutils
-# github.com/jfrog/gofrog v1.7.1
+# github.com/jfrog/gofrog v1.7.2
 ## explicit; go 1.20
 github.com/jfrog/gofrog/datastructures
 github.com/jfrog/gofrog/io
@@ -217,8 +217,8 @@ github.com/jfrog/gofrog/parallel
 github.com/jfrog/gofrog/stringutils
 github.com/jfrog/gofrog/unarchive
 github.com/jfrog/gofrog/version
-# github.com/jfrog/jfrog-cli-core/v2 v2.53.0
-## explicit; go 1.20
+# github.com/jfrog/jfrog-cli-core/v2 v2.53.1
+## explicit; go 1.22.3
 github.com/jfrog/jfrog-cli-core/v2/artifactory/commands/commandssummaries
 github.com/jfrog/jfrog-cli-core/v2/artifactory/commands/generic
 github.com/jfrog/jfrog-cli-core/v2/artifactory/commands/utils
@@ -234,8 +234,8 @@ github.com/jfrog/jfrog-cli-core/v2/utils/ioutils
 github.com/jfrog/jfrog-cli-core/v2/utils/lock
 github.com/jfrog/jfrog-cli-core/v2/utils/log
 github.com/jfrog/jfrog-cli-core/v2/utils/osutils
-# github.com/jfrog/jfrog-client-go v1.40.2
-## explicit; go 1.20
+# github.com/jfrog/jfrog-client-go v1.41.0
+## explicit; go 1.22
 github.com/jfrog/jfrog-client-go/access
 github.com/jfrog/jfrog-client-go/access/auth
 github.com/jfrog/jfrog-client-go/access/services
@@ -252,6 +252,9 @@ github.com/jfrog/jfrog-client-go/distribution
 github.com/jfrog/jfrog-client-go/distribution/auth
 github.com/jfrog/jfrog-client-go/distribution/services
 github.com/jfrog/jfrog-client-go/distribution/services/utils
+github.com/jfrog/jfrog-client-go/evidence
+github.com/jfrog/jfrog-client-go/evidence/auth
+github.com/jfrog/jfrog-client-go/evidence/services
 github.com/jfrog/jfrog-client-go/http/httpclient
 github.com/jfrog/jfrog-client-go/http/jfroghttpclient
 github.com/jfrog/jfrog-client-go/lifecycle
@@ -460,17 +463,11 @@ golang.org/x/sys/windows
 golang.org/x/term
 # golang.org/x/text v0.15.0
 ## explicit; go 1.18
-golang.org/x/text/cases
 golang.org/x/text/encoding
 golang.org/x/text/encoding/internal
 golang.org/x/text/encoding/internal/identifier
 golang.org/x/text/encoding/unicode
-golang.org/x/text/internal
-golang.org/x/text/internal/language
-golang.org/x/text/internal/language/compact
-golang.org/x/text/internal/tag
 golang.org/x/text/internal/utf8internal
-golang.org/x/text/language
 golang.org/x/text/runes
 golang.org/x/text/transform
 golang.org/x/text/unicode/norm
