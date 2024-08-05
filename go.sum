@@ -96,8 +96,8 @@ github.com/jfrog/build-info-go v1.9.32 h1:PKXAMe84sMdob6eBtwwGz47Fz2cmjMwMPoHW8x
 github.com/jfrog/build-info-go v1.9.32/go.mod h1:JTGnENexG1jRhKWCkQtZuDb0PerlzlSzF5OmMLG9kfc=
 github.com/jfrog/gofrog v1.7.5 h1:dFgtEDefJdlq9cqTRoe09RLxS5Bxbe1Ev5+E6SmZHcg=
 github.com/jfrog/gofrog v1.7.5/go.mod h1:jyGiCgiqSSR7k86hcUSu67XVvmvkkgWTmPsH25wI298=
-github.com/jfrog/jfrog-cli-core/v2 v2.54.0 h1:vSVSADvuZ2vou4B5spfsUZ32oA/sl4mPVEVgqfNbjUM=
-github.com/jfrog/jfrog-cli-core/v2 v2.54.0/go.mod h1:ynAcz9jWDrcQi1/IkNLrIgfQnJO8LPLFwjLplgvY8KI=
+github.com/jfrog/jfrog-cli-core/v2 v2.54.1 h1:oNIsqUVJ/P17qEcHgj9/c1nfO23stqqj1sHB7ldFNmQ=
+github.com/jfrog/jfrog-cli-core/v2 v2.54.1/go.mod h1:o8Ux0XiXWayxBXbtkMd5Vbs2YJZZDNiS9jtN6yQ4Ur8=
 github.com/jfrog/jfrog-client-go v1.43.2 h1:NLSTTSFUkrNiSYs8rpRW7/sd6gDTPOi/eMVkGEarXq0=
 github.com/jfrog/jfrog-client-go v1.43.2/go.mod h1:JUevXnjHbGL0MIIPs48L/axJMW/q4ioWMR1e1NuVn8w=
 github.com/kevinburke/ssh_config v1.2.0 h1:x584FjTGwHzMwvHx18PXxbBVzfnxogHaAReU4gf13a4=
