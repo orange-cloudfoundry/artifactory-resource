@@ -219,7 +219,7 @@ github.com/jfrog/gofrog/parallel
 github.com/jfrog/gofrog/stringutils
 github.com/jfrog/gofrog/unarchive
 github.com/jfrog/gofrog/version
-# github.com/jfrog/jfrog-cli-core/v2 v2.54.2
+# github.com/jfrog/jfrog-cli-core/v2 v2.55.1
 ## explicit; go 1.22.3
 github.com/jfrog/jfrog-cli-core/v2/artifactory/commands/commandssummaries
 github.com/jfrog/jfrog-cli-core/v2/artifactory/commands/generic
@@ -262,6 +262,9 @@ github.com/jfrog/jfrog-client-go/http/jfroghttpclient
 github.com/jfrog/jfrog-client-go/lifecycle
 github.com/jfrog/jfrog-client-go/lifecycle/auth
 github.com/jfrog/jfrog-client-go/lifecycle/services
+github.com/jfrog/jfrog-client-go/metadata
+github.com/jfrog/jfrog-client-go/metadata/auth
+github.com/jfrog/jfrog-client-go/metadata/services
 github.com/jfrog/jfrog-client-go/pipelines
 github.com/jfrog/jfrog-client-go/pipelines/auth
 github.com/jfrog/jfrog-client-go/pipelines/services
@@ -316,7 +319,7 @@ github.com/mattn/go-colorable
 # github.com/mattn/go-isatty v0.0.20
 ## explicit; go 1.15
 github.com/mattn/go-isatty
-# github.com/mattn/go-runewidth v0.0.15
+# github.com/mattn/go-runewidth v0.0.16
 ## explicit; go 1.9
 github.com/mattn/go-runewidth
 # github.com/mattn/go-tty v0.0.5
