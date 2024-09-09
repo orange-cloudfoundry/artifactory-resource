@@ -5,7 +5,7 @@ go 1.22.6
 require (
 	github.com/Masterminds/semver v1.5.0
 	github.com/jfrog/jfrog-cli-core/v2 v2.55.7
-	github.com/jfrog/jfrog-client-go v1.46.1
+	github.com/jfrog/jfrog-client-go v1.46.2
 	gopkg.in/yaml.v3 v3.0.1
 )
 
@@ -38,8 +38,8 @@ require (
 	github.com/jbenet/go-context v0.0.0-20150711004518-d14ea06fba99 // indirect
 	github.com/jedib0t/go-pretty/v6 v6.5.9 // indirect
 	github.com/jfrog/archiver/v3 v3.6.1 // indirect
-	github.com/jfrog/build-info-go v1.9.35 // indirect
-	github.com/jfrog/gofrog v1.7.5 // indirect
+	github.com/jfrog/build-info-go v1.9.36 // indirect
+	github.com/jfrog/gofrog v1.7.6 // indirect
 	github.com/kevinburke/ssh_config v1.2.0 // indirect
 	github.com/klauspost/compress v1.17.9 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.8 // indirect
@@ -74,13 +74,13 @@ require (
 	github.com/xi2/xz v0.0.0-20171230120015-48954b6210f8 // indirect
 	github.com/xo/terminfo v0.0.0-20220910002029-abceb7e1c41e // indirect
 	go.uber.org/multierr v1.11.0 // indirect
-	golang.org/x/crypto v0.26.0 // indirect
-	golang.org/x/exp v0.0.0-20240823005443-9b4947da3948 // indirect
+	golang.org/x/crypto v0.27.0 // indirect
+	golang.org/x/exp v0.0.0-20240904232852-e7e105dedf7e // indirect
 	golang.org/x/net v0.28.0 // indirect
 	golang.org/x/sync v0.8.0 // indirect
-	golang.org/x/sys v0.24.0 // indirect
-	golang.org/x/term v0.23.0 // indirect
-	golang.org/x/text v0.17.0 // indirect
+	golang.org/x/sys v0.25.0 // indirect
+	golang.org/x/term v0.24.0 // indirect
+	golang.org/x/text v0.18.0 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/warnings.v0 v0.1.2 // indirect
 )
