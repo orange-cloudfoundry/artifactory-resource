@@ -196,7 +196,7 @@ github.com/jedib0t/go-pretty/v6/text
 # github.com/jfrog/archiver/v3 v3.6.1
 ## explicit; go 1.20
 github.com/jfrog/archiver/v3
-# github.com/jfrog/build-info-go v1.10.1
+# github.com/jfrog/build-info-go v1.10.2
 ## explicit; go 1.22
 github.com/jfrog/build-info-go/build
 github.com/jfrog/build-info-go/build/utils
@@ -220,7 +220,7 @@ github.com/jfrog/gofrog/safeconvert
 github.com/jfrog/gofrog/stringutils
 github.com/jfrog/gofrog/unarchive
 github.com/jfrog/gofrog/version
-# github.com/jfrog/jfrog-cli-core/v2 v2.56.1
+# github.com/jfrog/jfrog-cli-core/v2 v2.56.2
 ## explicit; go 1.22.7
 github.com/jfrog/jfrog-cli-core/v2/artifactory/commands/generic
 github.com/jfrog/jfrog-cli-core/v2/artifactory/commands/utils
