@@ -5,7 +5,7 @@ go 1.22.7
 require (
 	github.com/Masterminds/semver v1.5.0
 	github.com/jfrog/jfrog-cli-core/v2 v2.56.3
-	github.com/jfrog/jfrog-client-go v1.47.2
+	github.com/jfrog/jfrog-client-go v1.47.3
 	gopkg.in/yaml.v3 v3.0.1
 )
 
