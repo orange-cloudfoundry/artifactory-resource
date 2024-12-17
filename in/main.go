@@ -2,10 +2,11 @@ package main
 
 import (
 	"fmt"
-	buildutils "github.com/jfrog/jfrog-cli-core/v2/common/build"
 	"os"
 	"path/filepath"
 	"time"
+
+	buildutils "github.com/jfrog/jfrog-cli-core/v2/common/build"
 
 	"github.com/jfrog/jfrog-cli-core/v2/artifactory/commands/generic"
 	artutils "github.com/jfrog/jfrog-cli-core/v2/artifactory/utils"
