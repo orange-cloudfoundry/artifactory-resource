@@ -62,7 +62,6 @@ func RetrieveArtDetails(source model.Source) (*config.ServerDetails, error) {
 		Password:       source.Password,
 		SshKeyPath:     sshKeyPath,
 	}, err
-
 }
 
 func AddTrailingSlashIfNeeded(path string) string {
