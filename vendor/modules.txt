@@ -225,7 +225,7 @@ github.com/jfrog/gofrog/safeconvert
 github.com/jfrog/gofrog/stringutils
 github.com/jfrog/gofrog/unarchive
 github.com/jfrog/gofrog/version
-# github.com/jfrog/jfrog-cli-core/v2 v2.57.1
+# github.com/jfrog/jfrog-cli-core/v2 v2.57.3
 ## explicit; go 1.23.3
 github.com/jfrog/jfrog-cli-core/v2/artifactory/commands/generic
 github.com/jfrog/jfrog-cli-core/v2/artifactory/commands/utils
@@ -265,6 +265,8 @@ github.com/jfrog/jfrog-client-go/evidence/auth
 github.com/jfrog/jfrog-client-go/evidence/services
 github.com/jfrog/jfrog-client-go/http/httpclient
 github.com/jfrog/jfrog-client-go/http/jfroghttpclient
+github.com/jfrog/jfrog-client-go/jfconnect
+github.com/jfrog/jfrog-client-go/jfconnect/services
 github.com/jfrog/jfrog-client-go/lifecycle
 github.com/jfrog/jfrog-client-go/lifecycle/auth
 github.com/jfrog/jfrog-client-go/lifecycle/services
