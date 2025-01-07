@@ -201,7 +201,7 @@ github.com/jedib0t/go-pretty/v6/text
 # github.com/jfrog/archiver/v3 v3.6.1
 ## explicit; go 1.20
 github.com/jfrog/archiver/v3
-# github.com/jfrog/build-info-go v1.10.7
+# github.com/jfrog/build-info-go v1.10.8
 ## explicit; go 1.22
 github.com/jfrog/build-info-go/build
 github.com/jfrog/build-info-go/build/utils
@@ -242,7 +242,7 @@ github.com/jfrog/jfrog-cli-core/v2/utils/ioutils
 github.com/jfrog/jfrog-cli-core/v2/utils/lock
 github.com/jfrog/jfrog-cli-core/v2/utils/log
 github.com/jfrog/jfrog-cli-core/v2/utils/osutils
-# github.com/jfrog/jfrog-client-go v1.48.6
+# github.com/jfrog/jfrog-client-go v1.49.0
 ## explicit; go 1.22.9
 github.com/jfrog/jfrog-client-go/access
 github.com/jfrog/jfrog-client-go/access/auth
@@ -434,7 +434,7 @@ github.com/xo/terminfo
 # go.uber.org/multierr v1.11.0
 ## explicit; go 1.19
 go.uber.org/multierr
-# golang.org/x/crypto v0.31.0
+# golang.org/x/crypto v0.32.0
 ## explicit; go 1.20
 golang.org/x/crypto/argon2
 golang.org/x/crypto/blake2b
@@ -450,14 +450,14 @@ golang.org/x/crypto/ssh
 golang.org/x/crypto/ssh/agent
 golang.org/x/crypto/ssh/internal/bcrypt_pbkdf
 golang.org/x/crypto/ssh/knownhosts
-# golang.org/x/exp v0.0.0-20241215155358-4a5509556b9e
+# golang.org/x/exp v0.0.0-20250106191152-7588d65b2ba8
 ## explicit; go 1.22.0
 golang.org/x/exp/maps
 golang.org/x/exp/slices
 golang.org/x/exp/slog
 golang.org/x/exp/slog/internal
 golang.org/x/exp/slog/internal/buffer
-# golang.org/x/net v0.33.0
+# golang.org/x/net v0.34.0
 ## explicit; go 1.18
 golang.org/x/net/context
 golang.org/x/net/internal/socks
@@ -465,14 +465,14 @@ golang.org/x/net/proxy
 # golang.org/x/sync v0.10.0
 ## explicit; go 1.18
 golang.org/x/sync/errgroup
-# golang.org/x/sys v0.28.0
+# golang.org/x/sys v0.29.0
 ## explicit; go 1.18
 golang.org/x/sys/cpu
 golang.org/x/sys/execabs
 golang.org/x/sys/plan9
 golang.org/x/sys/unix
 golang.org/x/sys/windows
-# golang.org/x/term v0.27.0
+# golang.org/x/term v0.28.0
 ## explicit; go 1.18
 golang.org/x/term
 # golang.org/x/text v0.21.0
