@@ -164,7 +164,7 @@ github.com/go-git/go-git/v5/utils/trace
 # github.com/gocarina/gocsv v0.0.0-20240520201108-78e41c74b4b1
 ## explicit; go 1.13
 github.com/gocarina/gocsv
-# github.com/golang-jwt/jwt/v4 v4.5.1
+# github.com/golang-jwt/jwt/v4 v4.5.2
 ## explicit; go 1.16
 github.com/golang-jwt/jwt/v4
 # github.com/golang/groupcache v0.0.0-20241129210726-2c02b8208cf8
