@@ -18,7 +18,7 @@ github.com/Microsoft/go-winio/internal/fs
 github.com/Microsoft/go-winio/internal/socket
 github.com/Microsoft/go-winio/internal/stringbuffer
 github.com/Microsoft/go-winio/pkg/guid
-# github.com/ProtonMail/go-crypto v1.1.5
+# github.com/ProtonMail/go-crypto v1.1.6
 ## explicit; go 1.17
 github.com/ProtonMail/go-crypto/bitcurves
 github.com/ProtonMail/go-crypto/brainpool
@@ -92,7 +92,7 @@ github.com/emirpasic/gods/lists/arraylist
 github.com/emirpasic/gods/trees
 github.com/emirpasic/gods/trees/binaryheap
 github.com/emirpasic/gods/utils
-# github.com/forPelevin/gomoji v1.2.0
+# github.com/forPelevin/gomoji v1.3.0
 ## explicit; go 1.19
 github.com/forPelevin/gomoji
 # github.com/fsnotify/fsnotify v1.8.0
@@ -113,8 +113,8 @@ github.com/go-git/go-billy/v5/helper/polyfill
 github.com/go-git/go-billy/v5/memfs
 github.com/go-git/go-billy/v5/osfs
 github.com/go-git/go-billy/v5/util
-# github.com/go-git/go-git/v5 v5.13.2
-## explicit; go 1.21
+# github.com/go-git/go-git/v5 v5.14.0
+## explicit; go 1.23.0
 github.com/go-git/go-git/v5
 github.com/go-git/go-git/v5/config
 github.com/go-git/go-git/v5/internal/path_util
@@ -218,6 +218,7 @@ github.com/jfrog/build-info-go/utils/pythonutils
 ## explicit; go 1.22
 github.com/jfrog/gofrog/crypto
 github.com/jfrog/gofrog/datastructures
+github.com/jfrog/gofrog/http/retryexecutor
 github.com/jfrog/gofrog/io
 github.com/jfrog/gofrog/log
 github.com/jfrog/gofrog/parallel
@@ -242,8 +243,8 @@ github.com/jfrog/jfrog-cli-core/v2/utils/ioutils
 github.com/jfrog/jfrog-cli-core/v2/utils/lock
 github.com/jfrog/jfrog-cli-core/v2/utils/log
 github.com/jfrog/jfrog-cli-core/v2/utils/osutils
-# github.com/jfrog/jfrog-client-go v1.51.1
-## explicit; go 1.22.9
+# github.com/jfrog/jfrog-client-go v1.52.0
+## explicit; go 1.23.7
 github.com/jfrog/jfrog-client-go/access
 github.com/jfrog/jfrog-client-go/access/auth
 github.com/jfrog/jfrog-client-go/access/services
@@ -434,7 +435,7 @@ github.com/xo/terminfo
 # go.uber.org/multierr v1.11.0
 ## explicit; go 1.19
 go.uber.org/multierr
-# golang.org/x/crypto v0.35.0
+# golang.org/x/crypto v0.36.0
 ## explicit; go 1.23.0
 golang.org/x/crypto/argon2
 golang.org/x/crypto/blake2b
@@ -452,33 +453,33 @@ golang.org/x/crypto/ssh
 golang.org/x/crypto/ssh/agent
 golang.org/x/crypto/ssh/internal/bcrypt_pbkdf
 golang.org/x/crypto/ssh/knownhosts
-# golang.org/x/exp v0.0.0-20250128182459-e0ece0dbea4c
-## explicit; go 1.22.0
+# golang.org/x/exp v0.0.0-20250305212735-054e65f0b394
+## explicit; go 1.23.0
 golang.org/x/exp/maps
 golang.org/x/exp/slices
 golang.org/x/exp/slog
 golang.org/x/exp/slog/internal
 golang.org/x/exp/slog/internal/buffer
-# golang.org/x/net v0.36.0
+# golang.org/x/net v0.38.0
 ## explicit; go 1.23.0
 golang.org/x/net/context
 golang.org/x/net/internal/socks
 golang.org/x/net/proxy
-# golang.org/x/sync v0.11.0
-## explicit; go 1.18
+# golang.org/x/sync v0.12.0
+## explicit; go 1.23.0
 golang.org/x/sync/errgroup
-# golang.org/x/sys v0.30.0
-## explicit; go 1.18
+# golang.org/x/sys v0.31.0
+## explicit; go 1.23.0
 golang.org/x/sys/cpu
 golang.org/x/sys/execabs
 golang.org/x/sys/plan9
 golang.org/x/sys/unix
 golang.org/x/sys/windows
-# golang.org/x/term v0.29.0
-## explicit; go 1.18
+# golang.org/x/term v0.30.0
+## explicit; go 1.23.0
 golang.org/x/term
-# golang.org/x/text v0.22.0
-## explicit; go 1.18
+# golang.org/x/text v0.23.0
+## explicit; go 1.23.0
 golang.org/x/text/encoding
 golang.org/x/text/encoding/internal
 golang.org/x/text/encoding/internal/identifier
