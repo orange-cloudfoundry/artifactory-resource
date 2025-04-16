@@ -1,10 +1,15 @@
+version: "2"
+
 run:
   timeout: 30m
 output:
   formats:
-    - format: line-number
+    text:
+      path: stdout
+      print-linter-name: true
+      print-issued-lines: true
+      colors: true
 linters:
-  disable-all: false
   enable:
   - bodyclose
   - dogsled

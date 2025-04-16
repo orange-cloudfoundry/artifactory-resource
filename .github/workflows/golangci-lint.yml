@@ -24,8 +24,3 @@ jobs:
         uses: golangci/golangci-lint-action@v7
         with:
           version: v2.0
-          args: >
-            --enable govet
-            --enable staticcheck
-            --enable unused
-            --config .golangci.yml
