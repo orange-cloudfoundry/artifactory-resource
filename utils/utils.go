@@ -31,20 +31,20 @@ const (
 
 func CheckReqParamsWithPattern(source model.Source) error {
 	if source.Repository == "" {
-		return errors.New("You must provide a repository (e.g.: 'bucket/folder/')")
+		return errors.New("you must provide a repository (e.g.: 'bucket/folder/')")
 	}
 	return CheckReqParams(source)
 }
 
 func CheckReqParams(source model.Source) error {
 	if source.Url == "" {
-		return errors.New("You must pass an url to artifactory.")
+		return errors.New("you must pass an url to artifactory")
 	}
 	if source.User == "" && source.ApiKey == "" {
-		return errors.New("You must pass user/password pair or apiKey to authnticate over artifactory.")
+		return errors.New("you must pass user/password pair or apiKey to authnticate over artifactory")
 	}
 	if _, err := regexp.Compile(source.Filter); err != nil {
-		return fmt.Errorf("Invalid filter '%s', must be valid regexp: %s", source.Filter, err)
+		return fmt.Errorf("invalid filter '%s', must be valid regexp: %s", source.Filter, err)
 	}
 	return nil
 }
@@ -124,7 +124,7 @@ func HashFile(path string, hasher hash.Hash) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	defer file.Close()
+	defer CloseAndLogError(file)
 	_, err = io.Copy(hasher, file)
 	if err != nil {
 		return "", err
@@ -136,7 +136,7 @@ func TransfertDetailsToMeta(result *cmdutils.Result) []model.Metadata {
 	metadata := []model.Metadata{}
 	if result != nil && result.Reader() != nil {
 		reader := result.Reader()
-		defer reader.Close()
+		defer CloseAndLogError(reader)
 		for d := new(clientutils.FileTransferDetails); reader.NextRecord(d) == nil; d = new(clientutils.FileTransferDetails) {
 			if val, err := HashFile(d.SourcePath, sha1.New()); err == nil {
 				metadata = append(metadata, model.Metadata{
@@ -253,4 +253,17 @@ func RetrieveJsonRequest(v interface{}) error {
 
 func SendJsonResponse(v interface{}) error {
 	return json.NewEncoder(os.Stdout).Encode(v)
+}
+
+// Utility function to close an io.Closer and log errors without returning them
+func CloseAndLogError(closer io.Closer) {
+	if closer == nil {
+		return
+	}
+
+	// Attempt to close the resource (e.g., an HTTP response or a file).
+	// If an error occurs during the close operation, the error is captured.
+	if err := closer.Close(); err != nil {
+		fmt.Printf("Error closing resource: %v", err)
+	}
 }

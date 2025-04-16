@@ -1,10 +1,21 @@
+version: "2"
+
 run:
   timeout: 30m
 output:
   formats:
-    - format: line-number
+    text:
+      path: stdout
+      print-linter-name: true
+      print-issued-lines: true
+      colors: true
+
+formatters:
+  enable:
+    - gofmt
+    - goimports
+
 linters:
-  disable-all: false
   enable:
   - bodyclose
   - dogsled
@@ -14,17 +25,10 @@ linters:
   - goconst
   - gocritic
   - godox
-  - gofmt
-  - goimports
-  #- gosec
-  - gosimple
   - govet
   - ineffassign
   - nakedret
-  #- revive
   - staticcheck
-  #- stylecheck
-  - typecheck
   - unconvert
   - unparam
   - unused

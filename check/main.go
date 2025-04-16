@@ -4,7 +4,7 @@ import (
 	"os"
 	"sort"
 
-	"github.com/jfrog/jfrog-cli-core/v2/artifactory/commands/generic"
+	"github.com/jfrog/jfrog-cli-artifactory/artifactory/commands/generic"
 	artutils "github.com/jfrog/jfrog-cli-core/v2/artifactory/utils"
 	"github.com/jfrog/jfrog-cli-core/v2/common/spec"
 	"github.com/jfrog/jfrog-cli-core/v2/utils/config"
@@ -91,7 +91,7 @@ func (c Check) search(spec *spec.SpecFiles) ([]artutils.SearchResult, error) {
 	}
 
 	reader := cmd.Result().Reader()
-	defer reader.Close()
+	defer utils.CloseAndLogError(reader)
 	_, err = reader.Length()
 	if err != nil {
 		return nil, err
