@@ -9,6 +9,12 @@ output:
       print-linter-name: true
       print-issued-lines: true
       colors: true
+
+formatters:
+  enable:
+    - gofmt
+    - goimports
+
 linters:
   enable:
   - bodyclose
@@ -19,17 +25,10 @@ linters:
   - goconst
   - gocritic
   - godox
-  - gofmt
-  - goimports
-  #- gosec
-  - gosimple
   - govet
   - ineffassign
   - nakedret
-  #- revive
   - staticcheck
-  #- stylecheck
-  - typecheck
   - unconvert
   - unparam
   - unused

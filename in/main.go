@@ -135,7 +135,7 @@ func (c In) downloadProps(remoteFile string, propsFilename string) string {
 	}
 
 	reader := cmd.Result().Reader()
-	defer reader.Close()
+	defer utils.CloseAndLogError(reader)
 	_, err = reader.Length()
 	if err != nil {
 		utils.Fatal(fmt.Sprintf("error while reading properties for file '%s': %s", c.version.File, err))

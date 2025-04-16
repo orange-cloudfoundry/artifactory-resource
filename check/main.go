@@ -91,7 +91,7 @@ func (c Check) search(spec *spec.SpecFiles) ([]artutils.SearchResult, error) {
 	}
 
 	reader := cmd.Result().Reader()
-	defer reader.Close()
+	defer utils.CloseAndLogError(reader)
 	_, err = reader.Length()
 	if err != nil {
 		return nil, err
