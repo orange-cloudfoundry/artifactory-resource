@@ -193,7 +193,7 @@ github.com/jedib0t/go-pretty/v6/text
 # github.com/jfrog/archiver/v3 v3.6.1
 ## explicit; go 1.20
 github.com/jfrog/archiver/v3
-# github.com/jfrog/build-info-go v1.10.12
+# github.com/jfrog/build-info-go v1.10.14
 ## explicit; go 1.22
 github.com/jfrog/build-info-go/build
 github.com/jfrog/build-info-go/build/utils
@@ -221,7 +221,7 @@ github.com/jfrog/gofrog/version
 # github.com/jfrog/jfrog-cli-artifactory v0.3.1
 ## explicit; go 1.23.7
 github.com/jfrog/jfrog-cli-artifactory/artifactory/commands/generic
-# github.com/jfrog/jfrog-cli-core/v2 v2.58.7
+# github.com/jfrog/jfrog-cli-core/v2 v2.59.0
 ## explicit; go 1.23.7
 github.com/jfrog/jfrog-cli-core/v2/artifactory/commands/utils
 github.com/jfrog/jfrog-cli-core/v2/artifactory/utils
@@ -237,7 +237,7 @@ github.com/jfrog/jfrog-cli-core/v2/utils/ioutils
 github.com/jfrog/jfrog-cli-core/v2/utils/lock
 github.com/jfrog/jfrog-cli-core/v2/utils/log
 github.com/jfrog/jfrog-cli-core/v2/utils/osutils
-# github.com/jfrog/jfrog-client-go v1.53.1
+# github.com/jfrog/jfrog-client-go v1.54.1
 ## explicit; go 1.23.7
 github.com/jfrog/jfrog-client-go/access
 github.com/jfrog/jfrog-client-go/access/auth
@@ -268,6 +268,9 @@ github.com/jfrog/jfrog-client-go/lifecycle/services
 github.com/jfrog/jfrog-client-go/metadata
 github.com/jfrog/jfrog-client-go/metadata/auth
 github.com/jfrog/jfrog-client-go/metadata/services
+github.com/jfrog/jfrog-client-go/onemodel
+github.com/jfrog/jfrog-client-go/onemodel/auth
+github.com/jfrog/jfrog-client-go/onemodel/services
 github.com/jfrog/jfrog-client-go/pipelines
 github.com/jfrog/jfrog-client-go/pipelines/auth
 github.com/jfrog/jfrog-client-go/pipelines/services
