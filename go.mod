@@ -6,7 +6,7 @@ require (
 	github.com/Masterminds/semver v1.5.0
 	github.com/jfrog/jfrog-cli-artifactory v0.3.2
 	github.com/jfrog/jfrog-cli-core/v2 v2.59.1
-	github.com/jfrog/jfrog-client-go v1.54.1
+	github.com/jfrog/jfrog-client-go v1.54.2
 	gopkg.in/yaml.v3 v3.0.1
 )
 
