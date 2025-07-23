@@ -221,7 +221,7 @@ github.com/jfrog/gofrog/version
 # github.com/jfrog/jfrog-cli-artifactory v0.4.0
 ## explicit; go 1.23.7
 github.com/jfrog/jfrog-cli-artifactory/artifactory/commands/generic
-# github.com/jfrog/jfrog-cli-core/v2 v2.59.2
+# github.com/jfrog/jfrog-cli-core/v2 v2.59.3
 ## explicit; go 1.23.7
 github.com/jfrog/jfrog-cli-core/v2/artifactory/commands/utils
 github.com/jfrog/jfrog-cli-core/v2/artifactory/utils
