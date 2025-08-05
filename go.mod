@@ -1,12 +1,12 @@
 module github.com/orange-cloudfoundry/artifactory-resource
 
-go 1.24.1
+go 1.24.4
 
 require (
 	github.com/Masterminds/semver v1.5.0
 	github.com/jfrog/jfrog-cli-artifactory v0.5.1
 	github.com/jfrog/jfrog-cli-core/v2 v2.59.3
-	github.com/jfrog/jfrog-client-go v1.54.3
+	github.com/jfrog/jfrog-client-go v1.54.4
 	gopkg.in/yaml.v3 v3.0.1
 )
 
@@ -39,7 +39,7 @@ require (
 	github.com/jbenet/go-context v0.0.0-20150711004518-d14ea06fba99 // indirect
 	github.com/jedib0t/go-pretty/v6 v6.6.7 // indirect
 	github.com/jfrog/archiver/v3 v3.6.1 // indirect
-	github.com/jfrog/build-info-go v1.10.14 // indirect
+	github.com/jfrog/build-info-go v1.10.15 // indirect
 	github.com/jfrog/gofrog v1.7.6 // indirect
 	github.com/kevinburke/ssh_config v1.2.0 // indirect
 	github.com/klauspost/compress v1.18.0 // indirect
