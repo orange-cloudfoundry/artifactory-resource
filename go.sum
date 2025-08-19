@@ -98,8 +98,8 @@ github.com/jfrog/jfrog-cli-artifactory v0.6.0 h1:++P/euXYMlV+fKsyMWJG2hnfiUc2ATL
 github.com/jfrog/jfrog-cli-artifactory v0.6.0/go.mod h1:TC2TecHCZvVYtquPixz++VfHNX600vzAg+hXCQ3j0uE=
 github.com/jfrog/jfrog-cli-core/v2 v2.59.4 h1:6FU8hR0Niao8PuXh+0jU06lxTRJtDD8r4UL/4T+8yuI=
 github.com/jfrog/jfrog-cli-core/v2 v2.59.4/go.mod h1:agFp57/4zU9J5E3sKyqxIMzqjFpxE+xrWPg3RcjTNbY=
-github.com/jfrog/jfrog-client-go v1.54.4 h1:W5J2WAidEPghlvWl7FbrJUeRyVbNzC6GnihNACVaeEM=
-github.com/jfrog/jfrog-client-go v1.54.4/go.mod h1:+pSVE7Co+ytwhOhmz84/Lpe5fSeTaWJXsP1qt+WVfw0=
+github.com/jfrog/jfrog-client-go v1.54.5 h1:WKd26zbJYPCgKTTFFflHnX/1QqtZt0IXh3czlikXsyY=
+github.com/jfrog/jfrog-client-go v1.54.5/go.mod h1:+pSVE7Co+ytwhOhmz84/Lpe5fSeTaWJXsP1qt+WVfw0=
 github.com/kevinburke/ssh_config v1.2.0 h1:x584FjTGwHzMwvHx18PXxbBVzfnxogHaAReU4gf13a4=
 github.com/kevinburke/ssh_config v1.2.0/go.mod h1:CT57kijsi8u/K/BOFA39wgDQJ9CxiF4nAY/ojJ6r6mM=
 github.com/klauspost/compress v1.4.1/go.mod h1:RyIbtBH6LamlWaDj8nUwkbUhJ87Yi3uG0guNDohfE1A=
