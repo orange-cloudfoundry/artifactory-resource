@@ -218,10 +218,10 @@ github.com/jfrog/gofrog/safeconvert
 github.com/jfrog/gofrog/stringutils
 github.com/jfrog/gofrog/unarchive
 github.com/jfrog/gofrog/version
-# github.com/jfrog/jfrog-cli-artifactory v0.6.2
+# github.com/jfrog/jfrog-cli-artifactory v0.7.0
 ## explicit; go 1.24.6
 github.com/jfrog/jfrog-cli-artifactory/artifactory/commands/generic
-# github.com/jfrog/jfrog-cli-core/v2 v2.59.5
+# github.com/jfrog/jfrog-cli-core/v2 v2.59.6
 ## explicit; go 1.24.6
 github.com/jfrog/jfrog-cli-core/v2/artifactory/commands/utils
 github.com/jfrog/jfrog-cli-core/v2/artifactory/utils
