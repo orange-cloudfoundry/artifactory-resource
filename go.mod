@@ -5,7 +5,7 @@ go 1.25.0
 require (
 	github.com/Masterminds/semver v1.5.0
 	github.com/jfrog/jfrog-cli-artifactory v0.6.2
-	github.com/jfrog/jfrog-cli-core/v2 v2.59.5
+	github.com/jfrog/jfrog-cli-core/v2 v2.59.6
 	github.com/jfrog/jfrog-client-go v1.54.6
 	gopkg.in/yaml.v3 v3.0.1
 )
