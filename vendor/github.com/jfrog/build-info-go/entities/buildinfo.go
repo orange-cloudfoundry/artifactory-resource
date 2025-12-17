@@ -2,13 +2,14 @@ package entities
 
 import (
 	"errors"
-	"github.com/jfrog/build-info-go/utils/compareutils"
-	"golang.org/x/exp/maps"
-	"golang.org/x/exp/slices"
 	"regexp"
 	"sort"
 	"strings"
 	"time"
+
+	"github.com/jfrog/build-info-go/utils/compareutils"
+	"golang.org/x/exp/maps"
+	"golang.org/x/exp/slices"
 
 	cdx "github.com/CycloneDX/cyclonedx-go"
 	"github.com/jfrog/gofrog/stringutils"
@@ -174,7 +175,7 @@ func (targetBuildInfo *BuildInfo) ToCycloneDxBom() (*cdx.BOM, error) {
 			newComp.Type = cdx.ComponentTypeLibrary
 		}
 
-		if !biDep.Checksum.IsEmpty() {
+		if !biDep.IsEmpty() {
 			hashes := []cdx.Hash{
 				{
 					Algorithm: cdx.HashAlgoSHA256,
@@ -377,7 +378,7 @@ type Module struct {
 // If the 'other' Module matches the current one, return true.
 // 'other' Module may contain regex values for Id, Artifacts, ExcludedArtifacts, Dependencies and Checksum.
 func (m *Module) isEqual(other Module) (bool, error) {
-	match, err := m.Checksum.IsEqual(other.Checksum)
+	match, err := m.IsEqual(other.Checksum)
 	if !match || err != nil {
 		return false, err
 	}
@@ -453,7 +454,7 @@ func (a *Artifact) isEqual(other Artifact) (bool, error) {
 	if !match || err != nil {
 		return false, err
 	}
-	match, err = a.Checksum.IsEqual(other.Checksum)
+	match, err = a.IsEqual(other.Checksum)
 	if !match || err != nil {
 		return false, err
 	}
