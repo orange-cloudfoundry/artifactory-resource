@@ -2,13 +2,14 @@ package entities
 
 import (
 	"errors"
-	"github.com/jfrog/build-info-go/utils/compareutils"
-	"golang.org/x/exp/maps"
-	"golang.org/x/exp/slices"
 	"regexp"
 	"sort"
 	"strings"
 	"time"
+
+	"github.com/jfrog/build-info-go/utils/compareutils"
+	"golang.org/x/exp/maps"
+	"golang.org/x/exp/slices"
 
 	cdx "github.com/CycloneDX/cyclonedx-go"
 	"github.com/jfrog/gofrog/stringutils"
@@ -34,6 +35,8 @@ const (
 	Go        ModuleType = "go"
 	Python    ModuleType = "python"
 	Terraform ModuleType = "terraform"
+	Helm      ModuleType = "helm"
+	Conan     ModuleType = "conan"
 )
 
 type BuildInfo struct {
@@ -174,7 +177,7 @@ func (targetBuildInfo *BuildInfo) ToCycloneDxBom() (*cdx.BOM, error) {
 			newComp.Type = cdx.ComponentTypeLibrary
 		}
 
-		if !biDep.Checksum.IsEmpty() {
+		if !biDep.IsEmpty() {
 			hashes := []cdx.Hash{
 				{
 					Algorithm: cdx.HashAlgoSHA256,
@@ -377,7 +380,7 @@ type Module struct {
 // If the 'other' Module matches the current one, return true.
 // 'other' Module may contain regex values for Id, Artifacts, ExcludedArtifacts, Dependencies and Checksum.
 func (m *Module) isEqual(other Module) (bool, error) {
-	match, err := m.Checksum.IsEqual(other.Checksum)
+	match, err := m.IsEqual(other.Checksum)
 	if !match || err != nil {
 		return false, err
 	}
@@ -453,7 +456,7 @@ func (a *Artifact) isEqual(other Artifact) (bool, error) {
 	if !match || err != nil {
 		return false, err
 	}
-	match, err = a.Checksum.IsEqual(other.Checksum)
+	match, err = a.IsEqual(other.Checksum)
 	if !match || err != nil {
 		return false, err
 	}
@@ -493,6 +496,7 @@ type Dependency struct {
 	Type        string     `json:"type,omitempty"`
 	Scopes      []string   `json:"scopes,omitempty"`
 	RequestedBy [][]string `json:"requestedBy,omitempty"`
+	Repository  string     `json:"repository,omitempty"`
 	Checksum
 }
 
@@ -508,10 +512,6 @@ func (d *Dependency) IsEqual(other Dependency) (bool, error) {
 		return false, err
 	}
 	return d.Type == other.Type && compareutils.IsEqualSlices(d.Scopes, other.Scopes) && compareutils.IsEqual2DSlices(d.RequestedBy, other.RequestedBy), nil
-}
-
-func IsEqualDependencySlices(actual, other []Dependency) (bool, error) {
-	return IsEqualModuleSlices([]Module{{Dependencies: actual}}, []Module{{Dependencies: other}})
 }
 
 func isEqualDependencySlices(actual, other []Dependency) (bool, error) {

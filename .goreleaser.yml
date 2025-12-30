@@ -1,4 +1,5 @@
 project_name: artifactory-resource
+version: 2
 
 builds:
   - &build
@@ -23,7 +24,7 @@ builds:
     binary: 'assets_{{ .Os }}_{{ .Arch }}/out'
 
 archives:
-- format: binary
+- formats: [binary]
 
 changelog:
   sort: asc
