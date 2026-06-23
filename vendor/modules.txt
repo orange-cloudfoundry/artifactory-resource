@@ -5,8 +5,8 @@ dario.cat/mergo
 ## explicit; go 1.18
 github.com/BurntSushi/toml
 github.com/BurntSushi/toml/internal
-# github.com/CycloneDX/cyclonedx-go v0.9.3
-## explicit; go 1.20
+# github.com/CycloneDX/cyclonedx-go v0.11.0
+## explicit; go 1.23
 github.com/CycloneDX/cyclonedx-go
 # github.com/Masterminds/semver v1.5.0
 ## explicit
@@ -18,8 +18,8 @@ github.com/Microsoft/go-winio/internal/fs
 github.com/Microsoft/go-winio/internal/socket
 github.com/Microsoft/go-winio/internal/stringbuffer
 github.com/Microsoft/go-winio/pkg/guid
-# github.com/ProtonMail/go-crypto v1.3.0
-## explicit; go 1.22.0
+# github.com/ProtonMail/go-crypto v1.4.1
+## explicit; go 1.23.0
 github.com/ProtonMail/go-crypto/bitcurves
 github.com/ProtonMail/go-crypto/brainpool
 github.com/ProtonMail/go-crypto/eax
@@ -42,11 +42,12 @@ github.com/ProtonMail/go-crypto/openpgp/packet
 github.com/ProtonMail/go-crypto/openpgp/s2k
 github.com/ProtonMail/go-crypto/openpgp/x25519
 github.com/ProtonMail/go-crypto/openpgp/x448
-# github.com/andybalholm/brotli v1.2.0
+# github.com/andybalholm/brotli v1.2.1
 ## explicit; go 1.22
 github.com/andybalholm/brotli
+github.com/andybalholm/brotli/flate
 github.com/andybalholm/brotli/matchfinder
-# github.com/buger/jsonparser v1.1.2
+# github.com/buger/jsonparser v1.2.0
 ## explicit; go 1.13
 github.com/buger/jsonparser
 # github.com/c-bata/go-prompt v0.2.6
@@ -59,15 +60,11 @@ github.com/c-bata/go-prompt/internal/term
 # github.com/chzyer/readline v1.5.1
 ## explicit; go 1.15
 github.com/chzyer/readline
-# github.com/clipperhouse/stringish v0.1.1
-## explicit; go 1.18
-github.com/clipperhouse/stringish
-# github.com/clipperhouse/uax29/v2 v2.3.0
+# github.com/clipperhouse/uax29/v2 v2.7.0
 ## explicit; go 1.18
 github.com/clipperhouse/uax29/v2/graphemes
-github.com/clipperhouse/uax29/v2/internal/iterators
-# github.com/cloudflare/circl v1.6.3
-## explicit; go 1.22.0
+# github.com/cloudflare/circl v1.6.4
+## explicit; go 1.24.0
 github.com/cloudflare/circl/dh/x25519
 github.com/cloudflare/circl/dh/x448
 github.com/cloudflare/circl/ecc/goldilocks
@@ -80,7 +77,7 @@ github.com/cloudflare/circl/math/mlsbset
 github.com/cloudflare/circl/sign
 github.com/cloudflare/circl/sign/ed25519
 github.com/cloudflare/circl/sign/ed448
-# github.com/cyphar/filepath-securejoin v0.6.1
+# github.com/cyphar/filepath-securejoin v0.7.0
 ## explicit; go 1.18
 github.com/cyphar/filepath-securejoin
 github.com/cyphar/filepath-securejoin/internal/consts
@@ -103,8 +100,8 @@ github.com/emirpasic/gods/utils
 # github.com/forPelevin/gomoji v1.4.1
 ## explicit; go 1.19
 github.com/forPelevin/gomoji
-# github.com/fsnotify/fsnotify v1.9.0
-## explicit; go 1.17
+# github.com/fsnotify/fsnotify v1.10.1
+## explicit; go 1.23
 github.com/fsnotify/fsnotify
 github.com/fsnotify/fsnotify/internal
 # github.com/go-git/gcfg v1.5.1-0.20230307220236-3a3c6141e376
@@ -170,11 +167,11 @@ github.com/go-git/go-git/v5/utils/merkletrie/internal/frame
 github.com/go-git/go-git/v5/utils/merkletrie/noder
 github.com/go-git/go-git/v5/utils/sync
 github.com/go-git/go-git/v5/utils/trace
-# github.com/go-viper/mapstructure/v2 v2.4.0
+# github.com/go-viper/mapstructure/v2 v2.5.0
 ## explicit; go 1.18
 github.com/go-viper/mapstructure/v2
 github.com/go-viper/mapstructure/v2/internal/errors
-# github.com/gocarina/gocsv v0.0.0-20240520201108-78e41c74b4b1
+# github.com/gocarina/gocsv v0.0.0-20260607070740-0735908c6461
 ## explicit; go 1.13
 github.com/gocarina/gocsv
 # github.com/golang-jwt/jwt/v4 v4.5.2
@@ -189,13 +186,13 @@ github.com/golang/snappy
 # github.com/google/uuid v1.6.0
 ## explicit
 github.com/google/uuid
-# github.com/gookit/color v1.6.0
+# github.com/gookit/color v1.6.1
 ## explicit; go 1.18
 github.com/gookit/color
 # github.com/jbenet/go-context v0.0.0-20150711004518-d14ea06fba99
 ## explicit
 github.com/jbenet/go-context/io
-# github.com/jedib0t/go-pretty/v6 v6.7.8
+# github.com/jedib0t/go-pretty/v6 v6.8.1
 ## explicit; go 1.18
 github.com/jedib0t/go-pretty/v6/table
 github.com/jedib0t/go-pretty/v6/text
@@ -227,15 +224,14 @@ github.com/jfrog/gofrog/safeconvert
 github.com/jfrog/gofrog/stringutils
 github.com/jfrog/gofrog/unarchive
 github.com/jfrog/gofrog/version
-# github.com/jfrog/jfrog-cli-artifactory v0.7.2
-## explicit; go 1.24.6
+# github.com/jfrog/jfrog-cli-artifactory v0.8.0
+## explicit; go 1.25.4
 github.com/jfrog/jfrog-cli-artifactory/artifactory/commands/generic
-# github.com/jfrog/jfrog-cli-core/v2 v2.60.0
+# github.com/jfrog/jfrog-cli-core/v2 v2.60.1-0.20251015045218-1a38c9e47097
 ## explicit; go 1.24.6
 github.com/jfrog/jfrog-cli-core/v2/artifactory/commands/utils
 github.com/jfrog/jfrog-cli-core/v2/artifactory/utils
 github.com/jfrog/jfrog-cli-core/v2/artifactory/utils/commandsummary
-github.com/jfrog/jfrog-cli-core/v2/artifactory/utils/container
 github.com/jfrog/jfrog-cli-core/v2/common/build
 github.com/jfrog/jfrog-cli-core/v2/common/format
 github.com/jfrog/jfrog-cli-core/v2/common/project
@@ -246,11 +242,14 @@ github.com/jfrog/jfrog-cli-core/v2/utils/ioutils
 github.com/jfrog/jfrog-cli-core/v2/utils/lock
 github.com/jfrog/jfrog-cli-core/v2/utils/log
 github.com/jfrog/jfrog-cli-core/v2/utils/osutils
-# github.com/jfrog/jfrog-client-go v1.55.0
+# github.com/jfrog/jfrog-client-go v1.55.1-0.20251106114658-e01e86b037c8
 ## explicit; go 1.24.6
 github.com/jfrog/jfrog-client-go/access
 github.com/jfrog/jfrog-client-go/access/auth
 github.com/jfrog/jfrog-client-go/access/services
+github.com/jfrog/jfrog-client-go/apptrust
+github.com/jfrog/jfrog-client-go/apptrust/auth
+github.com/jfrog/jfrog-client-go/apptrust/services
 github.com/jfrog/jfrog-client-go/artifactory
 github.com/jfrog/jfrog-client-go/artifactory/auth
 github.com/jfrog/jfrog-client-go/artifactory/services
@@ -274,6 +273,7 @@ github.com/jfrog/jfrog-client-go/http/httpclient
 github.com/jfrog/jfrog-client-go/http/jfroghttpclient
 github.com/jfrog/jfrog-client-go/jfconnect
 github.com/jfrog/jfrog-client-go/jfconnect/services
+github.com/jfrog/jfrog-client-go/jpd
 github.com/jfrog/jfrog-client-go/lifecycle
 github.com/jfrog/jfrog-client-go/lifecycle/auth
 github.com/jfrog/jfrog-client-go/lifecycle/services
@@ -303,11 +303,11 @@ github.com/jfrog/jfrog-client-go/xsc
 github.com/jfrog/jfrog-client-go/xsc/auth
 github.com/jfrog/jfrog-client-go/xsc/services
 github.com/jfrog/jfrog-client-go/xsc/services/utils
-# github.com/kevinburke/ssh_config v1.4.0
+# github.com/kevinburke/ssh_config v1.6.0
 ## explicit; go 1.18
 github.com/kevinburke/ssh_config
-# github.com/klauspost/compress v1.18.2
-## explicit; go 1.23
+# github.com/klauspost/compress v1.18.6
+## explicit; go 1.24
 github.com/klauspost/compress
 github.com/klauspost/compress/flate
 github.com/klauspost/compress/fse
@@ -331,32 +331,31 @@ github.com/klauspost/pgzip
 github.com/manifoldco/promptui
 github.com/manifoldco/promptui/list
 github.com/manifoldco/promptui/screenbuf
-# github.com/mattn/go-colorable v0.1.14
+# github.com/mattn/go-colorable v0.1.15
 ## explicit; go 1.18
 github.com/mattn/go-colorable
-# github.com/mattn/go-isatty v0.0.20
-## explicit; go 1.15
+# github.com/mattn/go-isatty v0.0.22
+## explicit; go 1.21
 github.com/mattn/go-isatty
-# github.com/mattn/go-runewidth v0.0.19
+# github.com/mattn/go-runewidth v0.0.24
 ## explicit; go 1.20
 github.com/mattn/go-runewidth
-# github.com/mattn/go-tty v0.0.7
+# github.com/mattn/go-tty v0.0.8
 ## explicit; go 1.18
 github.com/mattn/go-tty
 # github.com/minio/sha256-simd v1.0.1
 ## explicit; go 1.17
 github.com/minio/sha256-simd
-# github.com/nwaples/rardecode/v2 v2.2.2
+# github.com/nwaples/rardecode/v2 v2.2.5
 ## explicit; go 1.21
 github.com/nwaples/rardecode/v2
-# github.com/pelletier/go-toml/v2 v2.2.4
+# github.com/pelletier/go-toml/v2 v2.4.1
 ## explicit; go 1.21.0
 github.com/pelletier/go-toml/v2
-github.com/pelletier/go-toml/v2/internal/characters
-github.com/pelletier/go-toml/v2/internal/danger
+github.com/pelletier/go-toml/v2/internal/parserbridge
 github.com/pelletier/go-toml/v2/internal/tracker
 github.com/pelletier/go-toml/v2/unstable
-# github.com/pierrec/lz4/v4 v4.1.23
+# github.com/pierrec/lz4/v4 v4.1.27
 ## explicit; go 1.17
 github.com/pierrec/lz4/v4
 github.com/pierrec/lz4/v4/internal/lz4block
@@ -428,7 +427,7 @@ github.com/xo/terminfo
 # go.yaml.in/yaml/v3 v3.0.4
 ## explicit; go 1.16
 go.yaml.in/yaml/v3
-# golang.org/x/crypto v0.50.0
+# golang.org/x/crypto v0.53.0
 ## explicit; go 1.25.0
 golang.org/x/crypto/argon2
 golang.org/x/crypto/blake2b
@@ -446,29 +445,29 @@ golang.org/x/crypto/ssh
 golang.org/x/crypto/ssh/agent
 golang.org/x/crypto/ssh/internal/bcrypt_pbkdf
 golang.org/x/crypto/ssh/knownhosts
-# golang.org/x/exp v0.0.0-20260410095643-746e56fc9e2f
+# golang.org/x/exp v0.0.0-20260611194520-c48552f49976
 ## explicit; go 1.25.0
 golang.org/x/exp/maps
 golang.org/x/exp/slices
-# golang.org/x/net v0.53.0
+# golang.org/x/net v0.56.0
 ## explicit; go 1.25.0
 golang.org/x/net/context
 golang.org/x/net/internal/socks
 golang.org/x/net/proxy
-# golang.org/x/sync v0.20.0
+# golang.org/x/sync v0.21.0
 ## explicit; go 1.25.0
 golang.org/x/sync/errgroup
-# golang.org/x/sys v0.43.0
+# golang.org/x/sys v0.46.0
 ## explicit; go 1.25.0
 golang.org/x/sys/cpu
 golang.org/x/sys/execabs
 golang.org/x/sys/plan9
 golang.org/x/sys/unix
 golang.org/x/sys/windows
-# golang.org/x/term v0.42.0
+# golang.org/x/term v0.44.0
 ## explicit; go 1.25.0
 golang.org/x/term
-# golang.org/x/text v0.36.0
+# golang.org/x/text v0.38.0
 ## explicit; go 1.25.0
 golang.org/x/text/encoding
 golang.org/x/text/encoding/internal

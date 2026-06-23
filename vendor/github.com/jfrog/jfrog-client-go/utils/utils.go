@@ -5,6 +5,8 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"math"
+	"math/rand"
 	"net/url"
 	"os"
 	"path"
@@ -12,6 +14,7 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/jfrog/jfrog-client-go/utils/io"
 
@@ -51,6 +54,8 @@ var (
 	MaxBufferSize          = 50000
 	userAgent              = getDefaultUserAgent()
 	curlyParenthesesRegexp = regexp.MustCompile(`\{(\d+?)}`)
+	// #nosec G404
+	backoffRand = rand.New(rand.NewSource(time.Now().UnixNano()))
 )
 
 func getVersion() string {
@@ -625,7 +630,7 @@ func SetEnvWithResetCallback(key, value string) (func() error, error) {
 
 const (
 	// If the access token used for the client is project-scoped, the API call needs to contain the project key as query param to pass to the Server.
-	ProjectKeyQueryParam = "projectKey="
+	ProjectKeyPermissionsQueryParam = "projectKey="
 )
 
 // To access some of the API calls in Xray, we need to add the project key as a query parameter (used for validations if the token is project-scoped).
@@ -636,15 +641,35 @@ func AppendScopedProjectKeyParam(url, projectKey string) string {
 	}
 	if strings.Contains(url, "?") {
 		// the URL already contains query parameters, append the project key with an '&'
-		url += "&" + ProjectKeyQueryParam + projectKey
+		url += "&" + ProjectKeyPermissionsQueryParam + projectKey
 	} else {
 		// the URL does not contain any query parameters, add the project key with a '?'
-		url += "?" + ProjectKeyQueryParam + projectKey
+		url += "?" + ProjectKeyPermissionsQueryParam + projectKey
 	}
 	return url
 }
 
 func urlContainsProjectKeyParam(url string) bool {
 	// check if the URL already contains the project key query parameter
-	return len(url) > 0 && strings.Contains(url, ProjectKeyQueryParam)
+	return len(url) > 0 && strings.Contains(url, ProjectKeyPermissionsQueryParam)
+}
+
+func CalculateBackoff(attempt int, initialDelay, maxDelay time.Duration) time.Duration {
+	if initialDelay < 0 {
+		initialDelay = 0
+	}
+	if maxDelay < 0 {
+		maxDelay = 0
+	}
+	if initialDelay > maxDelay {
+		initialDelay = maxDelay
+	}
+	expDelay := float64(initialDelay) * math.Pow(2, float64(attempt))
+	cappedDelay := math.Min(expDelay, float64(maxDelay))
+	jitterFactor := 1.0 + (backoffRand.Float64()*0.4 - 0.2)
+	currentDelay := time.Duration(cappedDelay * jitterFactor)
+	if currentDelay < 0 {
+		currentDelay = 0
+	}
+	return currentDelay
 }
