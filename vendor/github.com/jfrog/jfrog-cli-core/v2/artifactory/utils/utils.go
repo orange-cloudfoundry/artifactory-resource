@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	jpdService "github.com/jfrog/jfrog-client-go/jpd"
 	"io"
 	"net/http"
 	"net/url"
@@ -16,6 +17,7 @@ import (
 	"time"
 
 	ioutils "github.com/jfrog/gofrog/io"
+	"github.com/jfrog/jfrog-client-go/apptrust"
 	"github.com/jfrog/jfrog-client-go/evidence"
 
 	"github.com/jfrog/jfrog-cli-core/v2/utils/config"
@@ -223,6 +225,27 @@ func CreateLifecycleServiceManager(serviceDetails *config.ServerDetails, isDryRu
 	return lifecycle.New(serviceConfig)
 }
 
+func CreateJPDServiceManager(serviceDetails *config.ServerDetails, isDryRun bool) (*jpdService.JPDServicesManager, error) {
+	certsPath, err := coreutils.GetJfrogCertsDir()
+	if err != nil {
+		return nil, err
+	}
+	evdAuth, err := serviceDetails.CreateEvidenceAuthConfig()
+	if err != nil {
+		return nil, err
+	}
+	serviceConfig, err := clientConfig.NewConfigBuilder().
+		SetServiceDetails(evdAuth).
+		SetCertificatesPath(certsPath).
+		SetInsecureTls(serviceDetails.InsecureTls).
+		SetDryRun(isDryRun).
+		Build()
+	if err != nil {
+		return nil, err
+	}
+	return jpdService.NewJPDServicesManager(serviceConfig)
+}
+
 func CreateEvidenceServiceManager(serviceDetails *config.ServerDetails, isDryRun bool) (*evidence.EvidenceServicesManager, error) {
 	certsPath, err := coreutils.GetJfrogCertsDir()
 	if err != nil {
@@ -242,6 +265,27 @@ func CreateEvidenceServiceManager(serviceDetails *config.ServerDetails, isDryRun
 		return nil, err
 	}
 	return evidence.New(serviceConfig)
+}
+
+func CreateApptrustServiceManager(serviceDetails *config.ServerDetails, isDryRun bool) (*apptrust.ApptrustServicesManager, error) {
+	certsPath, err := coreutils.GetJfrogCertsDir()
+	if err != nil {
+		return nil, err
+	}
+	apptrustAuth, err := serviceDetails.CreateApptrustAuthConfig()
+	if err != nil {
+		return nil, err
+	}
+	serviceConfig, err := clientConfig.NewConfigBuilder().
+		SetServiceDetails(apptrustAuth).
+		SetCertificatesPath(certsPath).
+		SetInsecureTls(serviceDetails.InsecureTls).
+		SetDryRun(isDryRun).
+		Build()
+	if err != nil {
+		return nil, err
+	}
+	return apptrust.New(serviceConfig)
 }
 
 func CreateMetadataServiceManager(serviceDetails *config.ServerDetails, isDryRun bool) (metadata.Manager, error) {

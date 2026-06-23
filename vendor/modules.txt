@@ -226,15 +226,14 @@ github.com/jfrog/gofrog/safeconvert
 github.com/jfrog/gofrog/stringutils
 github.com/jfrog/gofrog/unarchive
 github.com/jfrog/gofrog/version
-# github.com/jfrog/jfrog-cli-artifactory v0.7.2
-## explicit; go 1.24.6
+# github.com/jfrog/jfrog-cli-artifactory v0.8.0
+## explicit; go 1.25.4
 github.com/jfrog/jfrog-cli-artifactory/artifactory/commands/generic
-# github.com/jfrog/jfrog-cli-core/v2 v2.60.0
+# github.com/jfrog/jfrog-cli-core/v2 v2.60.1-0.20251015045218-1a38c9e47097
 ## explicit; go 1.24.6
 github.com/jfrog/jfrog-cli-core/v2/artifactory/commands/utils
 github.com/jfrog/jfrog-cli-core/v2/artifactory/utils
 github.com/jfrog/jfrog-cli-core/v2/artifactory/utils/commandsummary
-github.com/jfrog/jfrog-cli-core/v2/artifactory/utils/container
 github.com/jfrog/jfrog-cli-core/v2/common/build
 github.com/jfrog/jfrog-cli-core/v2/common/format
 github.com/jfrog/jfrog-cli-core/v2/common/project
@@ -245,11 +244,14 @@ github.com/jfrog/jfrog-cli-core/v2/utils/ioutils
 github.com/jfrog/jfrog-cli-core/v2/utils/lock
 github.com/jfrog/jfrog-cli-core/v2/utils/log
 github.com/jfrog/jfrog-cli-core/v2/utils/osutils
-# github.com/jfrog/jfrog-client-go v1.55.0
+# github.com/jfrog/jfrog-client-go v1.55.1-0.20251015041910-ef0fe832b111
 ## explicit; go 1.24.6
 github.com/jfrog/jfrog-client-go/access
 github.com/jfrog/jfrog-client-go/access/auth
 github.com/jfrog/jfrog-client-go/access/services
+github.com/jfrog/jfrog-client-go/apptrust
+github.com/jfrog/jfrog-client-go/apptrust/auth
+github.com/jfrog/jfrog-client-go/apptrust/services
 github.com/jfrog/jfrog-client-go/artifactory
 github.com/jfrog/jfrog-client-go/artifactory/auth
 github.com/jfrog/jfrog-client-go/artifactory/services
@@ -273,6 +275,7 @@ github.com/jfrog/jfrog-client-go/http/httpclient
 github.com/jfrog/jfrog-client-go/http/jfroghttpclient
 github.com/jfrog/jfrog-client-go/jfconnect
 github.com/jfrog/jfrog-client-go/jfconnect/services
+github.com/jfrog/jfrog-client-go/jpd
 github.com/jfrog/jfrog-client-go/lifecycle
 github.com/jfrog/jfrog-client-go/lifecycle/auth
 github.com/jfrog/jfrog-client-go/lifecycle/services

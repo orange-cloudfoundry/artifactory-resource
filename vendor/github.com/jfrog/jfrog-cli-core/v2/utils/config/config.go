@@ -15,6 +15,7 @@ import (
 	"github.com/jfrog/jfrog-cli-core/v2/utils/coreutils"
 	cliLog "github.com/jfrog/jfrog-cli-core/v2/utils/log"
 	accessAuth "github.com/jfrog/jfrog-client-go/access/auth"
+	apptrustAuth "github.com/jfrog/jfrog-client-go/apptrust/auth"
 	artifactoryAuth "github.com/jfrog/jfrog-client-go/artifactory/auth"
 	"github.com/jfrog/jfrog-client-go/auth"
 	catalogAuth "github.com/jfrog/jfrog-client-go/catalog/auth"
@@ -587,6 +588,7 @@ type ServerDetails struct {
 	EvidenceUrl                     string `json:"-"`
 	MetadataUrl                     string `json:"-"`
 	OnemodelUrl                     string `json:"-"`
+	ApptrustUrl                     string `json:"-"`
 	User                            string `json:"user,omitempty"`
 	Password                        string `json:"password,omitempty"`
 	SshKeyPath                      string `json:"sshKeyPath,omitempty"`
@@ -601,6 +603,7 @@ type ServerDetails struct {
 	IsDefault                       bool   `json:"isDefault,omitempty"`
 	InsecureTls                     bool   `json:"-"`
 	WebLogin                        bool   `json:"webLogin,omitempty"`
+	DisableTokenRefresh             bool   `json:"disableTokenRefresh,omitempty"`
 }
 
 // Deprecated
@@ -683,6 +686,10 @@ func (serverDetails *ServerDetails) GetLifecycleUrl() string {
 
 func (serverDetails *ServerDetails) GetEvidenceUrl() string {
 	return serverDetails.EvidenceUrl
+}
+
+func (serverDetails *ServerDetails) GetApptrustUrl() string {
+	return serverDetails.ApptrustUrl
 }
 
 func (serverDetails *ServerDetails) GetMetadataUrl() string {
@@ -784,6 +791,12 @@ func (serverDetails *ServerDetails) CreateEvidenceAuthConfig() (auth.ServiceDeta
 	return serverDetails.createAuthConfig(evdAuth)
 }
 
+func (serverDetails *ServerDetails) CreateApptrustAuthConfig() (auth.ServiceDetails, error) {
+	apptrustAuth := apptrustAuth.NewApptrustDetails()
+	apptrustAuth.SetUrl(serverDetails.ApptrustUrl)
+	return serverDetails.createAuthConfig(apptrustAuth)
+}
+
 func (serverDetails *ServerDetails) CreateMetadataAuthConfig() (auth.ServiceDetails, error) {
 	mdAuth := metadataAuth.NewMetadataDetails()
 	mdAuth.SetUrl(serverDetails.MetadataUrl)
@@ -802,7 +815,7 @@ func (serverDetails *ServerDetails) createAuthConfig(details auth.ServiceDetails
 	// If refresh token is not empty, set a refresh handler and skip other credentials.
 	// First we check access's token, if empty we check artifactory's token.
 	switch {
-	case serverDetails.RefreshToken != "":
+	case serverDetails.RefreshToken != "" && !serverDetails.DisableTokenRefresh:
 		// Save serverId for refreshing if needed. If empty serverId is saved, default will be used.
 		tokenRefreshServerId = serverDetails.ServerId
 		details.AppendPreRequestFunction(AccessTokenRefreshPreRequestInterceptor)
