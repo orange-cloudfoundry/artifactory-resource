@@ -52,9 +52,21 @@ const (
 	file5CompDictFract = 0x000F8000
 	file5CompV5Compat  = 0x00100000
 
+	// host os
+	file5HostOSWindows = 0
+	file5HostOSUnix    = 1
+
+	// file header extra types
+	file5ExtraCrypt    = 1
+	file5ExtraHash     = 2
+	file5ExtraTime     = 3
+	file5ExtraVersion  = 4
+	file5ExtraRedirect = 5
+	file5ExtraOwner    = 6
+
 	// file encryption record flags
-	file5EncCheckPresent = 0x0001 // password check data is present
-	file5EncUseMac       = 0x0002 // use MAC instead of plain checksum
+	file5ExtraCryptCheckPresent = 0x0001 // password check data is present
+	file5ExtraCryptUseMac       = 0x0002 // use MAC instead of plain checksum
 
 	// precision time flags
 	file5ExtraTimeIsUnixTime = 0x01 // is unix time_t
@@ -62,6 +74,15 @@ const (
 	file5ExtraTimeHasCTime   = 0x04 // has creation time
 	file5ExtraTimeHasATime   = 0x08 // has access time
 	file5ExtraTimeHasUnixNS  = 0x10 // unix nanosecond time format
+
+	file5ExtraRedirDir = 0x1 // redirection target is a directory
+
+	file5ExtraUnixOwnerHasUserName  = 0x01 // has unix user name string
+	file5ExtraUnixOwnerHasGroupName = 0x02 // has unix group name string
+	file5ExtraUnixOwnerHasUserID    = 0x04 // has unix user id
+	file5ExtraUnixOwnerHasGroupID   = 0x06 // has unix group id
+
+	maxPathSize = 0x10000
 
 	cacheSize50   = 4
 	maxPbkdf2Salt = 64
@@ -227,13 +248,13 @@ func (a *archive50) parseFileEncryptionRecord(b readBuf, f *fileBlockHeader) err
 	f.iv = slices.Clone(b.bytes(16))
 
 	var check []byte
-	if flags&file5EncCheckPresent > 0 {
+	if flags&file5ExtraCryptCheckPresent > 0 {
 		if len(b) < 12 {
 			return ErrCorruptEncryptData
 		}
 		check = slices.Clone(b.bytes(12))
 	}
-	useMac := flags&file5EncUseMac > 0
+	useMac := flags&file5ExtraCryptUseMac > 0
 	// only need to generate keys for first block or
 	// last block if it has an optional hash key
 	if a.pass == nil || !(f.first || (f.last && useMac)) {
@@ -280,7 +301,7 @@ func readUnixNanoseconds(b *readBuf) (time.Duration, error) {
 }
 
 // parseFilePrecisionTimeRecord processes the optional high precision time record from a file header.
-func (a *archive50) parseFilePrecisionTimeRecord(b *readBuf, f *fileBlockHeader) error {
+func parseFilePrecisionTimeRecord(b *readBuf, f *fileBlockHeader) error {
 	var err error
 	flags := b.uvarint()
 	isUnixTime := flags&file5ExtraTimeIsUnixTime > 0
@@ -340,6 +361,45 @@ func (a *archive50) parseFilePrecisionTimeRecord(b *readBuf, f *fileBlockHeader)
 	return nil
 }
 
+// parseFileRedirectionRecord processes the file redirection record from a file header.
+func parseFileRedirectionRecord(b *readBuf, f *fileBlockHeader) error {
+	if len(*b) == 0 {
+		return ErrCorruptFileHeader
+	}
+	f.LinkType = byte(b.uvarint())
+	flags := b.uvarint()
+	f.LinkTargetIsDir = flags&file5ExtraRedirDir > 0
+	nameLen := b.uvarint()
+	if nameLen > 0 && nameLen < maxPathSize {
+		f.LinkTarget = b.stringAtMost(nameLen)
+	}
+	return nil
+}
+
+// parseFileOwnerRecord processes the file owner record from a file header.
+func parseFileOwnerRecord(b *readBuf, f *fileBlockHeader) error {
+	flags := b.uvarint()
+	if flags&file5ExtraUnixOwnerHasUserName > 0 {
+		nameLen := min(b.uvarint(), 255)
+		name := b.stringAtMost(nameLen)
+		f.UnixOwnerUserName = &name
+	}
+	if flags&file5ExtraUnixOwnerHasGroupName > 0 {
+		nameLen := min(b.uvarint(), 255)
+		name := b.stringAtMost(nameLen)
+		f.UnixOwnerGroupName = &name
+	}
+	if flags&file5ExtraUnixOwnerHasUserID > 0 {
+		id := b.uvarint()
+		f.UnixOwnerUserID = &id
+	}
+	if flags&file5ExtraUnixOwnerHasGroupID > 0 {
+		id := b.uvarint()
+		f.UnixOwnerGroupID = &id
+	}
+	return nil
+}
+
 func (a *archive50) parseFileHeader(h *blockHeader50) (*fileBlockHeader, error) {
 	f := new(fileBlockHeader)
 
@@ -375,32 +435,31 @@ func (a *archive50) parseFileHeader(h *blockHeader50) (*fileBlockHeader, error) 
 	method := (flags & file5CompMethod) >> 7 // compression method (0 == none)
 	if f.first && method != 0 {
 		unpackver := flags & file5CompAlgorithm
+		f.winSize = 0x20000 << ((flags & file5CompDictSize) >> 10)
 		switch unpackver {
 		case 0:
 			f.decVer = decode50Ver
-			f.winSize = 0x20000 << ((flags & file5CompDictSize) >> 10)
 		case 1:
 			if flags&file5CompV5Compat > 0 {
 				f.decVer = decode50Ver
 			} else {
 				f.decVer = decode70Ver
 			}
-			f.winSize = 0x20000 << ((flags >> 10) & 0x1F)
 			f.winSize += f.winSize / 32 * int64((flags&file5CompDictFract)>>15)
 		default:
-			return nil, ErrUnknownDecoder
+			f.decVer = decodeUnknownVer
 		}
 	}
 	switch h.data.uvarint() {
-	case 0:
+	case file5HostOSWindows:
 		f.HostOS = HostOSWindows
-	case 1:
+	case file5HostOSUnix:
 		f.HostOS = HostOSUnix
 	default:
 		f.HostOS = HostOSUnknown
 	}
-	nlen := int(h.data.uvarint())
-	if len(h.data) < nlen {
+	nlen := h.data.uvarint()
+	if h.data.len() < nlen {
 		return nil, ErrCorruptFileHeader
 	}
 	f.Name = string(h.data.bytes(nlen))
@@ -409,21 +468,21 @@ func (a *archive50) parseFileHeader(h *blockHeader50) (*fileBlockHeader, error) 
 	for _, e := range h.extra {
 		var err error
 		switch e.ftype {
-		case 1: // encryption
+		case file5ExtraCrypt:
 			if encErr := a.parseFileEncryptionRecord(e.data, f); encErr != nil {
 				f.errs = append(f.errs, encErr)
 			}
-		case 2:
+		case file5ExtraHash:
 			// TODO: hash
-		case 3:
-			err = a.parseFilePrecisionTimeRecord(&e.data, f)
-		case 4: // version
+		case file5ExtraTime:
+			err = parseFilePrecisionTimeRecord(&e.data, f)
+		case file5ExtraVersion:
 			_ = e.data.uvarint() // ignore flags field
 			f.Version = int(e.data.uvarint())
-		case 5:
-			// TODO: redirection
-		case 6:
-			// TODO: owner
+		case file5ExtraRedirect:
+			err = parseFileRedirectionRecord(&e.data, f)
+		case file5ExtraOwner:
+			err = parseFileOwnerRecord(&e.data, f)
 		}
 		if err != nil {
 			return nil, err
@@ -499,8 +558,8 @@ func (a *archive50) readBlockHeader(r byteReader) (*blockHeader50, error) {
 	crc := b.uint32()
 
 	// Check if header size is valid
-	size := int(b.uvarint())
-	bufSize := 3 + size - len(b)
+	size := b.uvarint()
+	bufSize := 3 + size - b.len()
 	if bufSize < 4 || size > maxHeaderSize {
 		return nil, ErrBadBlockHeader
 	}
@@ -524,22 +583,22 @@ func (a *archive50) readBlockHeader(r byteReader) (*blockHeader50, error) {
 	h.htype = b.uvarint()
 	h.flags = b.uvarint()
 
-	var extraSize int
+	var extraSize uint64
 	if h.flags&block5HasExtra > 0 {
-		extraSize = int(b.uvarint())
+		extraSize = b.uvarint()
 	}
 	if h.flags&block5HasData > 0 {
 		h.dataSize = int64(b.uvarint())
 	}
-	if len(b) < extraSize {
+	if b.len() < extraSize {
 		return nil, ErrCorruptBlockHeader
 	}
-	h.data = b.bytes(len(b) - extraSize)
+	h.data = b.bytes(b.len() - extraSize)
 
 	// read header extra records
 	for len(b) > 0 {
-		size = int(b.uvarint())
-		if len(b) < size {
+		size = b.uvarint()
+		if b.len() < size {
 			return nil, ErrCorruptBlockHeader
 		}
 		data := readBuf(b.bytes(size))

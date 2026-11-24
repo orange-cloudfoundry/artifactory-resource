@@ -3,6 +3,7 @@ package gocsv
 import (
 	"encoding"
 	"fmt"
+	"math/big"
 	"reflect"
 	"strconv"
 	"strings"
@@ -130,7 +131,8 @@ func toInt(in interface{}) (int64, error) {
 			return 0, nil
 		}
 		out := strings.SplitN(s, ".", 2)
-		return strconv.ParseInt(out[0], 0, 64)
+		// base 10, not 0: a CSV field is data, not a Go literal
+		return strconv.ParseInt(out[0], 10, 64)
 	case reflect.Bool:
 		if inValue.Bool() {
 			return 1, nil
@@ -158,13 +160,29 @@ func toUint(in interface{}) (uint64, error) {
 
 		// support the float input
 		if strings.Contains(s, ".") {
-			f, err := strconv.ParseFloat(s, 64)
+			parsed, err := strconv.ParseFloat(s, 64)
 			if err != nil {
 				return 0, err
 			}
-			return uint64(f), nil
+			if parsed == 0 {
+				return 0, nil
+			}
+			// Retain all uint64 bits and truncate fractions without rounding up.
+			f, _, err := big.ParseFloat(s, 0, 64, big.ToZero)
+			if err != nil {
+				return 0, err
+			}
+			if f.Sign() < 0 && f.MantExp(nil) <= 0 {
+				return 0, nil
+			}
+			if f.Sign() < 0 || f.MantExp(nil) > 64 {
+				return 0, &strconv.NumError{Func: "ParseUint", Num: s, Err: strconv.ErrRange}
+			}
+			u, _ := f.Uint64()
+			return u, nil
 		}
-		return strconv.ParseUint(s, 0, 64)
+		// base 10, see toInt
+		return strconv.ParseUint(s, 10, 64)
 	case reflect.Bool:
 		if inValue.Bool() {
 			return 1, nil
@@ -181,6 +199,15 @@ func toUint(in interface{}) (uint64, error) {
 }
 
 func toFloat(in interface{}) (float64, error) {
+	return toFloatBits(in, 64)
+}
+
+// toFloatBits converts in to a float that fits in bitSize (32 or 64) bits.
+// Parsing a string at the field's own size matters at the edges: strconv
+// prints math.MaxFloat32 as 3.4028235e+38, which reads back as MaxFloat32 at
+// 32 bits but is out of range once parsed as a float64 and checked against
+// the float32 limit.
+func toFloatBits(in interface{}, bitSize int) (float64, error) {
 	inValue := reflect.ValueOf(in)
 
 	switch inValue.Kind() {
@@ -190,7 +217,7 @@ func toFloat(in interface{}) (float64, error) {
 			return 0, nil
 		}
 		s = strings.Replace(s, ",", ".", -1)
-		return strconv.ParseFloat(s, 64)
+		return strconv.ParseFloat(s, bitSize)
 	case reflect.Bool:
 		if inValue.Bool() {
 			return 1, nil
@@ -206,9 +233,21 @@ func toFloat(in interface{}) (float64, error) {
 	return 0, fmt.Errorf("No known conversion from " + inValue.Type().String() + " to float")
 }
 
+// isOnlyTextUnmarshaler reports whether t decodes through UnmarshalText, which
+// for types like time.Time rejects an empty string. A TypeUnmarshaller decides
+// for itself what an empty cell means.
+func isOnlyTextUnmarshaler(t reflect.Type) bool {
+	return t.Implements(reflect.TypeOf((*encoding.TextUnmarshaler)(nil)).Elem()) &&
+		!t.Implements(reflect.TypeOf((*TypeUnmarshaller)(nil)).Elem())
+}
+
 func setField(field reflect.Value, value string, omitEmpty bool) error {
 	if field.Kind() == reflect.Ptr {
 		if omitEmpty && value == "" {
+			return nil
+		}
+		if value == "" && (field.Type().Elem() == reflect.TypeOf(false) || isOnlyTextUnmarshaler(field.Type())) {
+			field.SetZero()
 			return nil
 		}
 		if field.IsNil() {
@@ -235,17 +274,26 @@ func setField(field reflect.Value, value string, omitEmpty bool) error {
 		if err != nil {
 			return err
 		}
+		if field.OverflowInt(i) {
+			return &strconv.NumError{Func: "ParseInt", Num: value, Err: strconv.ErrRange}
+		}
 		field.SetInt(i)
 	case uint, uint8, uint16, uint32, uint64:
 		ui, err := toUint(value)
 		if err != nil {
 			return err
 		}
+		if field.OverflowUint(ui) {
+			return &strconv.NumError{Func: "ParseUint", Num: value, Err: strconv.ErrRange}
+		}
 		field.SetUint(ui)
 	case float32, float64:
-		f, err := toFloat(value)
+		f, err := toFloatBits(value, field.Type().Bits())
 		if err != nil {
 			return err
+		}
+		if field.OverflowFloat(f) {
+			return &strconv.NumError{Func: "ParseFloat", Num: value, Err: strconv.ErrRange}
 		}
 		field.SetFloat(f)
 	default:
@@ -273,20 +321,29 @@ func setField(field reflect.Value, value string, omitEmpty bool) error {
 				if err != nil {
 					return err
 				}
+				if field.OverflowInt(i) {
+					return &strconv.NumError{Func: "ParseInt", Num: value, Err: strconv.ErrRange}
+				}
 				field.SetInt(i)
 			case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
 				ui, err := toUint(value)
 				if err != nil {
 					return err
 				}
+				if field.OverflowUint(ui) {
+					return &strconv.NumError{Func: "ParseUint", Num: value, Err: strconv.ErrRange}
+				}
 				field.SetUint(ui)
 			case reflect.Float32, reflect.Float64:
-				f, err := toFloat(value)
+				f, err := toFloatBits(value, field.Type().Bits())
 				if err != nil {
 					return err
 				}
+				if field.OverflowFloat(f) {
+					return &strconv.NumError{Func: "ParseFloat", Num: value, Err: strconv.ErrRange}
+				}
 				field.SetFloat(f)
-			case reflect.Slice, reflect.Struct:
+			case reflect.Slice, reflect.Array, reflect.Struct:
 				if value == "" {
 					return nil
 				}
@@ -324,9 +381,9 @@ func getFieldAsString(field reflect.Value) (str string, err error) {
 				return "false", nil
 			}
 		case int, int8, int16, int32, int64:
-			return fmt.Sprintf("%v", field.Int()), nil
+			return strconv.FormatInt(field.Int(), 10), nil
 		case uint, uint8, uint16, uint32, uint64:
-			return fmt.Sprintf("%v", field.Uint()), nil
+			return strconv.FormatUint(field.Uint(), 10), nil
 		case float32:
 			str, err = toString(float32(field.Float()))
 			if err != nil {
