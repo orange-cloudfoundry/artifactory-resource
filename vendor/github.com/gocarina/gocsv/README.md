@@ -99,7 +99,7 @@ type DateTime struct {
 
 // Convert the internal date as CSV string
 func (date *DateTime) MarshalCSV() (string, error) {
-	return date.Time.Format("20060201"), nil
+	return date.Time.Format("20060102"), nil
 }
 
 // You could also use the standard Stringer interface 
@@ -109,7 +109,7 @@ func (date *DateTime) String() (string) {
 
 // Convert the CSV string as internal date
 func (date *DateTime) UnmarshalCSV(csv string) (err error) {
-	date.Time, err = time.Parse("20060201", csv)
+	date.Time, err = time.Parse("20060102", csv)
 	return err
 }
 
@@ -120,6 +120,64 @@ type Client struct { // Our example struct with a custom type (DateTime)
 }
 
 ```
+
+Nested structs
+---
+
+When decoding nested pointer structs, GoCSV allocates the pointers needed to
+reach each field. An `omitempty` field still omits an empty leaf pointer value;
+it does not prevent allocation of the enclosing structs.
+
+By default, the fields of nested structs are prefixed with the parent field's
+name. For example:
+
+```go
+type Foo struct {
+	B Bar
+	X int `csv:"x"`
+}
+
+type Bar struct {
+	A int `csv:"a"`
+	B int `csv:"b"`
+}
+```
+
+produces columns `B.a, B.b, x`.
+
+Use the `csv:"."` tag to inline the nested struct's fields without that prefix; for example:
+
+```go
+type Foo struct {
+	B Bar `csv:"."`
+	X int `csv:"x"`
+}
+
+type Bar struct {
+	A int `csv:"a"`
+	B int `csv:"b"`
+}
+```
+
+produces columns `a, b, x`.
+
+Sanitizing values before decoding
+---
+
+Use a custom `Decoder` with `UnmarshalDecoder` to normalize values before they
+are converted to struct fields. Parse the CSV first, keep its header row, and
+map only the data columns that need cleaning. For example, the
+[runnable sanitizing example](sanitize_example_test.go) maps `N/A` to `NaN`
+only in the `Height` column; quoted names, Unicode, other columns and ordinary
+conversion errors keep their usual behavior.
+
+The example uses `csv.Reader.ReadAll`, so it holds all records in memory. For
+row-by-row processing, implement a `SimpleDecoder` whose `GetCSVRow` maps each
+data row, then use `UnmarshalDecoderToChan` or `UnmarshalDecoderToCallback`. Neither
+approach requires changing the process-wide `SetCSVReader` configuration.
+
+For a CSV without a header row, use `UnmarshalToCallbackWithoutHeaders`.
+It maps columns by struct field order and calls the callback for the first record as well.
 
 Customizable CSV Reader / Writer
 ---

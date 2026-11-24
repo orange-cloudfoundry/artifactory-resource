@@ -31,6 +31,9 @@ func writeFromChan(writer CSVWriter, c <-chan interface{}, omitHeaders bool) err
 	}
 	inInnerWasPointer := inType.Kind() == reflect.Ptr
 	inInnerStructInfo := getStructInfo(inType) // Get the inner struct info to get CSV annotations
+	if inInnerStructInfo.Err != nil {
+		return inInnerStructInfo.Err
+	}
 	csvHeadersLabels := make([]string, len(inInnerStructInfo.Fields))
 	for i, fieldInfo := range inInnerStructInfo.Fields { // Used to write the header (first line) in CSV
 		csvHeadersLabels[i] = fieldInfo.getFirstKey()
@@ -58,8 +61,8 @@ func writeFromChan(writer CSVWriter, c <-chan interface{}, omitHeaders bool) err
 		return err
 	}
 	for v := range c {
-		val, _ := getConcreteReflectValueAndType(v) // Get the concrete type (not pointer) (Slice<?> or Array<?>)
-		if err := ensureStructOrPtr(inType); err != nil {
+		val, valType := getConcreteReflectValueAndType(v) // Get the concrete type (not pointer) (Slice<?> or Array<?>)
+		if err := ensureStructOrPtr(valType); err != nil {
 			return err
 		}
 		if err := write(val); err != nil {
@@ -80,6 +83,9 @@ func writeTo(writer CSVWriter, in interface{}, omitHeaders bool) error {
 		return err
 	}
 	inInnerStructInfo := getStructInfo(inInnerType) // Get the inner struct info to get CSV annotations
+	if inInnerStructInfo.Err != nil {
+		return inInnerStructInfo.Err
+	}
 	csvHeadersLabels := make([]string, len(inInnerStructInfo.Fields))
 	for i, fieldInfo := range inInnerStructInfo.Fields { // Used to write the header (first line) in CSV
 		csvHeadersLabels[i] = fieldInfo.getFirstKey()
@@ -107,6 +113,7 @@ func writeTo(writer CSVWriter, in interface{}, omitHeaders bool) error {
 	return writer.Error()
 }
 
+// ensureStructOrPtr checks if t is a struct or a pointer.
 func ensureStructOrPtr(t reflect.Type) error {
 	switch t.Kind() {
 	case reflect.Struct:
@@ -114,7 +121,7 @@ func ensureStructOrPtr(t reflect.Type) error {
 	case reflect.Ptr:
 		return nil
 	}
-	return fmt.Errorf("cannot use " + t.String() + ", only slice or array supported")
+	return fmt.Errorf("cannot use " + t.String() + ", only struct or ptr supported")
 }
 
 // Check if the inType is an array or a slice

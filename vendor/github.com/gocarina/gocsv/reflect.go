@@ -13,6 +13,7 @@ import (
 
 type structInfo struct {
 	Fields []fieldInfo
+	Err    error
 }
 
 // fieldInfo is a struct field that should be mapped to a CSV column, or vice-versa
@@ -24,6 +25,7 @@ type fieldInfo struct {
 	IndexChain   []int
 	defaultValue string
 	partial      bool
+	inline       bool
 }
 
 func (f fieldInfo) getFirstKey() string {
@@ -56,24 +58,30 @@ func removeZeroWidthChars(s string) string {
 	}, s)
 }
 
-var structInfoCache sync.Map
 var structMap = make(map[reflect.Type]*structInfo)
 var structMapMutex sync.RWMutex
 
 func getStructInfo(rType reflect.Type) *structInfo {
-	stInfo, ok := structInfoCache.Load(rType)
+	structInfos := &loadHeaderNormalization().structInfos
+	stInfo, ok := structInfos.Load(rType)
 	if ok {
 		return stInfo.(*structInfo)
 	}
 
-	fieldsList := getFieldInfos(rType, []int{}, []string{})
-	stInfo = &structInfo{fieldsList}
-	structInfoCache.Store(rType, stInfo)
+	fieldsList, err := getFieldInfos(rType, []int{}, []string{}, make(map[reflect.Type]bool))
+	stInfo = &structInfo{Fields: fieldsList, Err: err}
+	structInfos.Store(rType, stInfo)
 
 	return stInfo.(*structInfo)
 }
 
-func getFieldInfos(rType reflect.Type, parentIndexChain []int, parentKeys []string) []fieldInfo {
+func getFieldInfos(rType reflect.Type, parentIndexChain []int, parentKeys []string, ancestors map[reflect.Type]bool) ([]fieldInfo, error) {
+	if ancestors[rType] {
+		return nil, fmt.Errorf("cyclic struct type %s: exclude the recursive field with csv:\"-\"", rType)
+	}
+	ancestors[rType] = true
+	defer delete(ancestors, rType)
+
 	fieldsCount := rType.NumField()
 	fieldsList := make([]fieldInfo, 0, fieldsCount)
 	for i := 0; i < fieldsCount; i++ {
@@ -86,6 +94,15 @@ func getFieldInfos(rType reflect.Type, parentIndexChain []int, parentKeys []stri
 		copy(cpy, parentIndexChain)
 		indexChain := append(cpy, i)
 
+		// Determine whether it's a struct we can expand into nested columns.
+		// Structs that implement any of the text or CSV marshaling methods
+		// should result in one value and not have their fields exposed
+		fieldType := field.Type
+		if fieldType.Kind() == reflect.Ptr {
+			fieldType = fieldType.Elem()
+		}
+		isExpandableStruct := fieldType.Kind() == reflect.Struct && !canMarshal(fieldType)
+
 		var currFieldInfo *fieldInfo
 		if !field.Anonymous {
 			filteredTags := []string{}
@@ -94,13 +111,17 @@ func getFieldInfos(rType reflect.Type, parentIndexChain []int, parentKeys []stri
 			if len(filteredTags) == 1 && filteredTags[0] == "-" {
 				// ignore nested structs with - tag
 				continue
+			} else if isExpandableStruct && len(filteredTags) == 1 && filteredTags[0] == "." {
+				// inline nested structs with . tag
+				currFieldInfo.inline = true
+				currFieldInfo.keys = parentKeys
 			} else if len(filteredTags) > 0 && filteredTags[0] != "" {
 				currFieldInfo.keys = filteredTags
 			} else {
 				currFieldInfo.keys = []string{normalizeName(field.Name)}
 			}
 
-			if len(parentKeys) > 0 && currFieldInfo != nil {
+			if len(parentKeys) > 0 && currFieldInfo != nil && !currFieldInfo.inline {
 				// create cartesian product of keys
 				// eg: parent keys x field keys
 				keys := make([]string, 0, len(parentKeys)*len(currFieldInfo.keys))
@@ -108,30 +129,24 @@ func getFieldInfos(rType reflect.Type, parentIndexChain []int, parentKeys []stri
 					for _, ckey := range currFieldInfo.keys {
 						keys = append(keys, normalizeName(fmt.Sprintf("%s%s%s", pkey, FieldsCombiner, ckey)))
 					}
-					currFieldInfo.keys = keys
 				}
+				currFieldInfo.keys = keys
 			}
 		}
 
 		// handle struct
-		fieldType := field.Type
-		// if the field is a pointer, follow the pointer
-		if fieldType.Kind() == reflect.Ptr {
-			fieldType = fieldType.Elem()
-		}
-		// if the field is a struct, create a fieldInfo for each of its fields
-		if fieldType.Kind() == reflect.Struct {
-			// Structs that implement any of the text or CSV marshaling methods
-			// should result in one value and not have their fields exposed
-			if !(canMarshal(fieldType)) {
-				// if the field is an embedded struct, pass along parent keys
-				keys := parentKeys
-				if currFieldInfo != nil {
-					keys = currFieldInfo.keys
-				}
-				fieldsList = append(fieldsList, getFieldInfos(fieldType, indexChain, keys)...)
-				continue
+		if isExpandableStruct {
+			// if the field is an embedded struct, pass along parent keys
+			keys := parentKeys
+			if currFieldInfo != nil {
+				keys = currFieldInfo.keys
 			}
+			childFields, err := getFieldInfos(fieldType, indexChain, keys, ancestors)
+			if err != nil {
+				return nil, err
+			}
+			fieldsList = append(fieldsList, childFields...)
+			continue
 		}
 
 		// if the field is an embedded struct, ignore the csv tag
@@ -148,12 +163,14 @@ func getFieldInfos(rType reflect.Type, parentIndexChain []int, parentKeys []stri
 
 			// slices or arrays of Struct get special handling
 			if field.Type.Elem().Kind() == reflect.Struct {
-				fieldInfos := getFieldInfos(field.Type.Elem(), []int{}, []string{})
-
 				// if no special csv[] tag was supplied, just include the field directly
 				if arrayLength == -1 {
 					fieldsList = append(fieldsList, *currFieldInfo)
 				} else {
+					fieldInfos, err := getFieldInfos(field.Type.Elem(), []int{}, []string{}, ancestors)
+					if err != nil {
+						return nil, err
+					}
 					// When the field is a slice/array of structs, create a fieldInfo for each index and each field
 					for idx := 0; idx < arrayLength; idx++ {
 						// copy index chain and append array index
@@ -211,7 +228,7 @@ func getFieldInfos(rType reflect.Type, parentIndexChain []int, parentKeys []stri
 			fieldsList = append(fieldsList, *currFieldInfo)
 		}
 	}
-	return fieldsList
+	return fieldsList, nil
 }
 
 func filterTags(tagName string, indexChain []int, field reflect.StructField) (*fieldInfo, []string) {
